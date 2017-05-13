@@ -10,7 +10,8 @@ import UIKit
 
 class ExercicesViewController: UIViewController {
     
-    var labelBienvenue = VCLabelMenu(text: "Bienvenue sur Vocs")
+    var labelBienvenue = VCLabelMenu("Bienvenue sur Vocs")
+    var boutonTraduction = VCButtonExercice("Traduction")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +21,17 @@ class ExercicesViewController: UIViewController {
     }
     
     func setupViews() {
+        self.view.addSubview(labelBienvenue)
+        labelBienvenue.topAnchor.constraint(equalTo: view.topAnchor, constant: 40).isActive = true
+        labelBienvenue.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+        labelBienvenue.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        labelBienvenue.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        
+        self.view.addSubview(boutonTraduction)
+        boutonTraduction.centerYAnchor.constraint(equalTo: view.centerYAnchor,constant : -20).isActive = true
+        boutonTraduction.widthAnchor.constraint(equalToConstant : 150).isActive = true
+        boutonTraduction.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        boutonTraduction.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
     }
     
