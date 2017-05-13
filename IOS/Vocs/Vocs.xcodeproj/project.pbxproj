@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		6A04B3D81EBBA540007204B5 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A04B3D71EBBA540007204B5 /* TabBarController.swift */; };
 		6A04B3DB1EBBA57A007204B5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A04B3DA1EBBA57A007204B5 /* Extensions.swift */; };
+		6A2733591EC74BA000E4830E /* ExercicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2733581EC74BA000E4830E /* ExercicesViewController.swift */; };
+		6A27335B1EC74BD500E4830E /* ListesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A27335A1EC74BD500E4830E /* ListesViewController.swift */; };
+		6A27335D1EC74BFA00E4830E /* ClassesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A27335C1EC74BFA00E4830E /* ClassesViewController.swift */; };
+		6A27335F1EC75EFD00E4830E /* BoutonTraduction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A27335E1EC75EFD00E4830E /* BoutonTraduction.swift */; };
+		6A2733611EC760C200E4830E /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2733601EC760C200E4830E /* Error.swift */; };
+		6A2733661EC7680800E4830E /* VCLabelMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2733651EC7680800E4830E /* VCLabelMenu.swift */; };
 		6A59D7661EBB701400E5D1BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A59D7651EBB701400E5D1BA /* AppDelegate.swift */; };
 		6A59D7681EBB701400E5D1BA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A59D7671EBB701400E5D1BA /* ViewController.swift */; };
 		6A59D76D1EBB701400E5D1BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A59D76C1EBB701400E5D1BA /* Assets.xcassets */; };
@@ -18,6 +24,12 @@
 /* Begin PBXFileReference section */
 		6A04B3D71EBBA540007204B5 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		6A04B3DA1EBBA57A007204B5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		6A2733581EC74BA000E4830E /* ExercicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExercicesViewController.swift; sourceTree = "<group>"; };
+		6A27335A1EC74BD500E4830E /* ListesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListesViewController.swift; sourceTree = "<group>"; };
+		6A27335C1EC74BFA00E4830E /* ClassesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassesViewController.swift; sourceTree = "<group>"; };
+		6A27335E1EC75EFD00E4830E /* BoutonTraduction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoutonTraduction.swift; sourceTree = "<group>"; };
+		6A2733601EC760C200E4830E /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		6A2733651EC7680800E4830E /* VCLabelMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCLabelMenu.swift; sourceTree = "<group>"; };
 		6A59D7621EBB701400E5D1BA /* Vocs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Vocs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A59D7651EBB701400E5D1BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6A59D7671EBB701400E5D1BA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -43,6 +55,14 @@
 				6A04B3DA1EBBA57A007204B5 /* Extensions.swift */,
 			);
 			name = Extensions;
+			sourceTree = "<group>";
+		};
+		6A2733621EC760C700E4830E /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				6A2733601EC760C200E4830E /* Error.swift */,
+			);
+			name = Error;
 			sourceTree = "<group>";
 		};
 		6A59D7591EBB701400E5D1BA = {
@@ -78,6 +98,7 @@
 		6A59D7771EBB70C700E5D1BA /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6A2733621EC760C700E4830E /* Error */,
 				6A04B3D91EBBA558007204B5 /* Extensions */,
 			);
 			name = Models;
@@ -86,6 +107,8 @@
 		6A59D7781EBB70D000E5D1BA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				6A27335E1EC75EFD00E4830E /* BoutonTraduction.swift */,
+				6A2733651EC7680800E4830E /* VCLabelMenu.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -95,6 +118,9 @@
 			children = (
 				6A59D7671EBB701400E5D1BA /* ViewController.swift */,
 				6A04B3D71EBBA540007204B5 /* TabBarController.swift */,
+				6A2733581EC74BA000E4830E /* ExercicesViewController.swift */,
+				6A27335A1EC74BD500E4830E /* ListesViewController.swift */,
+				6A27335C1EC74BFA00E4830E /* ClassesViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -179,9 +205,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6A2733591EC74BA000E4830E /* ExercicesViewController.swift in Sources */,
 				6A04B3D81EBBA540007204B5 /* TabBarController.swift in Sources */,
+				6A2733661EC7680800E4830E /* VCLabelMenu.swift in Sources */,
 				6A59D7681EBB701400E5D1BA /* ViewController.swift in Sources */,
 				6A59D7661EBB701400E5D1BA /* AppDelegate.swift in Sources */,
+				6A27335D1EC74BFA00E4830E /* ClassesViewController.swift in Sources */,
+				6A27335F1EC75EFD00E4830E /* BoutonTraduction.swift in Sources */,
+				6A27335B1EC74BD500E4830E /* ListesViewController.swift in Sources */,
+				6A2733611EC760C200E4830E /* Error.swift in Sources */,
 				6A04B3DB1EBBA57A007204B5 /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
