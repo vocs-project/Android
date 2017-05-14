@@ -8,11 +8,11 @@
 
 import UIKit
 
-class ListesViewController: UIViewController, UITableViewDataSource,UITableViewDelegate {
+class ListesViewController: UIViewController, UITableViewDataSource,UITableViewDelegate, AjouterUneListeDelegate {
     
     let reuseIdentifier = "listeCell"
     
-    let listes = ["Liste de mathis","Liste de simon","Liste d'informatique"]
+    var listes = ["Liste de mathis","Liste de simon","Liste d'informatique"]
     
     let headerTableView = VCHeaderListe()
     
@@ -35,8 +35,15 @@ class ListesViewController: UIViewController, UITableViewDataSource,UITableViewD
         setupViews()
     }
     
+    func envoyerListe(texte: String) {
+        listes.append(texte)
+        let indexPath = IndexPath(row: listes.count - 1, section: 0)
+        _ = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(insertRow), userInfo: indexPath, repeats: false)
+    }
+    
     func handleAjouter() {
         let controller = AjouterListeViewController()
+        controller.delegateAjouter = self
         let navController = UINavigationController(rootViewController: controller)
         present(navController, animated: true, completion: nil)
     }
@@ -77,9 +84,9 @@ class ListesViewController: UIViewController, UITableViewDataSource,UITableViewD
         return cell
         
     }
-//    func insertRow(timer : Timer) {
-//        themeTableView.insertRows(at: [timer.userInfo as! IndexPath], with: .automatic)
-//    }
+    func insertRow(timer : Timer) {
+        listesTableView.insertRows(at: [timer.userInfo as! IndexPath], with: .automatic)
+    }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

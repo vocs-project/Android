@@ -8,7 +8,8 @@
 
 import UIKit
 
-class MotsViewController: UIViewController , UITableViewDelegate, UITableViewDataSource {
+class MotsViewController: UIViewController , UITableViewDelegate, UITableViewDataSource, AjouterUnMotDelegate {
+
     
     var mots : [String] = ["Computer - Ordinateur","Laptop - Ordinateur portable","View - Vue"]
     let reuseIdentifier = "motCell"
@@ -33,7 +34,17 @@ class MotsViewController: UIViewController , UITableViewDelegate, UITableViewDat
     }
     
     func handleAjouter() {
-        
+        let controller = AjouterMotViewController()
+        controller.delegateMot = self
+        controller.navigationItem.title = self.navigationItem.title
+        let navController = UINavigationController(rootViewController: controller)
+        present(navController, animated: true, completion: nil)
+    }
+    
+    func envoyerMot(texte: String) {
+        mots.append(texte)
+        let indexPath = IndexPath(row: mots.count - 1, section: 0)
+        _ = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(insertRow), userInfo: indexPath, repeats: false)
     }
     
     func setupViews(){
@@ -56,6 +67,10 @@ class MotsViewController: UIViewController , UITableViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 45
+    }
+    
+    func insertRow(timer : Timer) {
+        motsTableView.insertRows(at: [timer.userInfo as! IndexPath], with: .automatic)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

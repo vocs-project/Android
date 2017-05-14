@@ -17,7 +17,7 @@ class VCTextFieldLigneBas : UITextField {
         return view
     }()
     
-    init(placeholder : String) {
+    init(placeholder : String, alignement : NSTextAlignment) {
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         self.placeholder = placeholder
         self.font = UIFont (name: "HelveticaNeue", size: 20)
@@ -25,8 +25,12 @@ class VCTextFieldLigneBas : UITextField {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.spellCheckingType = .no
         self.autocorrectionType = .no
-        self.textAlignment = .center
+        self.textAlignment = alignement
         setupViews()
+    }
+    
+    func getText() -> String? {
+        return self.text
     }
     
     func setupViews() {

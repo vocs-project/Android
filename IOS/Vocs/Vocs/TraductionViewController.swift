@@ -10,9 +10,10 @@ import UIKit
 
 class TraductionViewController: UIViewController {
 
-    var textField = VCTextFieldLigneBas(placeholder :"")
+    var textField = VCTextFieldLigneBas(placeholder :"",alignement : .center)
     var validateButton = VCButtonValidate()
     var labelMot = VCLabelMot(text : "Ordinateur")
+    var nbrDeMots = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,21 +21,35 @@ class TraductionViewController: UIViewController {
         self.view.backgroundColor = .white
         self.tabBarController?.tabBar.isHidden = true
         self.navigationItem.title = "Traduction"
-        self.navigationItem.setLeftBarButton(UIBarButtonItem(title: "Revenir", style: .plain, target: self, action: #selector(handleRevenir)), animated: true)
+        self.navigationItem.setLeftBarButton(UIBarButtonItem(title: "Revenir", style: .plain, target: self, action: #selector(handleQuitter)), animated: true)
         validateButton.addTarget(self, action: #selector(handleCheck), for: .touchUpInside)
         setupViews()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        textField.becomeFirstResponder()
     }
     
     func handleCheck() {
         if (textField.text?.uppercased() == "Computer".uppercased()){
             textField.textColor = UIColor(rgb: 0x1ABC9C)
         } else {
-            
+            textField.textColor = UIColor(rgb: 0xD83333)
         }
+        self.dismissKeyboard()
+        _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(prochaineView), userInfo: nil, repeats: false)
+        validateButton.isEnabled = false
     }
     
-    func prochainMot() {
-        
+    func prochaineView() {
+        if nbrDeMots >= 3 {
+            let controller = ScoreViewController()
+            self.navigationController?.pushViewController(controller, animated: true)
+        } else {
+            let controller = TraductionViewController()
+            controller.nbrDeMots = self.nbrDeMots + 1
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
     }
     
     
@@ -59,13 +74,9 @@ class TraductionViewController: UIViewController {
         labelMot.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
     }
 
-    func handleRevenir () {
+    func handleQuitter () {
         self.tabBarController?.tabBar.isHidden = false
-        _ = self.navigationController?.popViewController(animated: true)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        let controller = TabBarController()
+        presentRightToLeft(controller)
     }
 }

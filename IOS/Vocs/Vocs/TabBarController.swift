@@ -15,7 +15,7 @@ class TabBarController: UITabBarController {
         var arrayViews : [UIViewController] = [createAViewController(controller: ClassesViewController(), image: #imageLiteral(resourceName: "Classe"))]
         arrayViews.append(createAViewController(controller: ExercicesViewController(), image: #imageLiteral(resourceName: "Manette") ))
         arrayViews.append(createAViewController(controller: ListesViewController(), image: #imageLiteral(resourceName: "Liste")))
-        
+        self.view.backgroundColor = .white
         viewControllers = arrayViews
         self.selectedIndex = 1
     }

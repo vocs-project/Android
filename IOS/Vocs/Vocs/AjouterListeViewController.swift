@@ -10,7 +10,8 @@ import UIKit
 
 class AjouterListeViewController: UIViewController {
 
-    let textFieldNomListe = VCTextFieldLigneBas(placeholder: "Nom de la liste")
+    var delegateAjouter: AjouterUneListeDelegate!
+    let textFieldNomListe = VCTextFieldLigneBas(placeholder: "Nom de la liste",alignement : .left)
     let labelAjouter = VCTitreLabel(text : "Ajouter une liste")
     let validateButton = VCButtonValidate()
     
@@ -30,6 +31,11 @@ class AjouterListeViewController: UIViewController {
     }
     
     func handleAjouter() {
+        if let liste = textFieldNomListe.text {
+            if !(liste.isEmpty){
+                delegateAjouter.envoyerListe(texte : liste)
+            }
+        }
         dismiss(animated: true, completion: nil)
     }
     

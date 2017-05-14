@@ -26,6 +26,9 @@
 		6A59D7661EBB701400E5D1BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A59D7651EBB701400E5D1BA /* AppDelegate.swift */; };
 		6A59D76D1EBB701400E5D1BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A59D76C1EBB701400E5D1BA /* Assets.xcassets */; };
 		6A59D7701EBB701400E5D1BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6A59D76E1EBB701400E5D1BA /* LaunchScreen.storyboard */; };
+		6A5D46C81EC8C28A00854EA1 /* ScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5D46C71EC8C28A00854EA1 /* ScoreViewController.swift */; };
+		6A5D46CA1EC8F0D300854EA1 /* AjouterMotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5D46C91EC8F0D300854EA1 /* AjouterMotViewController.swift */; };
+		6A5D46CD1EC8F43900854EA1 /* Protocoles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5D46CC1EC8F43900854EA1 /* Protocoles.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +53,9 @@
 		6A59D76C1EBB701400E5D1BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6A59D76F1EBB701400E5D1BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6A59D7711EBB701400E5D1BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6A5D46C71EC8C28A00854EA1 /* ScoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScoreViewController.swift; sourceTree = "<group>"; };
+		6A5D46C91EC8F0D300854EA1 /* AjouterMotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AjouterMotViewController.swift; sourceTree = "<group>"; };
+		6A5D46CC1EC8F43900854EA1 /* Protocoles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocoles.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +118,7 @@
 		6A59D7771EBB70C700E5D1BA /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6A5D46CB1EC8F42900854EA1 /* Protocoles */,
 				6A2733621EC760C700E4830E /* Error */,
 				6A04B3D91EBBA558007204B5 /* Extensions */,
 			);
@@ -135,12 +142,14 @@
 			isa = PBXGroup;
 			children = (
 				6A04B3D71EBBA540007204B5 /* TabBarController.swift */,
+				6A5D46C91EC8F0D300854EA1 /* AjouterMotViewController.swift */,
 				6A2733581EC74BA000E4830E /* ExercicesViewController.swift */,
 				6A2733731EC8956F00E4830E /* MotsViewController.swift */,
 				6A2733711EC87BD800E4830E /* AjouterListeViewController.swift */,
 				6A27335A1EC74BD500E4830E /* ListesViewController.swift */,
 				6A2733671EC76F2600E4830E /* ReglagesViewController.swift */,
 				6A2733691EC77F3D00E4830E /* TraductionViewController.swift */,
+				6A5D46C71EC8C28A00854EA1 /* ScoreViewController.swift */,
 				6A27335C1EC74BFA00E4830E /* ClassesViewController.swift */,
 			);
 			name = Controllers;
@@ -152,6 +161,14 @@
 				6A59D76E1EBB701400E5D1BA /* LaunchScreen.storyboard */,
 			);
 			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		6A5D46CB1EC8F42900854EA1 /* Protocoles */ = {
+			isa = PBXGroup;
+			children = (
+				6A5D46CC1EC8F43900854EA1 /* Protocoles.swift */,
+			);
+			name = Protocoles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,6 +248,7 @@
 				6A27336A1EC77F3D00E4830E /* TraductionViewController.swift in Sources */,
 				6A27336C1EC7821E00E4830E /* TextFields.swift in Sources */,
 				6A04B3D81EBBA540007204B5 /* TabBarController.swift in Sources */,
+				6A5D46CD1EC8F43900854EA1 /* Protocoles.swift in Sources */,
 				6A2733741EC8956F00E4830E /* MotsViewController.swift in Sources */,
 				6A2733761EC8991900E4830E /* MotCell.swift in Sources */,
 				6A2733661EC7680800E4830E /* Label.swift in Sources */,
@@ -243,6 +261,8 @@
 				6A2733611EC760C200E4830E /* Error.swift in Sources */,
 				6A2733681EC76F2600E4830E /* ReglagesViewController.swift in Sources */,
 				6A04B3DB1EBBA57A007204B5 /* Extensions.swift in Sources */,
+				6A5D46C81EC8C28A00854EA1 /* ScoreViewController.swift in Sources */,
+				6A5D46CA1EC8F0D300854EA1 /* AjouterMotViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,6 +386,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.wathis.Vocs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -380,6 +401,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.wathis.Vocs;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

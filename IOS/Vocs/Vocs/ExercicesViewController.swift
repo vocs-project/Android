@@ -11,11 +11,12 @@ import UIKit
 class ExercicesViewController: UIViewController {
     
     var labelBienvenue = VCLabelMenu(text: "Bienvenue sur Vocs",size: 25)
-    var boutonTraduction = VCButtonExercice("Traduction")
+    var boutonTraduction = VCButtonExercice("Traduction",color : UIColor(rgb: 0x1C7FBD))
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
+        self.view.backgroundColor = .white
         self.navigationItem.title = "Exercices"
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Parametres"), style: .plain, target: self, action: #selector(handleParametres))
         boutonTraduction.addTarget(self, action: #selector(handleTraduction), for: .touchUpInside)
