@@ -10,14 +10,21 @@ import UIKit
 
 class ReglagesViewController: UIViewController {
 
-    let labelSiteWeb = VCLabelMenu("Site web : www.exemple.com")
+    let labelSiteWeb = VCLabelMenu(text: "Site web : www.exemple.com",size : 20)
     
-    var labelCopyright : VCLabelCopyright?
+    var labelCopyright = VCLabelCopyright()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
+        self.view.backgroundColor = .white
         self.navigationItem.title = "Réglages"
+        self.navigationItem.setRightBarButton(UIBarButtonItem(title: "Revenir", style: .plain, target: self, action: #selector(retour)), animated: true)
         setupViews()
+    }
+    
+    func retour() {
+        dismiss(animated: true, completion: nil)
     }
     
     func setupViews() {
@@ -27,8 +34,11 @@ class ReglagesViewController: UIViewController {
         labelSiteWeb.heightAnchor.constraint(equalToConstant: 50).isActive = true
         labelSiteWeb.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
-        labelCopyright = VCLabelCopyright(view: self.view)
-        self.view.addSubview(labelCopyright!)
+        self.view.addSubview(labelCopyright)
+        labelCopyright.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -15).isActive = true
+        labelCopyright.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
+        labelCopyright.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        labelCopyright.heightAnchor.constraint(equalToConstant: 30).isActive = true
     }
 
 }

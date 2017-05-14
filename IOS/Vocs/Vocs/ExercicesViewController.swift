@@ -10,13 +10,15 @@ import UIKit
 
 class ExercicesViewController: UIViewController {
     
-    var labelBienvenue = VCLabelMenu("Bienvenue sur Vocs")
+    var labelBienvenue = VCLabelMenu(text: "Bienvenue sur Vocs",size: 25)
     var boutonTraduction = VCButtonExercice("Traduction")
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.hideKeyboardWhenTappedAround()
         self.navigationItem.title = "Exercices"
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Parametres"), style: .plain, target: self, action: #selector(appuyerParametres))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Parametres"), style: .plain, target: self, action: #selector(handleParametres))
+        boutonTraduction.addTarget(self, action: #selector(handleTraduction), for: .touchUpInside)
         setupViews()
     }
     
@@ -29,13 +31,22 @@ class ExercicesViewController: UIViewController {
         
         self.view.addSubview(boutonTraduction)
         boutonTraduction.centerYAnchor.constraint(equalTo: view.centerYAnchor,constant : -20).isActive = true
-        boutonTraduction.widthAnchor.constraint(equalToConstant : 150).isActive = true
+        boutonTraduction.widthAnchor.constraint(equalToConstant : 200).isActive = true
         boutonTraduction.heightAnchor.constraint(equalToConstant: 60).isActive = true
         boutonTraduction.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         
     }
     
-    func appuyerParametres() {
+    func handleTraduction() {
+        let traduction = TraductionViewController()
+        self.navigationController?.pushViewController(traduction, animated: true)
+    }
+    
+    func handleParametres() {
+        
+        let reglagesController = ReglagesViewController()
+        let navReglageController = UINavigationController(rootViewController: reglagesController)
+        present(navReglageController, animated: true, completion: nil)
         
     }
     

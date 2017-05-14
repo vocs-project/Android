@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         let navigationBarAppearace = UINavigationBar.appearance()
-        //navigationBarAppearace.setBackgroundImage(UIImage(named: "image")!.resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch), for: .default)
+        navigationBarAppearace.setBackgroundImage(#imageLiteral(resourceName: "NavigationBackground").resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch), for: .default)
         navigationBarAppearace.isTranslucent = false
         navigationBarAppearace.tintColor = .white
         navigationBarAppearace.barTintColor = UIColor(r: 40, g: 125, b: 192)

@@ -1,18 +1,19 @@
 //
-//  ViewController.swift
+//  AjouterListeViewController.swift
 //  Vocs
 //
-//  Created by Mathis Delaunay on 04/05/2017.
+//  Created by Mathis Delaunay on 14/05/2017.
 //  Copyright © 2017 Wathis. All rights reserved.
 //
 
 import UIKit
 
-class ViewController: UIViewController {
+class AjouterListeViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        self.view.backgroundColor = .white
+        self.navigationItem.title = "Ajouter"
     }
 
     override func didReceiveMemoryWarning() {
@@ -20,6 +21,4 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
 }
-
