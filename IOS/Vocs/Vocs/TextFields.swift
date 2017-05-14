@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VCTextFieldTraduction : UITextField {
+class VCTextFieldLigneBas : UITextField {
 
     let separatorLine : UIView = {
         let view = UIView()
@@ -17,10 +17,10 @@ class VCTextFieldTraduction : UITextField {
         return view
     }()
     
-    init() {
+    init(placeholder : String) {
         super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-        self.placeholder = ""
-        self.font = UIFont (name: "HelveticaNeue-Bold", size: 20)
+        self.placeholder = placeholder
+        self.font = UIFont (name: "HelveticaNeue", size: 20)
         self.textColor = UIColor(rgb: 0x696969)
         self.translatesAutoresizingMaskIntoConstraints = false
         self.spellCheckingType = .no

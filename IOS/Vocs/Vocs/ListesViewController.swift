@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ListesViewController: UIViewController, UITableViewDataSource,UITableViewDelegate{
+class ListesViewController: UIViewController, UITableViewDataSource,UITableViewDelegate {
     
     let reuseIdentifier = "listeCell"
     
@@ -29,7 +29,6 @@ class ListesViewController: UIViewController, UITableViewDataSource,UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.hideKeyboardWhenTappedAround()
         self.navigationItem.title = "Mes listes"
         listesTableView.register(VCListeCell.self, forCellReuseIdentifier: reuseIdentifier)
         headerTableView.buttonAjouter.addTarget(self, action: #selector(handleAjouter), for: .touchUpInside)
@@ -82,11 +81,10 @@ class ListesViewController: UIViewController, UITableViewDataSource,UITableViewD
 //        themeTableView.insertRows(at: [timer.userInfo as! IndexPath], with: .automatic)
 //    }
     
-    /*---------------------------------- TABLE VIEW DELEGATE ----------------------------------------*/
     
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let controller = SectionsController()
-//        controller.theme = theme[indexPath.row]
-//        self.navigationController?.pushViewController(controller, animated: true)
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let controller = MotsViewController()
+        controller.navigationItem.title = listes[indexPath.row]
+        self.navigationController?.pushViewController(controller, animated: true)
+    }
 }

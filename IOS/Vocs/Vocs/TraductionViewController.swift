@@ -10,7 +10,7 @@ import UIKit
 
 class TraductionViewController: UIViewController {
 
-    var textField = VCTextFieldTraduction()
+    var textField = VCTextFieldLigneBas(placeholder :"")
     var validateButton = VCButtonValidate()
     var labelMot = VCLabelMot(text : "Ordinateur")
     
