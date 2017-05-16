@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         bswitch.setChecked(true);
         score = (Button) findViewById(R.id.score);
 
-        bon=0;  //qzdesefsef
+        bon=0;
         tt=0;
         nb=(int) (Math.random()*nbmot);
         afficheur.setText(motaffiche);
