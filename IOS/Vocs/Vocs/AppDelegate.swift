@@ -12,10 +12,28 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+ 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+    
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.makeKeyAndVisible()
+        let navigationBarAppearace = UINavigationBar.appearance()
+        navigationBarAppearace.setBackgroundImage(#imageLiteral(resourceName: "NavigationBackground").resizableImage(withCapInsets: UIEdgeInsets.zero, resizingMode: .stretch), for: .default)
+        navigationBarAppearace.isTranslucent = false
+        navigationBarAppearace.tintColor = .white
+        navigationBarAppearace.barTintColor = UIColor(r: 40, g: 125, b: 192)
+        navigationBarAppearace.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.white, NSFontAttributeName : UIFont(name: "HelveticaNeue", size: 20) as Any]
+        //GENERAL SETUPS
+        //Mettre   -->   View controller-based status bar appearance      a   NO
+        UIApplication.shared.statusBarStyle = .lightContent
+        UITabBar.appearance().tintColor = UIColor(r: 40, g: 125, b: 192)
+        
+        //Modify KeyBoard color
+        UITextField.appearance().keyboardAppearance = .dark
+        
+        window?.rootViewController = TabBarController()
+        
         return true
     }
 
