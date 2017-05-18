@@ -1,0 +1,27 @@
+.button-sm{
+	display: block;
+	border-radius: 6px;
+	background-color: #3498dc;
+	width:150px;
+	height:30px;
+	font-size: 1.2em;
+	font-family: open sans;
+	text-align: center;
+}
+
+.button-m{
+	display: block;
+	border-radius: 15px;
+	background-color: #3498dc;
+	width:200px;
+	height:50px;
+
+}
+
+.button-sm:hover{ 
+	background-color: #2b87c5;
+}
+
+
+
+
