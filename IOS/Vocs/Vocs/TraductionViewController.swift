@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SQLite
 
 class TraductionViewController: UIViewController {
 
@@ -24,6 +25,7 @@ class TraductionViewController: UIViewController {
         self.navigationItem.setLeftBarButton(UIBarButtonItem(title: "Revenir", style: .plain, target: self, action: #selector(handleQuitter)), animated: true)
         validateButton.addTarget(self, action: #selector(handleCheck), for: .touchUpInside)
         setupViews()
+        connectionBDD()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -49,6 +51,26 @@ class TraductionViewController: UIViewController {
             let controller = TraductionViewController()
             controller.nbrDeMots = self.nbrDeMots + 1
             self.navigationController?.pushViewController(controller, animated: true)
+        }
+    }
+    
+    func connectionBDD() {
+        do {
+            let path = NSSearchPathForDirectoriesInDomains(
+                .documentDirectory, .userDomainMask, true
+                ).first!
+            print("ZD \(path)")
+            let db = try Connection("\(path)/Vocs.sqlite")
+            print("Connecté à la base de donnée")
+            
+            let motAnglais = Expression<String>("english")
+            let motFrancais = Expression<String>("french")
+            let mots = Table("words")
+            let rowid = try db.run(mots.insert(motFrancais <- "Ordinateur", motAnglais <- "Computer"))
+            print("Row : \(rowid) " )
+        }   catch {
+            print("Erreur")
+            return
         }
     }
     
