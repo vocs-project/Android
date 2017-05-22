@@ -1,0 +1,5 @@
+vocs_platform_homepage:
+    path:     /
+    defaults: { _controller: VOCSPlatformBundle:Default:index }
+
+
