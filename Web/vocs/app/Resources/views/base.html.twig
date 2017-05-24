@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+   <!-- <link rel="icon" type="image/png" href="img/logo.png" /> -->
+    <title>{% block title %}Vocs{% endblock %}</title>
+</head>
+
+<div class="menu">
+    <div class="row">
+
+        <div class="menu-logo col-xs-6">
+            <div class="logo">
+                <img src="img/logo.png">
+            </div>
+        </div>
+
+        <div class="menu-navigation col-xs-6">
+            <div class="row">
+                <div class="menu-text col-xs-4">
+                    <a href="#">Team</a>
+                </div>
+                <div class="menu-text col-xs-4">
+                    <a href="#">Group</a>
+                </div>
+                <div class="menu-connection col-xs-4">
+                    <a href="#" ><div  class="button-sm">Connexion</div></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<body>
+{% block body %}{% endblock %}
+</body>
+</html>
+
+

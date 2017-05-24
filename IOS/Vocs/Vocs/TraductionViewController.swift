@@ -7,13 +7,16 @@
 //
 
 import UIKit
+import SQLite
 
 class TraductionViewController: UIViewController {
 
     var textField = VCTextFieldLigneBas(placeholder :"",alignement : .center)
     var validateButton = VCButtonValidate()
-    var labelMot = VCLabelMot(text : "Ordinateur")
+    var labelMot = VCLabelMot(text : "")
     var nbrDeMots = 0
+    var motsDictionnaire = [String:String]() //Premier mot français, deuxieme anglais
+    var lesMots = [String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,6 +27,12 @@ class TraductionViewController: UIViewController {
         self.navigationItem.setLeftBarButton(UIBarButtonItem(title: "Revenir", style: .plain, target: self, action: #selector(handleQuitter)), animated: true)
         validateButton.addTarget(self, action: #selector(handleCheck), for: .touchUpInside)
         setupViews()
+        if lesMots.count == 0 {
+            chargerLesMots()
+            chargerLeMot()
+        } else {
+            chargerLeMot()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -31,7 +40,7 @@ class TraductionViewController: UIViewController {
     }
     
     func handleCheck() {
-        if (textField.text?.uppercased() == "Computer".uppercased()){
+        if (lesMots[nbrDeMots * 2].uppercased()).contains((textField.text?.uppercased())!){
             textField.textColor = UIColor(rgb: 0x1ABC9C)
         } else {
             textField.textColor = UIColor(rgb: 0xD83333)
@@ -49,6 +58,33 @@ class TraductionViewController: UIViewController {
             let controller = TraductionViewController()
             controller.nbrDeMots = self.nbrDeMots + 1
             self.navigationController?.pushViewController(controller, animated: true)
+        }
+    }
+    
+    func chargerLeMot(){
+        self.labelMot.text = motsDictionnaire[lesMots[nbrDeMots * 2]]
+        print( lesMots[nbrDeMots * 2])
+    }
+    
+    func chargerLesMots() {
+        do {
+            let path = NSSearchPathForDirectoriesInDomains(
+                .documentDirectory, .userDomainMask, true
+                ).first!
+            print("ZD \(path)")
+            let db = try Connection("\(path)/Vocs.sqlite")
+            print("Connecté à la base de donnée")
+            
+            let motAnglais = Expression<String>("english")
+            let motFrancais = Expression<String>("french")
+            let words = Table("words")
+            for word in try db.prepare(words) {
+                lesMots.append(word[motFrancais])
+                motsDictionnaire[word[motFrancais]] = word[motAnglais]
+            }
+        }   catch {
+            print("Erreur")
+            return
         }
     }
     
