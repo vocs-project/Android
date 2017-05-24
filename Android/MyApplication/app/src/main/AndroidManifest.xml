@@ -16,8 +16,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".score"></activity>
+        <activity android:name=".score" />
+        <activity android:name=".PagePrinc" />
+        <activity android:name=".Liste"></activity>
     </application>
-
 
 </manifest>

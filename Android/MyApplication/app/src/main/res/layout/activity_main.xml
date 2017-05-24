@@ -64,55 +64,18 @@
         android:layout_below="@+id/textView"
         android:layout_centerHorizontal="true" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/reponse"
-        android:text=""
-        android:gravity="center"
-        android:inputType="textCapWords"
-        android:visibility="visible"
-        android:layout_above="@+id/bienmal"
-        android:layout_alignLeft="@+id/textView"
-        android:layout_alignStart="@+id/textView"
-        android:layout_marginBottom="68dp"
-        android:layout_alignRight="@+id/textView"
-        android:layout_alignEnd="@+id/textView"
-        android:backgroundTint="@android:color/holo_blue_dark"
-        android:textCursorDrawable="@android:color/background_dark"/>
-
     <Button
         android:text="Valider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/valider"
         android:textColor="@android:color/background_dark"
-        android:layout_marginBottom="75dp"
-        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="23dp"
+        android:layout_above="@+id/aide"
         android:layout_alignLeft="@+id/reponse"
         android:layout_alignStart="@+id/reponse"
         android:layout_alignRight="@+id/reponse"
         android:layout_alignEnd="@+id/reponse" />
-
-    <TextView
-        android:text=""
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bienmal"
-        android:textColor="@android:color/background_dark"
-        android:layout_marginBottom="50dp"
-        android:layout_above="@+id/valider"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="score"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/score"
-        android:layout_alignBaseline="@+id/soluc"
-        android:layout_alignBottom="@+id/soluc"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 
     <Button
         android:text="Aide"
@@ -122,18 +85,75 @@
         android:textColor="@android:color/background_dark"
         android:layout_alignBaseline="@+id/soluc"
         android:layout_alignBottom="@+id/soluc"
-        android:layout_alignRight="@+id/textView2"
-        android:layout_alignEnd="@+id/textView2" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/score"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="29dp"
+        android:layout_marginBottom="34dp"
         android:id="@+id/soluc"
         android:textColor="@android:color/background_dark"
+        android:layout_above="@+id/score"
+        android:layout_toRightOf="@+id/bswitch"
+        android:layout_toEndOf="@+id/bswitch" />
+
+    <Button
+        android:text="Retour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/retour"
+        android:textColor="@android:color/background_dark"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/reponse"
+        android:text=""
+        android:gravity="center"
+        android:inputType="textCapWords"
+        android:visibility="visible"
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:textCursorDrawable="@android:color/background_dark"
+        android:layout_above="@+id/bienmal"
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView" />
+
+    <TextView
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bienmal"
+        android:textColor="@android:color/background_dark"
+        android:layout_marginBottom="35dp"
+        android:layout_above="@+id/valider"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lemot"
+        android:textColor="@android:color/background_dark"
+        android:layout_above="@+id/valider"
+        android:layout_alignRight="@+id/bienmal"
+        android:layout_alignEnd="@+id/bienmal"
+        android:gravity="center"/>
 
 
 </RelativeLayout>
