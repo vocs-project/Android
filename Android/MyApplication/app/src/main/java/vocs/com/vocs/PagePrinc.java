@@ -35,7 +35,7 @@ public class PagePrinc extends AppCompatActivity {
         l.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent versliste = new Intent (PagePrinc.this, Liste.class);
+                Intent versliste = new Intent (PagePrinc.this, ViewListContents.class);
                 startActivity(versliste);
             }
         });

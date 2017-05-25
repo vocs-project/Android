@@ -15,10 +15,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ViewListContents"/>
         <activity android:name=".MainActivity" />
         <activity android:name=".score" />
         <activity android:name=".PagePrinc" />
-        <activity android:name=".Liste"></activity>
+        <activity android:name=".LesListes"></activity>
     </application>
 
 </manifest>
