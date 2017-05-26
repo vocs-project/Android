@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import static android.R.attr.id;
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+
 /**
  * Created by ASUS on 25/05/2017.
  */
@@ -45,10 +48,16 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
+
     public Cursor getListContents(){
         SQLiteDatabase db=this.getWritableDatabase();
         Cursor data=db.rawQuery("SELECT * FROM "+TABLE_NAME,null);
         return data;
+    }
+
+    public void supp(String item1){
+        SQLiteDatabase db=this.getWritableDatabase();
+       db.execSQL("DELETE FROM "+TABLE_NAME+" WHERE "+COL2+"='"+item1+"'");
     }
 }
 

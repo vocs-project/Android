@@ -25,7 +25,7 @@ import static vocs.com.vocs.R.id.retour;
 public class ViewListContents extends AppCompatActivity{
 
     DataBaseHelper myDB;
-    Button retour,add;
+    Button retour,add,supp;
 
     @Override
     public void onCreate (@Nullable Bundle savedInstanceState){
@@ -36,12 +36,21 @@ public class ViewListContents extends AppCompatActivity{
         myDB=new DataBaseHelper(this);
         retour=(Button) findViewById(R.id.retour);
         add=(Button) findViewById(R.id.add);
+        supp=(Button) findViewById(R.id.supp);
 
         retour.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Intent versliste = new Intent (ViewListContents.this, PagePrinc.class);
                 startActivity(versliste);
+            }
+        });
+
+       supp.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent verssupp = new Intent (ViewListContents.this, suppression.class);
+                startActivity(verssupp);
             }
         });
 
