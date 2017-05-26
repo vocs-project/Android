@@ -41,7 +41,7 @@ public class LesListes extends AppCompatActivity {
                     AddData(newEntry);
                     editText.setText("");
                 }else{
-                    Toast.makeText(LesListes.this,"exemple",Toast.LENGTH_LONG).show();
+                    Toast.makeText(LesListes.this,"echec",Toast.LENGTH_LONG).show();
                 }
             }
         });

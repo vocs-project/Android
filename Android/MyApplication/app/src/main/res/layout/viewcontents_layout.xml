@@ -5,7 +5,7 @@
     android:weightSum="1">
 
     <TextView
-        android:text="Voici les mots de cette liste :"
+        android:text="Voici vos liste :"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView7"
@@ -20,13 +20,13 @@
         android:id="@+id/listView"/>
 
     <Button
-        android:text="Ajouter un mot"
+        android:text="Ajouter une liste"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/add" />
 
     <Button
-        android:text="suprimer un mot"
+        android:text="suprimer une liste"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/supp"

@@ -66,7 +66,7 @@ public class ViewListContents extends AppCompatActivity{
         Cursor data=myDB.getListContents();
 
         if(data.getCount()==0){
-            Toast.makeText(ViewListContents.this,"y'a rien",Toast.LENGTH_LONG).show();
+            Toast.makeText(ViewListContents.this,"aucune liste trouvée",Toast.LENGTH_LONG).show();
         }else{
             while(data.moveToNext()){
                 theList.add(data.getString(1));

@@ -49,9 +49,5 @@ public class suppression extends AppCompatActivity {
             }
         });
     }
-
-       /* public void Supp(String newEntry){
-        myDB.supp(newEntry);
-        }*/
-    }
+}
 
