@@ -14,9 +14,11 @@ class TraductionViewController: UIViewController {
     var textField = VCTextFieldLigneBas(placeholder :"",alignement : .center)
     var validateButton = VCButtonValidate()
     var labelMot = VCLabelMot(text : "")
-    var nbrDeMots = 0
-    var motsDictionnaire = [String:String]() //Premier mot français, deuxieme anglais
-    var lesMots = [String]()
+    var compteur = 0
+    let NBR_MOTS_MAX = 10
+    var nbrReussi = 0
+    var mots : [Mot] = []
+    var list : List?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,64 +29,82 @@ class TraductionViewController: UIViewController {
         self.navigationItem.setLeftBarButton(UIBarButtonItem(title: "Revenir", style: .plain, target: self, action: #selector(handleQuitter)), animated: true)
         validateButton.addTarget(self, action: #selector(handleCheck), for: .touchUpInside)
         setupViews()
-        if lesMots.count == 0 {
-            chargerLesMots()
-            chargerLeMot()
-        } else {
-            chargerLeMot()
-        }
+        chargerLesMots()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         textField.becomeFirstResponder()
     }
     
-    func handleCheck() {
-        if (lesMots[nbrDeMots * 2].uppercased()).contains((textField.text?.uppercased())!){
-            textField.textColor = UIColor(rgb: 0x1ABC9C)
-        } else {
-            textField.textColor = UIColor(rgb: 0xD83333)
+    func chargerLesMots() {
+        do {
+            let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                .appendingPathComponent("Vocs.sqlite")
+            let db = try Connection("\(fileURL)")
+            print("Connecté")
+            let word_id = Expression<Int>("id_word")
+            let list_id = Expression<Int>("id_list")
+            let french = Expression<String>("french")
+            let english = Expression<String>("english")
+            let words_lists = Table("words_lists")
+            let words = Table("words")
+            let join_words = words.join(JoinType.leftOuter, words_lists, on: words[word_id] == words_lists[word_id])
+            let query = join_words.select(french,english)
+                .filter(list_id == (self.list?.id_list)!)
+                .order(french, english)
+            for word in try db.prepare(query) {
+                mots.append(Mot(french: word[french], english: word[english]))
+            }
+        } catch {
+            print("Erreur bdd")
+            return
         }
-        self.dismissKeyboard()
-        _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(prochaineView), userInfo: nil, repeats: false)
-        validateButton.isEnabled = false
+        chargerLeMot()
     }
     
-    func prochaineView() {
-        if nbrDeMots >= 3 {
-            let controller = ScoreViewController()
-            self.navigationController?.pushViewController(controller, animated: true)
-        } else {
-            let controller = TraductionViewController()
-            controller.nbrDeMots = self.nbrDeMots + 1
-            self.navigationController?.pushViewController(controller, animated: true)
+    func handleCheck() {
+        if let mot = mots[compteur].french?.uppercased() {
+            if (mot.contains((self.textField.text?.uppercased())!)){
+                textField.textColor = UIColor(rgb: 0x1ABC9C)
+                nbrReussi += 1;
+            } else {
+                textField.textColor = UIColor(rgb: 0xD83333)
+            }
+            compteur += 1;
         }
+        _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(chargerLeMot), userInfo: nil, repeats: false)
+    }
+    
+    func finir() {
+        let controller = ScoreViewController()
+        controller.monScore.score.text = String(nbrReussi)
+        controller.monScore.maximum.text = String(compteur)
+        self.navigationController?.pushViewController(controller, animated: true)
     }
     
     func chargerLeMot(){
-        self.labelMot.text = motsDictionnaire[lesMots[nbrDeMots * 2]]
-        print( lesMots[nbrDeMots * 2])
-    }
-    
-    func chargerLesMots() {
-        do {
-            let path = NSSearchPathForDirectoriesInDomains(
-                .documentDirectory, .userDomainMask, true
-                ).first!
-            print("ZD \(path)")
-            let db = try Connection("\(path)/Vocs.sqlite")
-            print("Connecté à la base de donnée")
-            
-            let motAnglais = Expression<String>("english")
-            let motFrancais = Expression<String>("french")
-            let words = Table("words")
-            for word in try db.prepare(words) {
-                lesMots.append(word[motFrancais])
-                motsDictionnaire[word[motFrancais]] = word[motAnglais]
+        if (compteur == NBR_MOTS_MAX){
+            finir()
+        }
+        if (compteur < mots.count){
+            self.labelMot.text = mots[compteur].english
+            self.textField.textColor = UIColor(rgb: 0x4A4A4A)
+            self.textField.text = ""
+        } else {
+            if compteur == 0 {
+                self.textField.isEnabled = false
+                let alertController = UIAlertController(title: "Liste vide", message:
+                    "\nVotre liste \(list!.name!) est vide\n", preferredStyle: UIAlertControllerStyle.alert)
+                let cancelAction = UIAlertAction(title: "D'accord", style: UIAlertActionStyle.cancel) {
+                    UIAlertAction in
+                    let controller = TabBarController()
+                    controller.modalTransitionStyle = UIModalTransitionStyle.flipHorizontal
+                    self.present(controller, animated: true, completion: nil)
+                }
+                alertController.addAction(cancelAction)
+                self.present(alertController, animated: true, completion: nil)
             }
-        }   catch {
-            print("Erreur")
-            return
+            finir()
         }
     }
     

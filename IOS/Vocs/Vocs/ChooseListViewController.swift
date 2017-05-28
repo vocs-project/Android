@@ -1,20 +1,20 @@
 //
-//  ListesViewController.swift
+//  ChooseListViewController.swift
 //  Vocs
 //
-//  Created by Mathis Delaunay on 13/05/2017.
+//  Created by Mathis Delaunay on 27/05/2017.
 //  Copyright © 2017 Wathis. All rights reserved.
 //
 
 import UIKit
 import SQLite
 
-class ListesViewController: UIViewController, UITableViewDataSource,UITableViewDelegate, AjouterUneListeDelegate {
+class ChooseListViewController: UIViewController, UITableViewDataSource,UITableViewDelegate {
     
     let reuseIdentifier = "listeCell"
     var lists : [List] = []
     
-    let headerTableView = VCHeaderListe()
+    let headerTableView = VCHeaderListeWithoutButton(text: "Choisir une liste")
     
     lazy var listesTableView : UITableView = {
         var tv = UITableView()
@@ -28,30 +28,11 @@ class ListesViewController: UIViewController, UITableViewDataSource,UITableViewD
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.title = "Mes listes"
+        self.navigationItem.title = "Traduction"
+        self.view.backgroundColor = .white
         chargerLesListes()
         listesTableView.register(VCListeCell.self, forCellReuseIdentifier: reuseIdentifier)
-        headerTableView.buttonAjouter.addTarget(self, action: #selector(handleAjouter), for: .touchUpInside)
         setupViews()
-    }
-    
-    func envoyerListe(texte: String) {
-        do {
-            let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
-                .appendingPathComponent("Vocs.sqlite")
-            let db = try Connection("\(fileURL)")
-            let listName = Expression<String>("name")
-            let lists = Table("lists")
-            let insert = lists.insert(listName <- texte)
-            let rowid = try db.run(insert)
-            self.lists.append(List(id_list: Int(rowid),name: texte))
-        }   catch {
-            print("Erreur insertion liste")
-            return
-        }
-        
-        let indexPath = IndexPath(row: lists.count - 1, section: 0)
-            _ = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(insertRow), userInfo: indexPath, repeats: false)
     }
     
     func chargerLesListes() {
@@ -59,6 +40,8 @@ class ListesViewController: UIViewController, UITableViewDataSource,UITableViewD
             let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
                 .appendingPathComponent("Vocs.sqlite")
             let db = try Connection("\(fileURL)")
+            print(fileURL)
+            print("Connecté")
             let idList = Expression<Int>("id_list")
             let nameList = Expression<String>("name")
             let words = Table("lists")
@@ -66,18 +49,11 @@ class ListesViewController: UIViewController, UITableViewDataSource,UITableViewD
                 lists.append(List(id_list: list[idList],name: list[nameList]))
             }
         }   catch {
-            print("Erreur chargement listes")
+            print("Erreur")
             return
         }
     }
     
-    func handleAjouter() {
-        let controller = AjouterListeViewController()
-        controller.delegateAjouter = self
-        let navController = UINavigationController(rootViewController: controller)
-        present(navController, animated: true, completion: nil)
-    }
-
     func setupViews() {
         
         self.view.addSubview(headerTableView)
@@ -119,9 +95,10 @@ class ListesViewController: UIViewController, UITableViewDataSource,UITableViewD
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let controller = MotsViewController()
-        controller.navigationItem.title = lists[indexPath.row].name!
-        controller.list = lists[indexPath.row]
-        self.navigationController?.pushViewController(controller, animated: true)
+        let controller = TraductionViewController()
+        controller.list =  lists[indexPath.row]
+        controller.modalTransitionStyle = UIModalTransitionStyle.flipHorizontal
+        let navController = UINavigationController(rootViewController: controller)
+        present(navController, animated: true, completion: nil)
     }
 }
