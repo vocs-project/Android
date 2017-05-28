@@ -10,7 +10,7 @@
 		6A04B3D81EBBA540007204B5 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A04B3D71EBBA540007204B5 /* TabBarController.swift */; };
 		6A04B3DB1EBBA57A007204B5 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A04B3DA1EBBA57A007204B5 /* Extensions.swift */; };
 		6A1EBA001ED9DCF900506F41 /* Mot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1EB9FF1ED9DCF900506F41 /* Mot.swift */; };
-		6A1EBA021ED9F2D400506F41 /* ChooseListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1EBA011ED9F2D400506F41 /* ChooseListViewController.swift */; };
+		6A1EBA021ED9F2D400506F41 /* ChoisirListeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A1EBA011ED9F2D400506F41 /* ChoisirListeViewController.swift */; };
 		6A2733591EC74BA000E4830E /* ExercicesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A2733581EC74BA000E4830E /* ExercicesViewController.swift */; };
 		6A27335B1EC74BD500E4830E /* ListesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A27335A1EC74BD500E4830E /* ListesViewController.swift */; };
 		6A27335D1EC74BFA00E4830E /* ClassesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A27335C1EC74BFA00E4830E /* ClassesViewController.swift */; };
@@ -42,7 +42,7 @@
 		6A04B3D71EBBA540007204B5 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		6A04B3DA1EBBA57A007204B5 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		6A1EB9FF1ED9DCF900506F41 /* Mot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mot.swift; sourceTree = "<group>"; };
-		6A1EBA011ED9F2D400506F41 /* ChooseListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseListViewController.swift; sourceTree = "<group>"; };
+		6A1EBA011ED9F2D400506F41 /* ChoisirListeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChoisirListeViewController.swift; sourceTree = "<group>"; };
 		6A2733581EC74BA000E4830E /* ExercicesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExercicesViewController.swift; sourceTree = "<group>"; };
 		6A27335A1EC74BD500E4830E /* ListesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListesViewController.swift; sourceTree = "<group>"; };
 		6A27335C1EC74BFA00E4830E /* ClassesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClassesViewController.swift; sourceTree = "<group>"; };
@@ -190,7 +190,7 @@
 				6A2733711EC87BD800E4830E /* AjouterListeViewController.swift */,
 				6A27335A1EC74BD500E4830E /* ListesViewController.swift */,
 				6A2733671EC76F2600E4830E /* ReglagesViewController.swift */,
-				6A1EBA011ED9F2D400506F41 /* ChooseListViewController.swift */,
+				6A1EBA011ED9F2D400506F41 /* ChoisirListeViewController.swift */,
 				6A27335C1EC74BFA00E4830E /* ClassesViewController.swift */,
 			);
 			name = Controllers;
@@ -344,7 +344,7 @@
 				6A5D46CD1EC8F43900854EA1 /* Protocoles.swift in Sources */,
 				6A2733741EC8956F00E4830E /* MotsViewController.swift in Sources */,
 				6A2733761EC8991900E4830E /* MotCell.swift in Sources */,
-				6A1EBA021ED9F2D400506F41 /* ChooseListViewController.swift in Sources */,
+				6A1EBA021ED9F2D400506F41 /* ChoisirListeViewController.swift in Sources */,
 				6A2733661EC7680800E4830E /* Label.swift in Sources */,
 				6A59D7661EBB701400E5D1BA /* AppDelegate.swift in Sources */,
 				6A27335D1EC74BFA00E4830E /* ClassesViewController.swift in Sources */,

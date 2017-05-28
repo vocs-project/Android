@@ -9,7 +9,7 @@
 import UIKit
 import SQLite
 
-class ChooseListViewController: UIViewController, UITableViewDataSource,UITableViewDelegate {
+class ChoisirListeViewController: UIViewController, UITableViewDataSource,UITableViewDelegate {
     
     let reuseIdentifier = "listeCell"
     var lists : [List] = []
@@ -94,11 +94,39 @@ class ChooseListViewController: UIViewController, UITableViewDataSource,UITableV
     }
     
     
+    func listeEstVide(indexPath : IndexPath) -> Bool {
+        do {
+            let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                .appendingPathComponent("Vocs.sqlite")
+            let db = try Connection("\(fileURL)")
+            let count = try db.scalar("SELECT count(*) FROM words_lists where id_list = \(lists[indexPath.row].id_list!);" ) as! Int64
+            if (count == 0){
+                return true
+            } else {
+                return false
+            }
+        } catch {
+            print(error)
+        }
+        return true
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let controller = TraductionViewController()
-        controller.list =  lists[indexPath.row]
-        controller.modalTransitionStyle = UIModalTransitionStyle.flipHorizontal
-        let navController = UINavigationController(rootViewController: controller)
-        present(navController, animated: true, completion: nil)
+        if (!listeEstVide(indexPath: indexPath)){
+            let controller = TraductionViewController()
+            controller.list =  lists[indexPath.row]
+            controller.modalTransitionStyle = UIModalTransitionStyle.flipHorizontal
+            let navController = UINavigationController(rootViewController: controller)
+            present(navController, animated: true, completion: nil)
+        } else {
+            let alertController = UIAlertController(title: "Problème de liste", message:
+                "\(lists[indexPath.row].name!) est vide", preferredStyle: UIAlertControllerStyle.alert)
+            let cancelAction = UIAlertAction(title: "Retour", style: UIAlertActionStyle.cancel) {
+                UIAlertAction in
+                print("Appuyé sur retour")
+            }
+            alertController.addAction(cancelAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
 }

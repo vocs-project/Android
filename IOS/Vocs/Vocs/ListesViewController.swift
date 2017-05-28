@@ -46,7 +46,7 @@ class ListesViewController: UIViewController, UITableViewDataSource,UITableViewD
             let rowid = try db.run(insert)
             self.lists.append(List(id_list: Int(rowid),name: texte))
         }   catch {
-            print("Erreur insertion liste")
+            print(error)
             return
         }
         
@@ -66,7 +66,7 @@ class ListesViewController: UIViewController, UITableViewDataSource,UITableViewD
                 lists.append(List(id_list: list[idList],name: list[nameList]))
             }
         }   catch {
-            print("Erreur chargement listes")
+            print(error)
             return
         }
     }

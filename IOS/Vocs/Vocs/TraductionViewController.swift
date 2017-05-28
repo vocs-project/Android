@@ -41,7 +41,6 @@ class TraductionViewController: UIViewController {
             let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
                 .appendingPathComponent("Vocs.sqlite")
             let db = try Connection("\(fileURL)")
-            print("Connecté")
             let word_id = Expression<Int>("id_word")
             let list_id = Expression<Int>("id_list")
             let french = Expression<String>("french")
@@ -56,23 +55,27 @@ class TraductionViewController: UIViewController {
                 mots.append(Mot(french: word[french], english: word[english]))
             }
         } catch {
-            print("Erreur bdd")
+            print(error)
             return
         }
         chargerLeMot()
     }
     
     func handleCheck() {
-        if let mot = mots[compteur].french?.uppercased() {
-            if (mot.contains((self.textField.text?.uppercased())!)){
-                textField.textColor = UIColor(rgb: 0x1ABC9C)
-                nbrReussi += 1;
-            } else {
-                textField.textColor = UIColor(rgb: 0xD83333)
+        if !(self.textField.text?.isEmpty)!{
+            if let mot = mots[compteur].french?.uppercased() {
+                if (mot.contains((self.textField.text?.uppercased())!)){
+                    textField.textColor = UIColor(rgb: 0x1ABC9C)
+                    nbrReussi += 1;
+                } else {
+                    textField.textColor = UIColor(rgb: 0xD83333)
+                }
             }
-            compteur += 1;
         }
+        compteur += 1;
         _ = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(chargerLeMot), userInfo: nil, repeats: false)
+        textField.isEnabled = false
+        validateButton.isEnabled = false
     }
     
     func finir() {
@@ -91,21 +94,10 @@ class TraductionViewController: UIViewController {
             self.textField.textColor = UIColor(rgb: 0x4A4A4A)
             self.textField.text = ""
         } else {
-            if compteur == 0 {
-                self.textField.isEnabled = false
-                let alertController = UIAlertController(title: "Liste vide", message:
-                    "\nVotre liste \(list!.name!) est vide\n", preferredStyle: UIAlertControllerStyle.alert)
-                let cancelAction = UIAlertAction(title: "D'accord", style: UIAlertActionStyle.cancel) {
-                    UIAlertAction in
-                    let controller = TabBarController()
-                    controller.modalTransitionStyle = UIModalTransitionStyle.flipHorizontal
-                    self.present(controller, animated: true, completion: nil)
-                }
-                alertController.addAction(cancelAction)
-                self.present(alertController, animated: true, completion: nil)
-            }
             finir()
         }
+        textField.isEnabled = true
+        validateButton.isEnabled = true
     }
     
     
@@ -131,8 +123,7 @@ class TraductionViewController: UIViewController {
     }
 
     func handleQuitter () {
-        self.tabBarController?.tabBar.isHidden = false
-        let controller = TabBarController()
-        presentRightToLeft(controller)
+        self.dismissKeyboard()
+        dismiss(animated: true, completion: nil)
     }
 }

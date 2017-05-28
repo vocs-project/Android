@@ -39,7 +39,7 @@ class ExercicesViewController: UIViewController {
     }
     
     func handleTraduction() {
-        let traduction = ChooseListViewController()
+        let traduction = ChoisirListeViewController()
         self.navigationController?.pushViewController(traduction, animated: true)
     }
     

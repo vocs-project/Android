@@ -43,13 +43,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let strDBPath   : String    = dbPath.path
         let fileManager : FileManager   = FileManager.default
         
-        if fileManager.fileExists(atPath:strDBPath){
-            print("Base de donnée trouvé à cette url  : \(strDBPath)")
-        }else{
-            print("Pas de base de donnée présente au chemin  : \(strDBPath)")
+        if !(fileManager.fileExists(atPath:strDBPath)){
             createTables()
         }
-        
     }
     
     func createTables() {

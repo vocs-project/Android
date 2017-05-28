@@ -85,7 +85,7 @@ class MotsViewController: UIViewController , UITableViewDelegate, UITableViewDat
             rowid = try db.run(words_lists.insert(word_id <- Int(rowid), list_id <- (self.list?.id_list)!))
             self.mots.append(Mot(french: mot.french!, english: mot.english!))
         }   catch {
-            print("Erreur")
+            print(error)
             return
         }
         
