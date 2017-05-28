@@ -28,7 +28,7 @@ public class vocs_logo extends AppCompatActivity {
         bout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent retour1 = new Intent (vocs_logo.this, MainActivity.class);
+                Intent retour1 = new Intent (vocs_logo.this, PagePrinc.class);
                 startActivity(retour1);
             }
     });}

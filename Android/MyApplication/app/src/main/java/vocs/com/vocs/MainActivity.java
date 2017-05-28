@@ -11,17 +11,19 @@ import android.widget.TextView;
 import java.text.Normalizer;
 import android.content.Intent;
 
+import org.w3c.dom.Text;
+
 
 public class MainActivity extends AppCompatActivity {
 
     String[] motanglais = new String[500];
     String[] motfrancais = new String[500];
     String motaffiche,motreponse,motsolution;
-    int nb,nbmot,bon,tt,tmp;
+    int nb,nbmot,bon,tt;
 
-    TextView afficheur,bienmal,soluc;
+    TextView afficheur,bienmal,soluc,lemot;
     EditText edit;
-    Button valider,aide,score;
+    Button valider,aide,score,retour;
     Switch bswitch;
 
     @Override
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         soluc= (TextView) findViewById(R.id.soluc);
         bswitch.setChecked(true);
         score = (Button) findViewById(R.id.score);
+        retour = (Button) findViewById(R.id.retour);
+        lemot = (TextView) findViewById(R.id.lemot);
 
         bon=0;
         tt=0;
@@ -274,6 +278,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     public void anim_score(){
         score.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -288,7 +294,15 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-    });}
+    });
+        retour.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent retour2 = new Intent (MainActivity.this, PagePrinc.class);
+                startActivity(retour2);
+            }
+        });
+    }
 
     public void maide(){
         aide.setOnClickListener(new View.OnClickListener(){
@@ -319,6 +333,7 @@ public class MainActivity extends AppCompatActivity {
                         bienmal.setTextColor(Color.GREEN);
                         edit.setText("");
                         soluc.setText("");
+                        lemot.setText(motsolution + " : " + motaffiche);
                         bon++;
                         nb=(int) (Math.random()*nbmot);
                         afficheur.setText(motaffiche);
@@ -329,6 +344,7 @@ public class MainActivity extends AppCompatActivity {
                         bienmal.setTextColor(Color.RED);
                         edit.setText("");
                         soluc.setText("");
+                        lemot.setText(motsolution + " : " + motaffiche);
                         nb=(int) (Math.random()*nbmot);
                         afficheur.setText(motaffiche);
                         fonction();
@@ -355,6 +371,7 @@ public class MainActivity extends AppCompatActivity {
                         bienmal.setTextColor(Color.GREEN);
                         edit.setText("");
                         soluc.setText("");
+                        lemot.setText(motsolution + " : " + motaffiche);
                         bon++;
                         nb=(int) (Math.random()*nbmot);
                         afficheur.setText(motaffiche);
@@ -365,6 +382,7 @@ public class MainActivity extends AppCompatActivity {
                         bienmal.setTextColor(Color.RED);
                         edit.setText("");
                         soluc.setText("");
+                        lemot.setText(motsolution + " : " + motaffiche);
                         nb=(int) (Math.random()*nbmot);
                         afficheur.setText(motaffiche);
                         fonction();
