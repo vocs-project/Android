@@ -2,15 +2,18 @@ package vocs.com.vocs;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Application;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -38,6 +41,8 @@ public class ViewListContents extends AppCompatActivity{
         add=(Button) findViewById(R.id.add);
         supp=(Button) findViewById(R.id.supp);
 
+        myDB.open();
+
         retour.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -46,7 +51,19 @@ public class ViewListContents extends AppCompatActivity{
             }
         });
 
-       supp.setOnClickListener(new View.OnClickListener(){
+       listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+           @Override
+           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               Intent versmots = new Intent (ViewListContents.this, Mots.class);
+               Bundle b = new Bundle();
+               b.putInt("key",(int) id);
+               versmots.putExtras(b);
+               startActivity(versmots);
+               finish();
+           }
+       });
+
+        supp.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Intent verssupp = new Intent (ViewListContents.this, suppression.class);
@@ -72,7 +89,10 @@ public class ViewListContents extends AppCompatActivity{
                 theList.add(data.getString(1));
                 ListAdapter listadapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,theList);
                 listView.setAdapter(listadapter);
+
+
             }
-        }
+        }data.close();
+        myDB.close();
     }
 }
