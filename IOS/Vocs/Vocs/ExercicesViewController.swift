@@ -39,12 +39,11 @@ class ExercicesViewController: UIViewController {
     }
     
     func handleTraduction() {
-        let traduction = TraductionViewController()
+        let traduction = ChoisirListeViewController()
         self.navigationController?.pushViewController(traduction, animated: true)
     }
     
     func handleParametres() {
-        
         let reglagesController = ReglagesViewController()
         let navReglageController = UINavigationController(rootViewController: reglagesController)
         present(navReglageController, animated: true, completion: nil)

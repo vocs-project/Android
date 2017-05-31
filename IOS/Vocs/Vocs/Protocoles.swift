@@ -9,7 +9,7 @@
 import Foundation
 
 protocol AjouterUnMotDelegate {
-    func envoyerMot(texte : String)
+    func envoyerMot(mot : Mot)
 }
 
 protocol AjouterUneListeDelegate {

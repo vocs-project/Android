@@ -23,10 +23,27 @@ class ScoreViewController: UIViewController {
         self.navigationItem.title = "Traduction"
         self.tabBarController?.tabBar.isHidden = false
         self.navigationItem.hidesBackButton = true
+        
+        if let score = monScore.score.text, let max = monScore.maximum.text {
+            let ratioScore = Double(score)! / Double(max)!
+            if ratioScore > 0.5 && ratioScore != 1{
+                labelCommentaire.text = "Bien joué !"
+            } else if ratioScore == 1{
+                labelCommentaire.text = "Parfait !"
+            } else if ratioScore <= 0.5 && ratioScore != 0{
+                labelCommentaire.text = "Presque !"
+            } else {
+                labelCommentaire.text = "Dommage !"
+            }
+        } else {
+            labelCommentaire.text = ""
+        }
     }
     
     func handleQuitter() {
-        present(TabBarController(), animated: true, completion: nil)
+        let controller = TabBarController()
+        controller.modalTransitionStyle = UIModalTransitionStyle.flipHorizontal
+        present(controller, animated: true, completion: nil)
     }
     
     func setupViews() {

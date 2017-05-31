@@ -13,8 +13,9 @@ class AjouterMotViewController: UIViewController {
     var delegateMot : AjouterUnMotDelegate!
     
     let labelAjouter = VCTitreLabel(text : "Ajouter un mot")
-    let textFieldMot = VCTextFieldLigneBas(placeholder: "Mot",alignement : .left)
-    let textFieldTraductionMot = VCTextFieldLigneBas(placeholder: "Traduction",alignement : .left)
+    let textFieldMot = VCTextFieldLigneBas(placeholder: "Anglais",alignement : .left)
+    let textFieldTraductionMot = VCTextFieldLigneBas(placeholder: "Français",alignement : .left)
+    var liste : List?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +28,7 @@ class AjouterMotViewController: UIViewController {
     func handleAjouter() {
         if let mot = textFieldMot.text, let traduction = textFieldTraductionMot.text {
             if (!(mot.isEmpty && traduction.isEmpty)){
-                delegateMot.envoyerMot(texte: mot + " : " + traduction)
+                delegateMot.envoyerMot(mot : Mot(french: mot, english: traduction))
             }
         }
         dismiss(animated: true, completion: nil)

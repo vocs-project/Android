@@ -6,6 +6,7 @@
 //  Copyright © 2017 Wathis. All rights reserved.
 //
 
+import SQLite
 import UIKit
 
 @UIApplicationMain
@@ -15,7 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
  
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-    
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         let navigationBarAppearace = UINavigationBar.appearance()
@@ -31,10 +31,57 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //Modify KeyBoard color
         UITextField.appearance().keyboardAppearance = .dark
-        
+        findIfSqliteDBExists()
         window?.rootViewController = TabBarController()
-        
         return true
+    }
+    
+    func findIfSqliteDBExists(){
+        
+        let docsDir     : URL       = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let dbPath      : URL       = docsDir.appendingPathComponent("Vocs.sqlite")
+        let strDBPath   : String    = dbPath.path
+        let fileManager : FileManager   = FileManager.default
+        
+        if !(fileManager.fileExists(atPath:strDBPath)){
+            createTables()
+        }
+    }
+    
+    func createTables() {
+        let query = "create table words" +
+            "(" +
+            "id_word integer ," +
+            "french varchar(255)," +
+            "english varchar(255)," +
+            "primary key (id_word)" +
+            ");" +
+            
+            "create table lists" +
+            "(" +
+            "id_list integer ," +
+            "name varchar(255)," +
+            "primary key (id_list)" +
+            ");" +
+            
+            "create table words_lists" +
+            
+            "(" +
+            "id_word integer," +
+            "id_list integer," +
+            "primary key (id_list,id_word)," +
+            "foreign key (id_word) references words," +
+            "foreign key (id_list) references lists" +
+        ");"
+        do {
+            let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                .appendingPathComponent("Vocs.sqlite")
+            let db = try Connection("\(fileURL)")
+            try db.execute(query)
+        } catch {
+            print(error)
+            return
+        }
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

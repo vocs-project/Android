@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import SQLite
 
 class MotsViewController: UIViewController , UITableViewDelegate, UITableViewDataSource, AjouterUnMotDelegate {
 
     
-    var mots : [String] = ["Computer - Ordinateur","Laptop - Ordinateur portable","View - Vue"]
+    var mots : [Mot] = []
     let reuseIdentifier = "motCell"
+    var list : List?
     
     lazy var motsTableView : UITableView = {
         var tv = UITableView()
@@ -30,19 +32,63 @@ class MotsViewController: UIViewController , UITableViewDelegate, UITableViewDat
         self.navigationItem.setRightBarButton(UIBarButtonItem(title: "Ajouter", style: .plain, target: self, action: #selector(handleAjouter)), animated: true)
         self.motsTableView.register(VCMotCell.self, forCellReuseIdentifier: reuseIdentifier)
         self.view.backgroundColor = .white
+        loadWords()
         setupViews()
+    }
+    
+    func loadWords() {
+        do {
+            let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                .appendingPathComponent("Vocs.sqlite")
+            let db = try Connection("\(fileURL)")
+            let word_id = Expression<Int>("id_word")
+            let list_id = Expression<Int>("id_list")
+            let french = Expression<String>("french")
+            let english = Expression<String>("english")
+            let words_lists = Table("words_lists")
+            let words = Table("words")
+            let join_words = words.join(JoinType.leftOuter, words_lists, on: words[word_id] == words_lists[word_id])
+            let query = join_words.select(french,english)
+                .filter(list_id == (self.list?.id_list)!)
+                .order(french, english)
+            for word in try db.prepare(query) {
+                mots.append(Mot(french: word[french], english: word[english]))
+            }
+        } catch {
+            print("Erreur bdd")
+            return
+        }
     }
     
     func handleAjouter() {
         let controller = AjouterMotViewController()
         controller.delegateMot = self
+        controller.liste = list
         controller.navigationItem.title = self.navigationItem.title
         let navController = UINavigationController(rootViewController: controller)
         present(navController, animated: true, completion: nil)
     }
     
-    func envoyerMot(texte: String) {
-        mots.append(texte)
+    func envoyerMot(mot: Mot) {
+        do {
+            let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                .appendingPathComponent("Vocs.sqlite")
+            let db = try Connection("\(fileURL)")
+            let french = Expression<String>("french")
+            let english = Expression<String>("english")
+            let word_id = Expression<Int>("id_word")
+            let list_id = Expression<Int>("id_list")
+            let words = Table("words")
+            let insert = words.insert(french <- mot.french!,english <- mot.english!)
+            var rowid = try db.run(insert)
+            let words_lists = Table("words_lists")
+            rowid = try db.run(words_lists.insert(word_id <- Int(rowid), list_id <- (self.list?.id_list)!))
+            self.mots.append(Mot(french: mot.french!, english: mot.english!))
+        }   catch {
+            print(error)
+            return
+        }
+        
         let indexPath = IndexPath(row: mots.count - 1, section: 0)
         _ = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(insertRow), userInfo: indexPath, repeats: false)
     }
@@ -76,7 +122,7 @@ class MotsViewController: UIViewController , UITableViewDelegate, UITableViewDat
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell:VCMotCell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier)! as! VCMotCell
-        cell.setText(text: mots[indexPath.row])
+        cell.setText(text: mots[indexPath.row].french! + " - " + mots[indexPath.row].english! )
         
         return cell
         
