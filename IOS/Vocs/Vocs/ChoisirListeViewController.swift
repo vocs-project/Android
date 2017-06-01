@@ -15,6 +15,7 @@ class ChoisirListeViewController: UIViewController, UITableViewDataSource,UITabl
     var lists : [List] = []
     
     let headerTableView = VCHeaderListeWithoutButton(text: "Choisir une liste")
+    var labelIndispobible = VCLabelMenu(text: "Vous n'avez aucune liste",size: 20)
     
     lazy var listesTableView : UITableView = {
         var tv = UITableView()
@@ -52,6 +53,9 @@ class ChoisirListeViewController: UIViewController, UITableViewDataSource,UITabl
             print("Erreur")
             return
         }
+        if (lists.count == 0){
+            messageVide()
+        }
     }
     
     func setupViews() {
@@ -70,6 +74,14 @@ class ChoisirListeViewController: UIViewController, UITableViewDataSource,UITabl
         listesTableView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
         listesTableView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 9/10).isActive = true
         listesTableView.heightAnchor.constraint(equalTo: self.view.heightAnchor).isActive = true
+    }
+    
+    func messageVide() {
+        self.view.addSubview(labelIndispobible)
+        labelIndispobible.centerYAnchor.constraint(equalTo: view.centerYAnchor,constant : -30).isActive = true
+        labelIndispobible.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+        labelIndispobible.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        labelIndispobible.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     

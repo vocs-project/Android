@@ -13,6 +13,7 @@ class ListesViewController: UIViewController, UITableViewDataSource,UITableViewD
     
     let reuseIdentifier = "listeCell"
     var lists : [List] = []
+    var labelIndispobible = VCLabelMenu(text: "Vous n'avez aucune liste",size: 20)
     
     let headerTableView = VCHeaderListe()
     
@@ -69,6 +70,17 @@ class ListesViewController: UIViewController, UITableViewDataSource,UITableViewD
             print(error)
             return
         }
+        if (lists.count == 0){
+            messageVide()
+        }
+    }
+    
+    func messageVide() {
+        self.view.addSubview(labelIndispobible)
+        labelIndispobible.centerYAnchor.constraint(equalTo: view.centerYAnchor,constant : -30).isActive = true
+        labelIndispobible.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+        labelIndispobible.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        labelIndispobible.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     func handleAjouter() {
@@ -125,12 +137,15 @@ class ListesViewController: UIViewController, UITableViewDataSource,UITableViewD
         self.navigationController?.pushViewController(controller, animated: true)
     }
     
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "Supprimer"
+    }
+    
     func deleteList(indexPath : IndexPath){
         do {
             let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
                 .appendingPathComponent("Vocs.sqlite")
             let db = try Connection("\(fileURL)")
-            print(fileURL)
             let list_id = Expression<Int>("id_list")
             let lists_table = Table("lists")
             let words_lists = Table("words_lists")

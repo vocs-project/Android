@@ -151,6 +151,10 @@ class MotsViewController: UIViewController , UITableViewDelegate, UITableViewDat
         mots.remove(at: indexPath.row)
     }
     
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        return "Supprimer"
+    }
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == UITableViewCellEditingStyle.delete {
             deleteMot(indexPath: indexPath)
