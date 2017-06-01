@@ -48,11 +48,11 @@ class TraductionViewController: UIViewController {
             let words_lists = Table("words_lists")
             let words = Table("words")
             let join_words = words.join(JoinType.leftOuter, words_lists, on: words[word_id] == words_lists[word_id])
-            let query = join_words.select(french,english)
+            let query = join_words.select(words[word_id],french,english)
                 .filter(list_id == (self.list?.id_list)!)
                 .order(french, english)
             for word in try db.prepare(query) {
-                mots.append(Mot(french: word[french], english: word[english]))
+                mots.append(Mot(id: word[word_id], french: word[french], english: word[english]))
             }
         } catch {
             print(error)

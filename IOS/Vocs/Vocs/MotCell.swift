@@ -14,6 +14,7 @@ class VCMotCell: UITableViewCell {
         let label = UILabel()
         label.text = "Overflow"
         label.font = UIFont(name: "Helvetica-Light", size: 15)
+        label.textAlignment = .left
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
