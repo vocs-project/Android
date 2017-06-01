@@ -20,7 +20,10 @@
         <activity android:name=".score" />
         <activity android:name=".PagePrinc" />
         <activity android:name=".LesListes" />
-        <activity android:name=".suppression"></activity>
+        <activity android:name=".suppression" />
+        <activity android:name=".Mots" />
+        <activity android:name=".AjoutMots" />
+        <activity android:name=".SupprimerMot"></activity>
     </application>
 
 </manifest>
