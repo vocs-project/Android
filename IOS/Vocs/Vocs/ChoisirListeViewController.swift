@@ -13,6 +13,7 @@ class ChoisirListeViewController: UIViewController, UITableViewDataSource,UITabl
     
     let reuseIdentifier = "listeCell"
     var lists : [List] = []
+    var dejaCharge = false
     
     let headerTableView = VCHeaderListeWithoutButton(text: "Choisir une liste")
     var labelIndispobible = VCLabelMenu(text: "Vous n'avez aucune liste",size: 20)
@@ -27,6 +28,11 @@ class ChoisirListeViewController: UIViewController, UITableViewDataSource,UITabl
         return tv
     }()
     
+    override func viewWillAppear(_ animated: Bool) {
+        chargerLesListes()
+        listesTableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Traduction"
@@ -34,9 +40,17 @@ class ChoisirListeViewController: UIViewController, UITableViewDataSource,UITabl
         chargerLesListes()
         listesTableView.register(VCListeCell.self, forCellReuseIdentifier: reuseIdentifier)
         setupViews()
+        checkVide()
+    }
+    
+    func checkVide() {
+        if (self.lists.isEmpty){
+            messageVide()
+        }
     }
     
     func chargerLesListes() {
+        lists.removeAll()
         do {
             let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
                 .appendingPathComponent("Vocs.sqlite")
@@ -52,9 +66,6 @@ class ChoisirListeViewController: UIViewController, UITableViewDataSource,UITabl
         }   catch {
             print("Erreur")
             return
-        }
-        if (lists.count == 0){
-            messageVide()
         }
     }
     

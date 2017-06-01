@@ -51,6 +51,8 @@ class ListesViewController: UIViewController, UITableViewDataSource,UITableViewD
             return
         }
         
+        self.labelIndispobible.removeFromSuperview()
+        
         let indexPath = IndexPath(row: lists.count - 1, section: 0)
             _ = Timer.scheduledTimer(timeInterval: 0.3, target: self, selector: #selector(insertRow), userInfo: indexPath, repeats: false)
     }
@@ -160,6 +162,9 @@ class ListesViewController: UIViewController, UITableViewDataSource,UITableViewD
             return
         }
         lists.remove(at: indexPath.row)
+        if (lists.count == 0){
+            messageVide()
+        }
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
