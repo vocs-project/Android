@@ -15,6 +15,7 @@ class VCListeCell: UITableViewCell {
         label.text = "Overflow"
         label.font = UIFont(name: "Helvetica-Light", size: 15)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .left
         return label
     }()
 

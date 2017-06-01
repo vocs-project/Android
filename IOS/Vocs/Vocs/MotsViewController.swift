@@ -48,14 +48,14 @@ class MotsViewController: UIViewController , UITableViewDelegate, UITableViewDat
             let words_lists = Table("words_lists")
             let words = Table("words")
             let join_words = words.join(JoinType.leftOuter, words_lists, on: words[word_id] == words_lists[word_id])
-            let query = join_words.select(french,english)
+            let query = join_words.select(words[word_id],french,english)
                 .filter(list_id == (self.list?.id_list)!)
                 .order(french, english)
             for word in try db.prepare(query) {
-                mots.append(Mot(french: word[french], english: word[english]))
+                mots.append(Mot(id: word[word_id], french: word[french], english: word[english]))
             }
         } catch {
-            print("Erreur bdd")
+            print(error)
             return
         }
     }
@@ -81,9 +81,11 @@ class MotsViewController: UIViewController , UITableViewDelegate, UITableViewDat
             let words = Table("words")
             let insert = words.insert(french <- mot.french!,english <- mot.english!)
             var rowid = try db.run(insert)
+            mot.id = Int(rowid)
             let words_lists = Table("words_lists")
             rowid = try db.run(words_lists.insert(word_id <- Int(rowid), list_id <- (self.list?.id_list)!))
-            self.mots.append(Mot(french: mot.french!, english: mot.english!))
+            
+            self.mots.append(mot)
         }   catch {
             print(error)
             return
@@ -126,5 +128,33 @@ class MotsViewController: UIViewController , UITableViewDelegate, UITableViewDat
         
         return cell
         
+    }
+    
+    func deleteMot(indexPath : IndexPath) {
+        do {
+            let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                .appendingPathComponent("Vocs.sqlite")
+            let db = try Connection("\(fileURL)")
+            let word_id = Expression<Int>("id_word")
+            let words = Table("words")
+            let words_lists = Table("words_lists")
+            if let id_word = mots[indexPath.row].id {
+                let word_filtered = words.filter(word_id == id_word)
+                try db.run(word_filtered.delete())
+                let words_lists_filtered = words_lists.filter(word_id == id_word)
+                try db.run(words_lists_filtered.delete())
+            }
+        }   catch {
+            print(error)
+            return
+        }
+        mots.remove(at: indexPath.row)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.delete {
+            deleteMot(indexPath: indexPath)
+            tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.fade)
+        }
     }
 }

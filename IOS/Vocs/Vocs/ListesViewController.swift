@@ -124,4 +124,34 @@ class ListesViewController: UIViewController, UITableViewDataSource,UITableViewD
         controller.list = lists[indexPath.row]
         self.navigationController?.pushViewController(controller, animated: true)
     }
+    
+    func deleteList(indexPath : IndexPath){
+        do {
+            let fileURL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+                .appendingPathComponent("Vocs.sqlite")
+            let db = try Connection("\(fileURL)")
+            print(fileURL)
+            let list_id = Expression<Int>("id_list")
+            let lists_table = Table("lists")
+            let words_lists = Table("words_lists")
+            if let id_list = lists[indexPath.row].id_list {
+                let list_filtered = lists_table.filter(list_id == id_list)
+                try db.run(list_filtered.delete())
+                let words_lists_filtered = words_lists.filter(list_id == id_list)
+                try db.run(words_lists_filtered.delete())
+            }
+        }   catch {
+            print(error)
+            return
+        }
+        lists.remove(at: indexPath.row)
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCellEditingStyle.delete {
+            deleteList(indexPath: indexPath)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            
+        }
+    }
 }
