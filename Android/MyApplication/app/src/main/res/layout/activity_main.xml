@@ -150,10 +150,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/lemot"
         android:textColor="@android:color/background_dark"
+        android:gravity="center"
         android:layout_above="@+id/valider"
-        android:layout_alignRight="@+id/bienmal"
-        android:layout_alignEnd="@+id/bienmal"
-        android:gravity="center"/>
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

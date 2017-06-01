@@ -23,7 +23,8 @@
         <activity android:name=".suppression" />
         <activity android:name=".Mots" />
         <activity android:name=".AjoutMots" />
-        <activity android:name=".SupprimerMot"></activity>
+        <activity android:name=".SupprimerMot" />
+        <activity android:name=".Parametres"></activity>
     </application>
 
 </manifest>

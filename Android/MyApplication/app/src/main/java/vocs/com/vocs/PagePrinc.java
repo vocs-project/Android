@@ -16,7 +16,7 @@ import android.widget.Toast;
 public class PagePrinc extends AppCompatActivity {
 
     Intent PagePrinc = getIntent();
-    Button b,l;
+    Button b,l,parametres;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +25,7 @@ public class PagePrinc extends AppCompatActivity {
 
         l=(Button) findViewById(R.id.liste);
         b=(Button) findViewById(R.id.traduction);
+        parametres=(Button) findViewById(R.id.parametres);
         b.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -37,6 +38,13 @@ public class PagePrinc extends AppCompatActivity {
             public void onClick(View v){
                 Intent versliste = new Intent (PagePrinc.this, ViewListContents.class);
                 startActivity(versliste);
+            }
+        });
+        parametres.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent versparam= new Intent (PagePrinc.this, Parametres.class);
+                startActivity(versparam);
             }
         });
     }
