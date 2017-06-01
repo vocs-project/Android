@@ -20,11 +20,12 @@ import java.util.ArrayList;
 
 import static android.R.attr.data;
 import static android.R.attr.id;
+import static vocs.com.vocs.R.id.retour;
 
 public class Mots extends AppCompatActivity {
 
     DataBaseHelper myDB;
-    Button retour,add;
+    Button retours,ajout,supprimermot;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,10 +43,11 @@ public class Mots extends AppCompatActivity {
             value = b.getInt("key");
             System.out.println(value);
         }
-        retour=(Button) findViewById(R.id.retour);
-        add=(Button) findViewById(R.id.add);
+        retours=(Button) findViewById(R.id.retours);
+        ajout=(Button) findViewById(R.id.ajout);
+        supprimermot=(Button) findViewById(R.id.supprimermot);
 
-        retour.setOnClickListener(new View.OnClickListener(){
+        retours.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Intent versliste = new Intent (Mots.this, ViewListContents.class);
@@ -53,13 +55,20 @@ public class Mots extends AppCompatActivity {
             }
         });
 
-       /* add.setOnClickListener(new View.OnClickListener(){
+        ajout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Intent versajout = new Intent (Mots.this, AjoutMots.class);
                 startActivity(versajout);
             }
-        });*/
+        });
+        supprimermot.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent versajout = new Intent (Mots.this, SupprimerMot.class);
+                startActivity(versajout);
+            }
+        });
 
         ArrayList<String> theList=new ArrayList<>();
         Cursor data=myDB.getListContents2();
@@ -74,6 +83,6 @@ public class Mots extends AppCompatActivity {
 
 
             }
-        }myDB.close();
+        }
     }
 }

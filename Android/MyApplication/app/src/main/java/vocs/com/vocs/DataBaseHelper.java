@@ -124,7 +124,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public Cursor getListContents3(Integer id){
         SQLiteDatabase db=this.getWritableDatabase();
-        Cursor data=db.rawQuery("SELECT * FROM "+TABLE_LIAISON_NAME+" INNER JOIN "+TABLE_MOT_NAME+" USING("+COLID+") WHERE "+COL1+"="+id,null);
+        Cursor data=db.rawQuery("SELECT * FROM "+TABLE_MOT_NAME+" INNER JOIN "+TABLE_LIAISON_NAME+" USING("+COLID+") WHERE "+COL1+"="+id,null);
         return data;
     }
 

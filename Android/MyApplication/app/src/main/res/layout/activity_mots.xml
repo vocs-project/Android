@@ -28,27 +28,16 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/retour" />
-
-    <Button
-        android:text="supprimer un mot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/retour"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/supprimer"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:id="@+id/retours" />
 
     <Button
         android:text="Ajouter des mots"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/supprimer"
+        android:layout_above="@+id/supprimermot"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/add"
+        android:id="@+id/ajout"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
@@ -57,8 +46,19 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/add"
+        android:layout_above="@+id/ajout"
         android:layout_below="@+id/textView9"
         android:id="@+id/listView"/>
+
+    <Button
+        android:text="supprimer un mot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/supprimermot"
+        android:layout_above="@+id/retours"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
