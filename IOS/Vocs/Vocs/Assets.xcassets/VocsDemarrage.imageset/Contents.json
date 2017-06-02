@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Vocs_Logo.png",
+      "filename" : "VocsDemarrage.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "VocsDemarrage-1.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "VocsDemarrage-2.png",
       "scale" : "3x"
     }
   ],
