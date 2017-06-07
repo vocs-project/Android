@@ -32,17 +32,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //Modify KeyBoard color
         UITextField.appearance().keyboardAppearance = .dark
         findIfSqliteDBExists()
-        window?.rootViewController = TabBarController()
+        window?.rootViewController = SplashViewController()
         return true
     }
     
     func findIfSqliteDBExists(){
-        
         let docsDir     : URL       = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let dbPath      : URL       = docsDir.appendingPathComponent("Vocs.sqlite")
         let strDBPath   : String    = dbPath.path
         let fileManager : FileManager   = FileManager.default
-        
         if !(fileManager.fileExists(atPath:strDBPath)){
             createTables()
         }

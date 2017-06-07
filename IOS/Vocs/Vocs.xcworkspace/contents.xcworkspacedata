@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:SplashScreenViewController.swift">
+   </FileRef>
+   <FileRef
       location = "group:Vocs.xcodeproj">
    </FileRef>
    <FileRef

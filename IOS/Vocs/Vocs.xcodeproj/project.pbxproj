@@ -32,6 +32,9 @@
 		6A5D46CA1EC8F0D300854EA1 /* AjouterMotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5D46C91EC8F0D300854EA1 /* AjouterMotViewController.swift */; };
 		6A5D46CD1EC8F43900854EA1 /* Protocoles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5D46CC1EC8F43900854EA1 /* Protocoles.swift */; };
 		6A6F1C891ED77A3C0098D6EE /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6F1C881ED77A3C0098D6EE /* List.swift */; };
+		6AE52CF91EE1B878003E5EF1 /* SplashScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE52CF81EE1B878003E5EF1 /* SplashScreenViewController.swift */; };
+		6AE52CFC1EE1B893003E5EF1 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AE52CFA1EE1B892003E5EF1 /* SplashViewController.swift */; };
+		6AE52CFD1EE1B893003E5EF1 /* SplashViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6AE52CFB1EE1B892003E5EF1 /* SplashViewController.xib */; };
 		E3C390AF04A1589C045CFC3B /* Pods_Vocs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44FA4FAA1318AAB86B1747FE /* Pods_Vocs.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +69,9 @@
 		6A5D46C91EC8F0D300854EA1 /* AjouterMotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AjouterMotViewController.swift; sourceTree = "<group>"; };
 		6A5D46CC1EC8F43900854EA1 /* Protocoles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocoles.swift; sourceTree = "<group>"; };
 		6A6F1C881ED77A3C0098D6EE /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
+		6AE52CF81EE1B878003E5EF1 /* SplashScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashScreenViewController.swift; sourceTree = "<group>"; };
+		6AE52CFA1EE1B892003E5EF1 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		6AE52CFB1EE1B892003E5EF1 /* SplashViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SplashViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +198,7 @@
 				6A2733671EC76F2600E4830E /* ReglagesViewController.swift */,
 				6A1EBA011ED9F2D400506F41 /* ChoisirListeViewController.swift */,
 				6A27335C1EC74BFA00E4830E /* ClassesViewController.swift */,
+				6AE52CF81EE1B878003E5EF1 /* SplashScreenViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -199,6 +206,7 @@
 		6A59D77A1EBB70EB00E5D1BA /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
+				6AE52CFE1EE1B8D1003E5EF1 /* SplashScreen */,
 				6A59D76E1EBB701400E5D1BA /* LaunchScreen.storyboard */,
 			);
 			name = Storyboards;
@@ -210,6 +218,15 @@
 				6A5D46CC1EC8F43900854EA1 /* Protocoles.swift */,
 			);
 			name = Protocoles;
+			sourceTree = "<group>";
+		};
+		6AE52CFE1EE1B8D1003E5EF1 /* SplashScreen */ = {
+			isa = PBXGroup;
+			children = (
+				6AE52CFB1EE1B892003E5EF1 /* SplashViewController.xib */,
+				6AE52CFA1EE1B892003E5EF1 /* SplashViewController.swift */,
+			);
+			name = SplashScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -276,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A59D7701EBB701400E5D1BA /* LaunchScreen.storyboard in Resources */,
+				6AE52CFD1EE1B893003E5EF1 /* SplashViewController.xib in Resources */,
 				6A59D76D1EBB701400E5D1BA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,12 +355,14 @@
 			files = (
 				6A2733701EC792B400E4830E /* Views.swift in Sources */,
 				6A2733591EC74BA000E4830E /* ExercicesViewController.swift in Sources */,
+				6AE52CF91EE1B878003E5EF1 /* SplashScreenViewController.swift in Sources */,
 				6A6F1C891ED77A3C0098D6EE /* List.swift in Sources */,
 				6A27336A1EC77F3D00E4830E /* TraductionViewController.swift in Sources */,
 				6A27336C1EC7821E00E4830E /* TextFields.swift in Sources */,
 				6A04B3D81EBBA540007204B5 /* TabBarController.swift in Sources */,
 				6A5D46CD1EC8F43900854EA1 /* Protocoles.swift in Sources */,
 				6A2733741EC8956F00E4830E /* MotsViewController.swift in Sources */,
+				6AE52CFC1EE1B893003E5EF1 /* SplashViewController.swift in Sources */,
 				6A2733761EC8991900E4830E /* MotCell.swift in Sources */,
 				6A1EBA021ED9F2D400506F41 /* ChoisirListeViewController.swift in Sources */,
 				6A2733661EC7680800E4830E /* Label.swift in Sources */,
