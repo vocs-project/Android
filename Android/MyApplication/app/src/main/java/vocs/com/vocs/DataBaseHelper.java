@@ -28,6 +28,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLID ="IDMOT";
     public static final String COL3="ITEM2";
     public static final String COL4="ITEM3";
+    public static final String NBR="UN";
 
     private SQLiteDatabase db;
 
@@ -39,7 +40,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
       String createTable ="CREATE TABLE "+TABLE_NAME+" ("+COL1+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
               "ITEM1 TEXT)";
         db.execSQL(createTable);
-      String createTable2 ="CREATE TABLE "+TABLE_MOT_NAME+" ("+COLID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+"ITEM2 TEXT, ITEM3 TEXT)";
+      String createTable2 ="CREATE TABLE "+TABLE_MOT_NAME+" ("+COLID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+"ITEM2 TEXT, ITEM3 TEXT, UN TEXT)";
         db.execSQL(createTable2);
       String createTable3 ="CREATE TABLE "+TABLE_LIAISON_NAME+" ("+COL1+" INTEGER NOT NULL, "+COLID+" INTEGER NOT NULL, "+" PRIMARY KEY ("+COL1+", "+COLID+"))";
         db.execSQL(createTable3);
@@ -66,11 +67,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean addData2(String item2, String item3){
+    public boolean addData2(String item2, String item3, String un){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
         contentValues.put(COL3, item2);
         contentValues.put(COL4, item3);
+        contentValues.put(NBR, un);
 
         long result=db.insert(TABLE_MOT_NAME, null, contentValues);
 
@@ -122,9 +124,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return data;
     }
 
-    public Cursor getListContents3(Integer id){
+    public Cursor getListContents3(String id){
         SQLiteDatabase db=this.getWritableDatabase();
-        Cursor data=db.rawQuery("SELECT * FROM "+TABLE_MOT_NAME+" INNER JOIN "+TABLE_LIAISON_NAME+" USING("+COLID+") WHERE "+COL1+"="+id,null);
+        Cursor data=db.rawQuery("SELECT * FROM "+TABLE_MOT_NAME+" WHERE "+NBR+"='"+id+"'",null);
         return data;
     }
 

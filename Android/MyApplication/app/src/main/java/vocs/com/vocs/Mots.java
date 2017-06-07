@@ -20,12 +20,14 @@ import java.util.ArrayList;
 
 import static android.R.attr.data;
 import static android.R.attr.id;
+import static android.R.attr.value;
 import static vocs.com.vocs.R.id.retour;
 
 public class Mots extends AppCompatActivity {
 
     DataBaseHelper myDB;
     Button retours,ajout,supprimermot;
+    int val;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,7 @@ public class Mots extends AppCompatActivity {
             value = b.getInt("key");
             System.out.println(value);
         }
+        val=value;
         retours=(Button) findViewById(R.id.retours);
         ajout=(Button) findViewById(R.id.ajout);
         supprimermot=(Button) findViewById(R.id.supprimermot);
@@ -59,6 +62,10 @@ public class Mots extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Intent versajout = new Intent (Mots.this, AjoutMots.class);
+                Bundle b = new Bundle();
+                b.putInt("key",val);
+                Toast.makeText(Mots.this,String.valueOf(val),Toast.LENGTH_LONG).show();
+                versajout.putExtras(b);
                 startActivity(versajout);
             }
         });
@@ -71,7 +78,7 @@ public class Mots extends AppCompatActivity {
         });
 
         ArrayList<String> theList=new ArrayList<>();
-        Cursor data=myDB.getListContents2();
+        Cursor data=myDB.getListContents3(String.valueOf(val));
 
         if(data.getCount()==0){
             Toast.makeText(Mots.this,"aucun mot trouvé",Toast.LENGTH_LONG).show();

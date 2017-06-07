@@ -56,7 +56,7 @@ public class ViewListContents extends AppCompatActivity{
            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                Intent versmots = new Intent (ViewListContents.this, Mots.class);
                Bundle b = new Bundle();
-               b.putInt("key",(int) id);
+               b.putInt("key",position);
                versmots.putExtras(b);
                startActivity(versmots);
                finish();

@@ -284,14 +284,14 @@ public class MainActivity extends AppCompatActivity {
         score.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(MainActivity.this, score.class);
+                Intent score = new Intent(MainActivity.this, score.class);
                 Bundle b = new Bundle();
                 Bundle t = new Bundle();
                 b.putInt("key", bon);
                 t.putInt("autre", tt);
-                intent.putExtras(b);
-                intent.putExtras(t);
-                startActivity(intent);
+                score.putExtras(b);
+                score.putExtras(t);
+                startActivity(score);
                 finish();
             }
     });
