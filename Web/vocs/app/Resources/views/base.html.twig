@@ -1,40 +1,71 @@
+
 <!DOCTYPE html>
 <html>
+
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-   <!-- <link rel="icon" type="image/png" href="img/logo.png" /> -->
-    <title>{% block title %}Vocs{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset("css/style.css")}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset("css/menu.css")}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset("css/etoiles.css")}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset("css/formulaires.css")}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset("css/parallax.css")}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset("css/COMPONENTS/widgets.css")}}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>
+
+    <title>Vocs</title>
+    <link rel="icon" type="image/png" href="{{asset("img/titleIcon.png")}}" />
+    
 </head>
 
-<div class="menu">
-    <div class="row">
 
-        <div class="menu-logo col-xs-6">
-            <div class="logo">
-                <img src="img/logo.png">
-            </div>
-        </div>
-
-        <div class="menu-navigation col-xs-6">
-            <div class="row">
-                <div class="menu-text col-xs-4">
-                    <a href="#">Team</a>
-                </div>
-                <div class="menu-text col-xs-4">
-                    <a href="#">Group</a>
-                </div>
-                <div class="menu-connection col-xs-4">
-                    <a href="#" ><div  class="button-sm">Connexion</div></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <body>
-{% block body %}{% endblock %}
+
+    <div id="menu-mobile">
+        <ul>
+            <li><a href="{{ path("vocs_platform_equipe")}}">l'equipe</a></li>
+            <li><a href="{{ path("vocs_platform_a_propos")}}">a propos</a></li>
+            <li><a href="{{ path("vocs_platform_connexion")}}" >Connexion</a></li>
+        </ul>
+    </div>
+
+
+
+    <div id="barre-nav">
+        <a href="{{ path("vocs_platform_homepage")}}"><img src="{{asset("img/logoFlat.png")}}" id="logo" class="animable apparait-rebondir-gauche rapide"></a>
+        <ul id="les-mots" class="animable apparait-bas rapide">
+                <li><a href="{{ path("vocs_platform_equipe")}}" class="bouton-mots">l'equipe</a></li>
+                <li><a href="{{ path("vocs_platform_a_propos")}}" class="bouton-mots">A Propos</a></li>
+                <li><a href="{{ path("vocs_platform_connexion")}}"><button class="bouton-bleu-xs">Connexion</button></a></li>
+        </ul>
+        <button type="button" id="menu-burger">
+          <span id="lignes-burger"></span>
+        </button>
+    </div>
+
+    <a href="#" id="bouton-remonter" title="Back to top">&uarr;</a>
+
+    <div id="page-interieur">
+
+        {% block body %}
+        {% endblock %}
+
+        <footer>
+          <div id="footer" >
+            <ul class="animable apparait-sans-bouger rapide">
+              <li><a href="{{ path("vocs_platform_a_propos")}}">A Propos</a></li>
+              <li><a href="#">Contact</a></li>
+              <li><a href="{{ path("vocs_platform_homepage")}}">Principal</a></li>
+            </ul>
+          </div>
+        </footer>
+
+    </div>
+
+    <script src='https://code.jquery.com/jquery-1.10.1.min.js'></script>
+    <script src="{{ asset("js/index.js")}}"></script>
+    
 </body>
 </html>
-
-

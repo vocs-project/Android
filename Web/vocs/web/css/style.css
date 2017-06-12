@@ -1,79 +1,1089 @@
-@import "FlexBoxGrid.css";
-@import "widgets.css";
 
 
-body{
 
-	margin:0;
-	padding:0;
+html,
+body
+{
+    font-family: 'Open Sans', 'Arial', sans-serif;
+
+    box-sizing: border-box;
 }
 
-.menu{
-	display: block;
-	position: fixed !important;
-	width:100%;
-	background-color: white;
-	border-bottom: 1px solid #c4d6c8;
-}
-
-.button{
-	display: block;
-	margin:0;
-	padding:0;
-	background-color: white;
-}
-
-.menu-text a:hover{ 
-	color: #3498dc;
-	border-bottom: thin solid #3498dc;
-}
-
-
-.menu-text{
-	font-size: 1.2em;
-	font-family: open sans;
-	display:block;
-	text-align: center;
-	box-sizing: border-box;
-}
-
-/**{
-	
-	border: 1px solid black;
+/**
+{
+    border:1px solid black;
 }
 */
-.logo img{
-	padding-left:1.5em;
-	padding-top: 0.4em;
-	height: 3em;
+body
+{
+    margin: 0;
+
+    background: black;
+}
+
+/*Pour l'alignement de certaines divs*/
+body *
+{
+    box-sizing: inherit;
+}
+
+a
+{
+    text-decoration: none;
+}
+
+a:hover
+{
+    text-decoration: none;
+}
+
+img
+{
+    max-width: 100%;
+}
+
+/*DEZOOM (MARCHE PAS POUR PRINCIPAL, PARALLAX ET LA BARRE DE NAV*/
+
+@media only screen and (max-width: 10000px)
+{
+    #page-interieur
+    {
+        margin-left: 35%;
+    }
+}
+
+@media only screen and (max-width: 5000px)
+{
+    #page-interieur
+    {
+        margin-left: 28%;
+    }
+}
+
+@media only screen and (max-width: 3200px)
+{
+    #page-interieur
+    {
+        margin-left: 16%;
+    }
+}
+
+@media only screen and (max-width: 2800px)
+{
+    #page-interieur
+    {
+        margin-left: 7%;
+    }
+}
+
+@media only screen and (max-width: 2300px)
+{
+    #page-interieur
+    {
+        margin-left: 2.5%;
+    }
+}
+
+@media only screen and (max-width: 2000px)
+{
+    #page-interieur
+    {
+        margin-left: 0;
+    }
+}
+
+
+
+#page-interieur
+{
+    position: relative;
+    z-index: 2;
+
+    transform: translate3d(0, 0, 0);
+
+    box-shadow: 1px 0 15px black;
+}
+#page-interieur,
+#menu-mobile
+{
+    overflow: hidden;
+}
+
+
+
+    /*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////PRINCIPAL///////////////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+#rideau{
+    position:absolute;
+    width:100%;
+    height:850px;
+    background-color:grey;
+    opacity:0.2;
+    z-index:-1;
+}
+
+#principal
+{
+    display: flex;
+
+    max-width: 1920px;
+    height: 100vh;
+
+    transition: all 300ms;
+
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: center;
+}
+
+#principal-interieur
+{
+    display:flex;
+    flex-direction: column;
+/*border: 1px solid white;*/
+    width: 70vw;
+    height: 60%;
+    margin: 8%;
+    margin-top: 20vh;
+
+    transition: all 300ms;
 
 }
 
-.menu-text a{
-	text-decoration:none;
-	display: inline-block;
-	color:black;
-	height:100%;
-	padding-top: 1em;
-	padding-bottom: 1em;
-	box-sizing: border-box;
+#texte
+{
+    font-family: 'Lato', sans-serif;
+    font-size: 58px;
+    width: 100%;
+    color: white;
+/*    border: 1px solid orange;*/
+}
+
+#texte-fixe
+{
+    font-family: Futura, 'Helvetica Neue', Helvetica, sans-serif;
+    font-weight: 600;
+    overflow: hidden;
+
+
+    text-align: center;
+
+    color: white;
 
 }
 
-.menu-connection{
-	padding-top: 1em;
-	padding-bottom: 1em;
-	border-left: 1px solid #dfdfdf;
-	box-sizing: border-box;
-	display: block;
-	text-align: center;
+
+
+#phrase-fixe
+{
+    margin: 0;
+    z-index:1;
+}
+
+#texte-mobile
+{
+    font-weight: 600;
+    overflow: hidden;
+    z-index:0;
+    height: 75px;
+}
+
+#texte-mobile-animation
+{
+    top: 0;
+
+    width: 100%;
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+
+    animation-name: change;
+    animation-duration: 12s;
+    animation-iteration-count: infinite;
+    text-align: center;
+}
+
+@keyframes change
+{
+    0%,
+    12.5%
+    {
+        transform: translate3d(0, 0, 0);
+    }
+    25%,
+    37.5%
+    {
+        transform: translate3d(0, -25%, 0);
+    }
+    50%,
+    62.5%
+    {
+        transform: translate3d(0, -50%, 0);
+    }
+    75%,
+    95%
+    {
+        transform: translate3d(0, -75%, 0);
+    }
+
 
 }
 
-.menu-connection a{
-	color:white;
-		height:100%;
-	display: inline-block;
-	text-decoration:none;
+#texte-vocs
+{
+    color: #79d0fc;
+    padding-top: 10px;
 }
 
+/*BOUTON INSCRIPTION*/
+
+
+
+#bouton-inscription
+{
+    z-index: 4;
+
+
+
+    width: 350px;
+    height: 65px;
+
+    margin: auto;
+    margin-top: 10px;
+
+}
+
+
+@media only screen and (max-width: 900px)
+{
+    #texte
+    {
+        font-size: 45px;
+    }
+    #texte-mobile
+    {
+       height:60px;
+    }
+}
+
+
+
+@media only screen and (max-width: 515px)
+{
+    #texte
+    {
+        font-size: 35px;
+    }
+    #texte-mobile
+    {
+       height:45px;
+    }
+
+    #bouton-inscription
+    {
+
+        width: 100%;
+
+}
+
+}
+
+@media only screen and (max-width: 390px)
+{
+    #texte
+    {
+        font-size: 28px;
+    }
+    #texte-mobile
+    {
+       height:35px;
+    }
+}
+
+@media only screen and (max-width: 310px)
+{
+    #texte
+    {
+        font-size: 22px;
+    }
+    #texte-mobile
+    {
+       height:25px;
+    }
+}
+
+
+
+    /*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////PRINCIPAL MOTS FOND///////////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+
+#fond-mots {
+  position:absolute;
+  bottom:0;
+  left:0;
+  overflow:hidden;
+  right:0;
+  top:0;
+background: linear-gradient(to bottom, #50abe3 0%,#007ece 100%);
+  height: inherit;
+  z-index:-2;
+}
+#fond-mots > div {
+  position:absolute;
+  bottom:0;
+}
+#fond-mots > div.sol {
+  width:100%;
+  height:20px;
+  bottom:0;
+  background:#3E474C;
+  z-index:0;
+}
+#fond-mots > div.mots1 {
+  width:100%;
+  top:0;
+  background:url(../IMG/words2.png) no-repeat center;
+  z-index:-1;
+}
+#fond-mots div.mots2 {
+  width:100%;
+  background:url(../IMG/words.png) no-repeat center;
+  top:0;
+  z-index:-1;
+}
+#fond-mots div.mots3 {
+  width:100%;
+  background:url(../IMG/words4.png) no-repeat center;
+  top:0;
+  z-index:-1;
+}
+#fond-mots > div.mots4 {  
+  width:100%;
+  background:url(../IMG/words3.png) no-repeat center;
+  top:0;
+  z-index:-1;
+ }
+
+
+
+
+    /*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////PREMIER BANDEAU/////////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+
+#premier-bandeau
+{
+    max-width: 1920px;
+    padding: 3.5rem 0;
+
+    transition: all 300ms;
+
+    color: #1c262b;
+    background: #fff;
+}
+
+#premier-bandeau h3
+{
+    font-size: 2rem;
+    font-weight: 300;
+
+    margin: 0 0 1rem;
+
+    text-align: center;
+}
+
+#premier-bandeau p
+{
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+.interieur
+{
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+#premier-bandeau-image
+{
+    display: inline-block;
+
+    width: 29%;
+    margin: 0 1.5%;
+
+    vertical-align: top;
+}
+#premier-bandeau-image-image
+{
+    height: 300px;
+}
+#premier-bandeau-texte
+{
+    display: inline-block;
+color:#4d4d4d;
+    width: 64%;
+    margin: 0 1.5%;
+    font-size:1em;
+    text-align: left;
+    vertical-align: top;
+}
+
+@media (max-width: 43.75em)
+{
+    #premier-bandeau
+    {
+        padding: 2rem 0;
+    }
+}
+
+@media (max-width: 43.75em)
+{
+    #premier-bandeau h3
+    {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 43.75em)
+{
+    #premier-bandeau-image
+    {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+@media (max-width: 43.75em)
+{
+    #premier-bandeau-image-image
+    {
+        width: auto;
+        height: 200px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 43.75em)
+{
+    #premier-bandeau-texte
+    {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+
+
+    /*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////DEUXIEME BANDEAU////////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+
+#deuxieme-bandeau
+{
+    max-width: 1920px;
+    padding: 3.5rem 0;
+
+    transition: all 300ms;
+    color: #fff;
+    background: #007ece;
+    z-index: 5;
+}
+
+.deuxieme-bandeau-texte
+{
+    display: inline-block;
+    width: 29%;
+    margin: 0 1.5%;
+    padding: 1rem;
+
+    text-align: center;
+    vertical-align: top;
+}
+
+.deuxieme-bandeau-texte p
+{
+    font-size: 1.3rem;
+    font-weight: 300;
+
+    margin: 0 0 1rem 0;
+}
+.deuxieme-bandeau-image
+{
+    height:85px;
+    margin-bottom:10px;
+}
+
+@media (max-width: 43.75em)
+{
+    .deuxieme-bandeau-texte
+    {
+        width: 100%;
+        margin: 0;
+        display:flex;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, .2);
+    }
+    .deuxieme-bandeau-texte:last-child
+    {
+        border: none;
+    }
+    .deuxieme-bandeau-image
+    {
+    height:75px;
+    margin-top:-10px;
+    margin-bottom: 0;
+    }
+}
+
+@media (max-width: 43.75em)
+{
+    .deuxieme-bandeau-texte p
+    {
+        margin-left: 3rem;
+    }
+}
+
+
+
+    /*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////FOOTER//////////////////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+
+#footer
+{
+    z-index: 999;
+    height: 200px;
+    padding-top: 10px;
+    background: black;
+}
+
+#footer ul
+{
+    padding:0;
+    margin-top:30px;
+}
+
+#footer li
+{
+    padding-top: 15px;
+    z-index: 999;
+    list-style: none;
+    text-align: center;
+}
+
+#footer li a
+{
+    text-decoration: none;
+    z-index: 999;
+    color: white;
+    font-size:20px;
+}
+
+
+    /*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////a-propos PRINCIPAL/////////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+#principal-a-propos
+{
+    display: flex;
+
+    max-width: 1920px;
+    height: 400px;
+
+    transition: all 300ms;
+
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: center;
+}
+
+#a-propos-texte-interieur
+{
+    font-family: Futura, 'Helvetica Neue', Helvetica, sans-serif;
+    font-size: 55px;
+    font-weight: 600;
+
+    display: flex;
+    overflow: hidden;
+
+    height: 85%;
+    margin-top: 5%;
+    margin-left: 5%;
+
+    text-align: center;
+
+    color: white;
+
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: center;
+}
+
+
+
+
+    /*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////a-propos///////////////////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+
+#a-propos-vocs
+{
+    max-width: 1920px;
+    padding: 3.5rem 0;
+
+    transition: all 300ms;
+
+    color: #1c262b;
+    background: #fff;
+}
+
+#a-propos-vocs h3
+{
+    font-size: 2rem;
+    font-weight: 300;
+
+    margin: 0 0 1rem;
+
+    text-align: center;
+}
+
+#a-propos-vocs p
+{
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+#a-propos-texte
+{
+    display: inline-block;
+
+    width: 100%;
+    margin: 0 1.5%;
+    /*  border:1px solid black;*/
+
+    text-align: left;
+    vertical-align: top;
+}
+
+@media (max-width: 43.75em)
+{
+    #a-propos-vocs
+    {
+        padding: 2rem 0;
+    }
+}
+
+@media (max-width: 43.75em)
+{
+    #a-propos-vocs h3
+    {
+        font-size: 1.5rem;
+    }
+}
+
+
+@media (max-width: 43.75em)
+{
+    #a-propos-texte
+    {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+    /*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////EQUIPE PRINCIPAL//////////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+#principal-equipe
+{
+    display: flex;
+
+    max-width: 1920px;
+    height: 400px;
+
+    transition: all 300ms;
+
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: center;
+}
+
+
+#equipe-texte-interieur
+{
+    font-family: Futura, 'Helvetica Neue', Helvetica, sans-serif;
+    font-size: 55px;
+    font-weight: 600;
+
+    display: flex;
+    overflow: hidden;
+
+    height: 85%;
+    margin-top: 5%;
+    margin-left: 5%;
+
+    text-align: center;
+
+    color: white;
+
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: center;
+}
+.equipe-interieur
+{
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+#equipe-texte
+{
+    display: inline-block;
+
+    width: 100%;
+    margin: 0 1.5%;
+    /*  border:1px solid black;*/
+
+    text-align: left;
+    vertical-align: top;
+}
+
+
+.membre{
+    display: inline-block;
+    width: 29%;
+    margin: 0 1.5%;
+    padding: 1rem;
+
+    text-align: center;
+    vertical-align: top;
+
+}
+
+.membre img{
+    height:250px;
+    width:250px;
+    margin-bottom:10px;
+    background-color: grey;
+
+}
+.membre h4{
+
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 0 0 1rem 0;
+
+}
+
+
+
+@media (max-width: 43.75em)
+{
+    .membre
+    {
+        width: 100%;
+        margin: 0;
+        display:flex;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, .2);
+    }
+    .membre:last-child
+    {
+        border: none;
+    }
+    .membre img
+    {
+    height:100px;
+    width:100px;
+    margin-top:-10px;
+    margin-bottom: 0;
+    }
+
+    .membre h4
+    {
+        margin-left: 3rem;
+    }
+    .membre h3
+    {
+        padding-left: 3rem;
+    }
+}
+
+
+
+    /*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////GROUP PRINCIPAL//////////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+#decouvrir-texte-interieur
+{
+    font-family: Futura, 'Helvetica Neue', Helvetica, sans-serif;
+    font-size: 55px;
+    font-weight: 600;
+
+    display: flex;
+    overflow: hidden;
+
+    height: 85%;
+    margin-top: 5%;
+    margin-left: 5%;
+
+    text-align: center;
+
+    color: white;
+
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: center;
+}
+
+
+
+
+
+    /*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////BOUTON REMONTER///////////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+#bouton-remonter {
+  position: fixed;
+  bottom: 40px;
+  right: -100px;
+  z-index: 9999;
+  width: 55px;
+  height: 55px;
+  text-align: center;
+  line-height: 45px;
+  background-color: #ffffff;
+  color: #007ECE;
+  cursor: pointer;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: all 0.3s ease-out;
+  opacity: 0.7;
+  font-size: 1.8em;
+}
+#bouton-remonter:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+
+}
+#bouton-remonter.visible {
+    right: 40px;
+}
+
+
+
+
+
+
+
+
+
+
+    /*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////ANIMATION ARRIVEE ELEMENTS///////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+
+.animable {
+  
+  /* initially hide animable objects */
+  visibility: hidden;
+  
+  /* initially pause animable objects their animations */ 
+  animation-play-state: paused; 
+}
+
+/* show objects being a-ete-anime */
+.a-ete-anime {
+  visibility: visible;
+  
+
+  animation-fill-mode: both;
+  
+
+
+
+
+  animation-play-state: running;
+}
+
+
+.rapide{
+      animation-duration: 0.8s;
+}
+
+.normal {
+      animation-duration: 1.5s;
+}
+.lent {
+      animation-duration: 2.2s;
+}
+/* CSS Animations (extracted from http://glifo.uiparade.com/) */
+
+
+@keyframes apparait-bas {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@keyframes apparait-sans-bouger {
+    0% {
+        opacity: 0;
+    }
+    60% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes apparait-rebondir {
+    0% {
+        opacity: 0;
+        transform: scale(.3);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    70% {
+        transform: scale(.95);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes apparait-rebondir-gauche {
+    0% {
+        opacity: 0;
+        transform: translateX(-2000px);
+    }
+
+    60% {
+        transform: translateX(20px);
+    }
+
+    80% {
+        transform: translateX(-5px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+@keyframes apparait-rebondir-droite {
+    0% {
+        opacity: 0;
+        transform: translateX(2000px);
+    }
+
+    60% {
+        transform: translateX(-20px);
+    }
+
+    80% {
+        transform: translateX(5px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+
+@keyframes apparait-sans-bouger-haut {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.a-ete-anime.apparait-rebondir {
+
+    animation-name: apparait-rebondir;
+}
+.a-ete-anime.apparait-rebondir-droite {
+
+    animation-name: apparait-rebondir-droite;
+}
+.a-ete-anime.apparait-rebondir-gauche {
+
+    animation-name: apparait-rebondir-gauche;
+}
+.a-ete-anime.apparait-sans-bouger {
+
+    animation-name: apparait-sans-bouger;
+}
+.a-ete-anime.apparait-bas {
+
+    animation-name: apparait-bas;
+}
+.a-ete-anime.apparait-sans-bouger-haut {
+
+    animation-name: apparait-sans-bouger-haut;
+}

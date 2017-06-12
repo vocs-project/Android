@@ -1,5 +1,106 @@
 {% extends "::base.html.twig" %}
 
 {% block body %}
-Hello World!
+
+		<div id="principal">
+			<div id="rideau"></div>
+			<div id="fond-mots">
+			  <div data-offset="110" class="mots1 parallax"></div>
+			  <div data-offset="130" class="mots2 parallax"></div>
+			  <div data-offset="40" class="mots3 parallax"></div>
+			  <div data-offset="90" class="mots4 parallax "></div>
+			  <div class="sol"></div>
+			</div>
+	 		<div id="principal-interieur">
+				<div id="texte" class="animable apparait-rebondir-gauche normal">
+					<div id="texte-fixe">
+						<p id="phrase-fixe">
+							La difference entre parler anglais et bien  parler anglais c'est
+						</p>
+					</div>
+					<div id="texte-mobile">
+						<ul id="texte-mobile-animation">
+							<li>le vocabulaire</li>
+							<li>la prononciation</li>
+							<li>la grammaire</li>
+							<li id="texte-vocs">VOCS</li>
+						</ul>
+					</div>
+				</div>
+	 			<div id="bouton-inscription" class="animable apparait-rebondir-droite normal">
+		 			<a href="{{ path("vocs_platform_connexion")}}" class="bouton-bleu-m">
+		 			<svg><rect x="0" y="0" fill="none" width="100%" height="100%"/></svg>
+		 			COMMENCER
+		 			</a>
+	    		</div>
+	 		</div>
+		</div>
+
+
+		<div id="premier-bandeau">
+		  <div class="interieur">
+		    <div id="premier-bandeau-image" class="animable apparait-rebondir-gauche normal">
+		      <img src="{{asset("img/iphone.png")}}" alt="" id="premier-bandeau-image-image"/>
+		    </div>
+		    <div id="premier-bandeau-texte" class="animable apparait-sans-bouger normal">
+		      <h3>Vocs partout où vous êtes.</h3>
+		      <p>Grâce au site Web et à l'application mobile, vous pourrez apprendre l'anglais partout où vous êtes.<br>Pas de connexion internet? Avec l'application mobile téléchargez votre vocabulaire sur votre appareil pour toujours l'avoir avec vous. </p>
+		    </div>
+		  </div>
+		</div>
+
+
+		<div id="deuxieme-bandeau">
+		  <div class="interieur">
+		    <div class="deuxieme-bandeau-texte animable apparait-rebondir-gauche normal">
+				<img src="{{asset("img/icone2.png")}}" class="deuxieme-bandeau-image"/>
+				<p> Simple, éfficace et facile d'utilisation.</p>
+		    </div>
+		    <div class="deuxieme-bandeau-texte animable apparait-sans-bouger normal">
+				<img src="{{asset("img/icone3.png")}}" class="deuxieme-bandeau-image" />
+				<p> Algorithmes d'apprentissage.</p>
+		    </div>
+		    <div class="deuxieme-bandeau-texte animable apparait-rebondir-droite normal">
+				<img src="{{asset("img/icone1.png")}}" class="deuxieme-bandeau-image"/>
+				<p> Connectez-vous avec les autres.</p>
+		    </div>
+		  </div>
+		</div>
+
+
+		<div id="parallax">
+			<div id="parallax-fond1" >
+				<div id="parallax-iphone">
+					<div id="fond-texte-iphone" class="animable apparait-rebondir-gauche rapide">Disponible à télécharger sur votre iPhone.</div>
+					<div id="fond-iphone" class="animable apparait-rebondir-droite rapide">  <img src="{{asset("img/iphone.png")}}"/></div>
+				</div>
+				<div id="parallax-android">
+					<div id="fond-texte-android" class="animable apparait-rebondir-gauche rapide">Ou alors sur votre appareil Android. Obtenez Vocs dès maintenant.</div>
+					<div id="fond-android" class="animable apparait-rebondir-droite rapide"><img src="{{asset("img/android.png")}}"/></div>
+				</div>
+			</div>
+			<div id="parallax-fond2">
+				<img src="{{asset("img/clouds.png")}}" id="fond-nuages"/>
+				<img src="{{asset("img/clouds.png")}}" id="fond-nuages"/>
+				<img src="{{asset("img/clouds.png")}}" id="fond-nuages"/>
+				<img src="{{asset("img/clouds.png")}}" id="fond-nuages"/>
+				<img src="{{asset("img/clouds.png")}}" id="fond-nuages"/>
+				<img src="{{asset("img/clouds.png")}}" id="fond-nuages"/>
+				<img src="{{asset("img/clouds.png")}}" id="fond-nuages"/>
+
+			</div>
+			<div id="parallax-fond3">
+				<img src="{{asset("img/clouds2.png")}}" id="fond-nuages"/>
+				<img src="{{asset("img/clouds2.png")}}" id="fond-nuages"/>
+				<img src="{{asset("img/clouds2.png")}}" id="fond-nuages"/>
+				<img src="{{asset("img/clouds2.png")}}" id="fond-nuages"/>
+				<img src="{{asset("img/clouds2.png")}}" id="fond-nuages"/>
+				<img src="{{asset("img/clouds2.png")}}" id="fond-nuages"/>
+				<img src="{{asset("img/clouds2.png")}}" id="fond-nuages"/>
+			</div>
+		</div>
+
+
+		<div id="parallax2">	
+		</div>
 {% endblock %}
