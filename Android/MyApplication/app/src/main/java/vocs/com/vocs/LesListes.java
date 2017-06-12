@@ -39,7 +39,8 @@ public class LesListes extends AppCompatActivity {
                 String newEntry=editText.getText().toString();
                 if(editText.length()!=0){
                     AddData(newEntry);
-                    editText.setText("");
+                    Intent versliste = new Intent (LesListes.this, ViewListContents.class);
+                    startActivity(versliste);
                 }else{
                     Toast.makeText(LesListes.this,"echec",Toast.LENGTH_LONG).show();
                 }

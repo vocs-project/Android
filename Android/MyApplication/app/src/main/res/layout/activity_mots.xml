@@ -46,9 +46,9 @@
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_above="@+id/ajout"
         android:layout_below="@+id/textView9"
-        android:id="@+id/listView"/>
+        android:id="@+id/listView"
+        android:layout_above="@+id/ajout" />
 
     <Button
         android:text="supprimer un mot"
@@ -58,6 +58,15 @@
         android:layout_above="@+id/retours"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:text="Supprimer la liste"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/supprliste"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 

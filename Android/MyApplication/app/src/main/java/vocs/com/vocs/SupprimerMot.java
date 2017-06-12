@@ -30,7 +30,7 @@ public class SupprimerMot extends AppCompatActivity {
         retourmot2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent versliste = new Intent (SupprimerMot.this, Mots.class);
+                Intent versliste = new Intent (SupprimerMot.this, ViewListContents.class);
                 startActivity(versliste);
             }
         });

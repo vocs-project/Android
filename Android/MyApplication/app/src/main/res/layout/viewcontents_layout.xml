@@ -5,7 +5,7 @@
     android:weightSum="1">
 
     <TextView
-        android:text="Voici vos liste :"
+        android:text="Voici vos listes :"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView7"
@@ -24,14 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/add" />
-
-    <Button
-        android:text="suprimer une liste"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/supp"
-        android:layout_gravity="end"
-         />
 
     <Button
     android:text="retour"

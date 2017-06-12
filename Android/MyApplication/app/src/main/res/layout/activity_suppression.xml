@@ -11,7 +11,7 @@
     tools:context="vocs.com.vocs.suppression">
 
     <TextView
-        android:text="Entrez la liste que vous voulez supprimer :"
+        android:text="Entrez le nom de la liste pour valider la suppression :"
         android:textColor="@android:color/background_dark"
         android:textSize="18sp"
         android:layout_width="wrap_content"
