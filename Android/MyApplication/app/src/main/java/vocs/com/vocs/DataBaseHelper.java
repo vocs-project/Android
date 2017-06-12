@@ -10,56 +10,58 @@ import android.database.sqlite.SQLiteOpenHelper;
 import static android.R.attr.id;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 import static android.os.Build.ID;
+import static android.os.Build.VERSION_CODES.N;
 
 /**
  * Created by ASUS on 25/05/2017.
  */
 
 public class DataBaseHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME="mylist.db";
-
-    public static final String TABLE_NAME="mylist_data";
-    public static final String TABLE_MOT_NAME="mylist2_data";
-    public static final String TABLE_LIAISON_NAME="mylist3_data";
-
-    public static final String COL1 ="ID";
-    public static final String COL2 ="ITEM1";
-
-    public static final String COLID ="IDMOT";
-    public static final String COL3="ITEM2";
-    public static final String COL4="ITEM3";
-    public static final String NBR="UN";
 
     private SQLiteDatabase db;
 
     public DataBaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, "mylist.db", null, 1);
     }
     @Override
     public void onCreate(SQLiteDatabase db){
-      String createTable ="CREATE TABLE "+TABLE_NAME+" ("+COL1+" INTEGER PRIMARY KEY AUTOINCREMENT, "+
-              "ITEM1 TEXT)";
-        db.execSQL(createTable);
-      String createTable2 ="CREATE TABLE "+TABLE_MOT_NAME+" ("+COLID+" INTEGER PRIMARY KEY AUTOINCREMENT, "+"ITEM2 TEXT, ITEM3 TEXT, UN TEXT)";
-        db.execSQL(createTable2);
-      String createTable3 ="CREATE TABLE "+TABLE_LIAISON_NAME+" ("+COL1+" INTEGER NOT NULL, "+COLID+" INTEGER NOT NULL, "+" PRIMARY KEY ("+COL1+", "+COLID+"))";
-        db.execSQL(createTable3);
+    db.execSQL("create table words " +
+            "(" +
+            "id_word integer," +
+            "french varchar(255)," +
+            "english varchar(255)," +
+            "primary key (id_word)" +
+            ");");
+            db.execSQL(
+            "create table lists " +
+            "(" +
+            "id_list integer ," +
+            "name varchar(255)," +
+            "primary key (id_list)" +
+            ");");
+            db.execSQL(
+            "create table words_lists " +
+            "(" +
+            "id_word integer," +
+            "id_list integer," +
+            "primary key (id_list,id_word)," +
+            "foreign key (id_word) references words," +
+            "foreign key (id_list) references lists" +
+            ");");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
-        db.execSQL("DROP IF TABLE EXISTS "+TABLE_NAME);
-        db.execSQL("DROP IF TABLE EXISTS "+TABLE_MOT_NAME);
-        db.execSQL("DROP IF TABLE EXISTS "+TABLE_LIAISON_NAME);
+        db.execSQL("DROP IF TABLE EXISTS LISTS");
+        db.execSQL("DROP IF TABLE EXISTS WORDS");
+        db.execSQL("DROP IF TABLE EXISTS WORDS_LISTS");
     }
 
     public boolean addData(String item1){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
-        contentValues.put(COL2, item1);
-
-        long result=db.insert(TABLE_NAME, null, contentValues);
-
+        contentValues.put("name", item1);
+        long result = db.insert("lists", null, contentValues);
         if(result==-1){
             return false;
         }else{
@@ -68,13 +70,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean addData2(String item2, String item3, String un){
-        SQLiteDatabase db=this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
-        contentValues.put(COL3, item2);
-        contentValues.put(COL4, item3);
-        contentValues.put(NBR, un);
+        contentValues.put("english", item2);
+        contentValues.put("french", item3);
 
-        long result=db.insert(TABLE_MOT_NAME, null, contentValues);
+        long result=db.insert("WORDS", null, contentValues);
+
+        db.execSQL("insert into words_lists (id_list,id_word) values (" + un + ", " + result + ")");
 
         if(result==-1){
             return false;
@@ -82,67 +85,30 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return true;
         }
     }
-
-    public boolean addData3(String item3){
-        SQLiteDatabase db=this.getWritableDatabase();
-        ContentValues contentValues=new ContentValues();
-        contentValues.put(COL4, item3);
-
-        long result=db.insert(TABLE_MOT_NAME, null, contentValues);
-
-        if(result==-1){
-            return false;
-        }else{
-            return true;
-        }
-    }
-
-    public boolean addData4(String item4){
-        SQLiteDatabase db=this.getWritableDatabase();
-        ContentValues contentValues=new ContentValues();
-        contentValues.put(COLID, item4);
-
-        long result=db.insert(TABLE_LIAISON_NAME, null, contentValues);
-
-        if(result==-1){
-            return false;
-        }else{
-            return true;
-        }
-    }
-
 
     public Cursor getListContents(){
         SQLiteDatabase db=this.getWritableDatabase();
-        Cursor data=db.rawQuery("SELECT * FROM "+TABLE_NAME,null);
+        Cursor data=db.rawQuery("SELECT * FROM LISTS ",null);
         return data;
     }
 
-    public Cursor getListContents2(){
-        SQLiteDatabase db=this.getWritableDatabase();
-        Cursor data=db.rawQuery("SELECT * FROM "+TABLE_MOT_NAME,null);
-        return data;
-    }
 
     public Cursor getListContents3(String id){
         SQLiteDatabase db=this.getWritableDatabase();
-        Cursor data=db.rawQuery("SELECT * FROM "+TABLE_MOT_NAME+" WHERE "+NBR+"='"+id+"'",null);
+        Cursor data=db.rawQuery("SELECT e2.english,e2.french FROM words_lists e1 join WORDS e2 using (id_word) WHERE id_list = "+id,null);
         return data;
     }
-
+    //Suppresion de mots d'une liste
+    //PArametre : item1 est le nom de la liste
     public void supp(String item1){
         SQLiteDatabase db=this.getWritableDatabase();
-       db.execSQL("DELETE FROM "+TABLE_NAME+" WHERE "+COL2+"='"+item1+"'");
+        db.execSQL("delete from words_lists where id_list in (select id_list from lists where name ='"+ item1 + "');");
+        db.execSQL("delete from lists where name = '" + item1 + "';");
     }
 
     public void supp2(String item2){
         SQLiteDatabase db=this.getWritableDatabase();
-        db.execSQL("DELETE FROM "+TABLE_MOT_NAME+" WHERE "+COL3+"='"+item2+"' or "+COL4+"='"+item2+"'");
-    }
-
-    public void supp3(String item3){
-        SQLiteDatabase db=this.getWritableDatabase();
-        db.execSQL("DELETE FROM "+TABLE_LIAISON_NAME+" WHERE "+COLID+"='"+item3);
+        db.execSQL("DELETE FROM words WHERE english='"+item2+"' or french='"+item2+"'");
     }
 
     public void close(){

@@ -17,8 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import static android.R.attr.button;
+import static android.R.attr.id;
+import static android.os.Build.VERSION_CODES.M;
 import static vocs.com.vocs.R.id.retour;
 
 /**
@@ -28,7 +31,11 @@ import static vocs.com.vocs.R.id.retour;
 public class ViewListContents extends AppCompatActivity{
 
     DataBaseHelper myDB;
-    Button retour,add,supp;
+    Button retour,add;
+    int variable;
+    private String idList;
+    private ArrayList<MyList> tableauList = new ArrayList<MyList>();
+
 
     @Override
     public void onCreate (@Nullable Bundle savedInstanceState){
@@ -39,7 +46,6 @@ public class ViewListContents extends AppCompatActivity{
         myDB=new DataBaseHelper(this);
         retour=(Button) findViewById(R.id.retour);
         add=(Button) findViewById(R.id.add);
-        supp=(Button) findViewById(R.id.supp);
 
         myDB.open();
 
@@ -56,20 +62,13 @@ public class ViewListContents extends AppCompatActivity{
            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                Intent versmots = new Intent (ViewListContents.this, Mots.class);
                Bundle b = new Bundle();
-               b.putInt("key",position);
+               b.putString("key",tableauList.get(position).getIdList());
+               b.putString("name",tableauList.get(position).getName());
                versmots.putExtras(b);
                startActivity(versmots);
                finish();
            }
        });
-
-        supp.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent verssupp = new Intent (ViewListContents.this, suppression.class);
-                startActivity(verssupp);
-            }
-        });
 
         add.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -85,14 +84,17 @@ public class ViewListContents extends AppCompatActivity{
         if(data.getCount()==0){
             Toast.makeText(ViewListContents.this,"aucune liste trouvée",Toast.LENGTH_LONG).show();
         }else{
+            int i = 0;
             while(data.moveToNext()){
                 theList.add(data.getString(1));
+                tableauList.add(i, new MyList(data.getString(0),data.getString(1)));
                 ListAdapter listadapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,theList);
                 listView.setAdapter(listadapter);
-
-
+                i++;
             }
         }data.close();
         myDB.close();
     }
 }
+
+

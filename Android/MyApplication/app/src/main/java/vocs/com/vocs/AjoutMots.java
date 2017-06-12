@@ -19,7 +19,7 @@ public class AjoutMots extends AppCompatActivity {
     DataBaseHelper myDB;
     Button retour_mots,ajout_mot;
     EditText editanglais,editfrancais;
-    int var;
+    String var;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,13 +35,10 @@ public class AjoutMots extends AppCompatActivity {
         myDB.open();
 
         Bundle b = getIntent().getExtras();
-        int valut = -1;
 
         if(b != null) {
-            valut = b.getInt("key");
-            System.out.println(valut);
+            var = b.getString("key");
         }
-        var= valut;
         retour_mots.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -55,9 +52,8 @@ public class AjoutMots extends AppCompatActivity {
 
                 String newEntry=editanglais.getText().toString();
                 String newEntry2=editfrancais.getText().toString();
-                String newEntry3= String.valueOf(var);
                 if(editanglais.length()!=0 && editfrancais.length() !=0){
-                    AddData2(newEntry,newEntry2,newEntry3);
+                    AddData2(newEntry,newEntry2,var);
                     editanglais.setText("");
                     editfrancais.setText("");
                 }else{

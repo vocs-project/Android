@@ -17,6 +17,7 @@ public class suppression extends AppCompatActivity {
     DataBaseHelper myDB;
     Button ok,retour;
     EditText leedit;
+    int variable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +28,15 @@ public class suppression extends AppCompatActivity {
         ok = (Button) findViewById(R.id.ok);
         retour = (Button) findViewById(R.id.retour);
         myDB=new DataBaseHelper(this);
+
+        Bundle b = getIntent().getExtras();
+        int value = -1;
+
+        if(b != null) {
+            value = b.getInt("key");
+            System.out.println(value);
+        }
+        variable=value;
 
         retour.setOnClickListener(new View.OnClickListener() {
             @Override
