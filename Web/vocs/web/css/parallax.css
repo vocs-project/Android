@@ -108,34 +108,50 @@
 
 @media only screen and (max-width: 1400px) {
   #parallax{
-    height:2300px;
+    height:1900px;
+  }
+  #fond-texte-iphone, #fond-texte-android{
+    font-size:48px;
+    width:35%;
   }
 }
 @media only screen and (max-width: 1150px) {
   #parallax{
-    height:2000px;
+    height:1600px;
   }
 }
 @media only screen and (max-width: 1055px) {
   #fond-texte-iphone, #fond-texte-android{
-    font-size:50px;
+    font-size:42px;
+    width:40%;
+  }
+  #parallax{
+    height:1450px;
   }
 }
 @media only screen and (max-width: 880px) {
   #fond-texte-iphone, #fond-texte-android{
-
+    font-size:38px;
+    width:45%;
+  }
+  #parallax{
+    height:1200px;
   }
 }
 @media only screen and (max-width: 705px) {
   #fond-texte-iphone, #fond-texte-android{
-    font-size:40px;
+    font-size:36px;
+
+  }
+  #parallax{
+    height:1100px;
   }
 }
-@media only screen and (max-width: 701px) {
+/*@media only screen and (max-width: 701px) {
   #parallax-fond3{
     margin-top: 2100px;
   }
-}
+}*/
 @media (max-width: 43.75em)
 {
   #parallax-fond3{
@@ -143,36 +159,58 @@
     height:100%;
     position: absolute;
     width:100%;
-    margin-top:800px;
+    /*margin-top:800px;*/
   }
   #parallax-fond2{
     z-index: 3;
     height:100%;
     position: absolute;
     width:100%;
-    margin-top:1500px;
+    /*margin-top:1500px;*/
+  }
+  #parallax{
+    height:1000px;
   }
 }
 @media only screen and (max-width: 620px) {
   #fond-texte-iphone, #fond-texte-android{
-
+    font-size:28px;
+  }
+  #parallax{
+    height:850px;
   }
 }
 @media only screen and (max-width: 535px) {
   #fond-texte-iphone, #fond-texte-android{
-    font-size:35px;
+    font-size:26px;
+    width:45%;
+  }
+  #parallax{
+    height:750px;
   }
 }
 @media only screen and (max-width: 455px) {
   #fond-texte-iphone, #fond-texte-android{
+    width:50%;
+  }
+    #parallax{
+    height:675px;
   }
 }
-@media only screen and (max-width: 455px) {
+@media only screen and (max-width: 400px) {
   #fond-texte-iphone, #fond-texte-android{
-    font-size:30px;
+    font-size:22px;
+    width:55%;
+  }
+  #parallax{
+    height:600px;
   }
 }
-
+@media only screen and (max-width: 350px) {
+  #parallax{
+    height:550px;
+  }
+}
 
 
     /*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -120,7 +120,7 @@ img
 #rideau{
     position:absolute;
     width:100%;
-    height:850px;
+    height:100vh;
     background-color:grey;
     opacity:0.2;
     z-index:-1;
@@ -342,34 +342,27 @@ background: linear-gradient(to bottom, #50abe3 0%,#007ece 100%);
   position:absolute;
   bottom:0;
 }
-#fond-mots > div.sol {
-  width:100%;
-  height:20px;
-  bottom:0;
-  background:#3E474C;
-  z-index:0;
-}
 #fond-mots > div.mots1 {
   width:100%;
   top:0;
-  background:url(../IMG/words2.png) no-repeat center;
+  background:url(../img/words2.png) no-repeat center;
   z-index:-1;
 }
 #fond-mots div.mots2 {
   width:100%;
-  background:url(../IMG/words.png) no-repeat center;
+  background:url(../img/words.png) no-repeat center;
   top:0;
   z-index:-1;
 }
 #fond-mots div.mots3 {
   width:100%;
-  background:url(../IMG/words4.png) no-repeat center;
+  background:url(../img/words4.png) no-repeat center;
   top:0;
   z-index:-1;
 }
 #fond-mots > div.mots4 {  
   width:100%;
-  background:url(../IMG/words3.png) no-repeat center;
+  background:url(../img/words3.png) no-repeat center;
   top:0;
   z-index:-1;
  }
