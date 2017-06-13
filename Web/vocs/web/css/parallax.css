@@ -1,0 +1,223 @@
+
+
+    /*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////PARALLAX1///////////////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+
+#parallax{
+  display: flex;
+  flex-direction: column;
+  font-family:  'Oxygen', sans-serif;
+/*  border: 2px solid red;*/
+  max-width:1920px;
+  height:300vh;
+  background:#50abe3;
+  position: relative;
+}
+
+#parallax-fond1{
+/*  border: 2px solid black;*/
+  position: absolute;
+  z-index: 2;
+  height:inherit;
+
+
+}
+
+#parallax-iphone{
+/*  border: 2px dashed white;*/
+  display:flex;
+  justify-content: center;
+  margin-top: 15%;
+}
+
+#fond-texte-iphone{
+/*  border: 2px solid black;*/
+  font-size: 60px;
+  font-weight: 500;
+  color:white;
+  z-index:2;
+
+  width:25%;
+  margin:50px;
+  margin-top: 8%;
+}
+
+#fond-iphone{
+/*  border: 2px solid pink;*/
+  width:45%;
+  height:17%;
+  z-index:2;
+  width:17%;
+}
+
+#parallax-android{
+/*  border: 2px dashed white;*/
+  display:flex;
+  justify-content: center;
+  margin-top:50%;
+}
+
+#fond-texte-android{
+/*  border: 2px solid black;*/
+  font-size: 60px;
+  font-weight: 500;
+  color:white;
+  z-index:1;
+
+  width:25%;
+    margin:50px;
+  margin-top: 7%;
+}
+
+#fond-android{
+/*  border: 2px solid pink;*/
+  width:45%;
+  height:17%;
+  z-index:1;
+  width:17%;
+}
+
+#parallax-fond2{
+/*  border: 8px solid orange;*/
+  z-index: 1;
+  height:300vh;
+  position: absolute;
+  width:100%;
+  margin-top:1500px;
+}
+
+
+#fond-nuages{
+  width:100%;
+}
+
+
+#parallax-fond3{
+/*  border: 8px dashed pink;*/
+  z-index: 3;
+  height:300vh;
+  position: absolute;
+  width:100%;
+  margin-top:800px;
+}
+
+@media only screen and (max-width: 1400px) {
+  #parallax{
+    height:1900px;
+  }
+  #fond-texte-iphone, #fond-texte-android{
+    font-size:48px;
+    width:35%;
+  }
+}
+@media only screen and (max-width: 1150px) {
+  #parallax{
+    height:1600px;
+  }
+}
+@media only screen and (max-width: 1055px) {
+  #fond-texte-iphone, #fond-texte-android{
+    font-size:42px;
+    width:40%;
+  }
+  #parallax{
+    height:1450px;
+  }
+}
+@media only screen and (max-width: 880px) {
+  #fond-texte-iphone, #fond-texte-android{
+    font-size:38px;
+    width:45%;
+  }
+  #parallax{
+    height:1200px;
+  }
+}
+@media only screen and (max-width: 705px) {
+  #fond-texte-iphone, #fond-texte-android{
+    font-size:36px;
+
+  }
+  #parallax{
+    height:1100px;
+  }
+}
+/*@media only screen and (max-width: 701px) {
+  #parallax-fond3{
+    margin-top: 2100px;
+  }
+}*/
+@media (max-width: 43.75em)
+{
+  #parallax-fond3{
+    z-index: 3;
+    height:100%;
+    position: absolute;
+    width:100%;
+    /*margin-top:800px;*/
+  }
+  #parallax-fond2{
+    z-index: 3;
+    height:100%;
+    position: absolute;
+    width:100%;
+    /*margin-top:1500px;*/
+  }
+  #parallax{
+    height:1000px;
+  }
+}
+@media only screen and (max-width: 620px) {
+  #fond-texte-iphone, #fond-texte-android{
+    font-size:28px;
+  }
+  #parallax{
+    height:850px;
+  }
+}
+@media only screen and (max-width: 535px) {
+  #fond-texte-iphone, #fond-texte-android{
+    font-size:26px;
+    width:45%;
+  }
+  #parallax{
+    height:750px;
+  }
+}
+@media only screen and (max-width: 455px) {
+  #fond-texte-iphone, #fond-texte-android{
+    width:50%;
+  }
+    #parallax{
+    height:675px;
+  }
+}
+@media only screen and (max-width: 400px) {
+  #fond-texte-iphone, #fond-texte-android{
+    font-size:22px;
+    width:55%;
+  }
+  #parallax{
+    height:600px;
+  }
+}
+@media only screen and (max-width: 350px) {
+  #parallax{
+    height:550px;
+  }
+}
+
+
+    /*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////PARALLAX2///////////////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+

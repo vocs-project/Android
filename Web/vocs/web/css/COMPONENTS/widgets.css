@@ -1,0 +1,215 @@
+
+
+    /*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////BOUTONS/////////////////////////////////////////////////////////////
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+
+.bouton-bleu-xs {
+  background-color: transparent;
+  border: 1.5px solid #3498dc;
+  border-radius: 0.6em;
+  cursor: pointer;
+  display: flex;
+  align-self: center;
+  font-size: 0.9rem;
+  margin-top:7px;
+
+  padding: 0.5em 1.6em;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: #fff;
+  background-image: linear-gradient(to bottom, #3498dc 50%, transparent 50%);
+  background-size: 210%;
+  transition: all 300ms ease-in-out;
+  z-index: 7;
+}
+
+.bouton-bleu-xs:hover, .bouton-bleu-xs:focus {
+  color: #fff;
+  outline: 0;
+  color: #3498dc;
+  background-position: 0 100%;
+}
+
+
+.bouton-bleu-sm{
+	display: block;
+	background-color: #3498dc;
+
+	line-height: 35px;
+	box-shadow: 1px 0 3px #4a5562;
+	height:35px;
+	margin-top:12px;
+  border-radius: 0.6em;
+
+  color: #fff;
+  background-image: linear-gradient(to bottom, #3498dc 50%, transparent 50%);
+  background-size: 210%;
+  transition: all 300ms ease-in-out;
+
+  background-color: white;
+  cursor: pointer;
+  align-self: center;
+  font-size: 0.9rem;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  z-index: 7;
+}
+
+.bouton-bleu-sm:hover {
+  color: #3498dc;
+  background-position: 0 100%;
+}
+
+.bouton-bleu-m {
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  font-size: 1.5em;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  margin: auto;
+  line-height: 250%;
+  justify-content: center;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+  width: 100%;
+  height:100%;
+  /*background: #3498dc;*/
+  transition: all 300ms;
+  z-index: 7;
+}
+@media only screen and (max-width: 275px)
+{
+    .bouton-bleu-m {
+
+        font-size: 1.1em;
+        line-height: 340%;
+    }
+}
+
+.bouton-bleu-m svg {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+.bouton-bleu-m rect {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 5;
+  stroke-dasharray: 1500, 0;
+}
+
+.bouton-bleu-m:hover {
+  background: none;
+  letter-spacing: 5px;
+
+  transition:letter-spacing 300ms,background 800ms;
+}
+
+.bouton-bleu-m:hover rect {
+  stroke-width: 5;
+  stroke-dasharray: 30, 250;
+  transition: all 1.35s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+
+
+.bouton-mots {
+  color: black;
+  cursor: pointer;
+  display: block;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 45px;
+  position: relative;
+  text-decoration: none;
+  text-transform: uppercase;
+  vertical-align: middle;
+  width: 100%;
+  letter-spacing: 2px;
+  transition: all 280ms;
+  z-index: 7;
+  font-family: Futura, 'Helvetica Neue', Helvetica, sans-serif;
+}
+
+
+
+.bouton-mots:hover,
+.bouton-mots:active {
+  letter-spacing: 5px;
+  transition: all 280ms;
+}
+
+.bouton-mots:after,
+.bouton-mots:before {
+  backface-visibility: hidden;
+  border: 1px solid rgba(255, 255, 255, 0);
+  bottom: 0px;
+  content: " ";
+  display: block;
+  margin: 0 auto;
+  position: relative;
+  transition: all 280ms ease-in-out;
+  width: 0;
+}
+
+.bouton-mots:hover:after,
+.bouton-mots:hover:before {
+  backface-visibility: hidden;
+  border-color: darkgrey;
+  transition: width 350ms ease-in-out;
+  width: 70%;
+  bottom: auto;
+  top: 0;
+  width: 70%;
+}
+
+.bouton-choix-compte {
+  background-color: transparent;
+  border: 2px solid #5195bf;
+  cursor: pointer;
+  display: flex;
+  align-self: center;
+  font-size: 23px;
+  width: 32.6%;
+  padding: 24px 0 24px 0;
+  margin: 0 2px 0 2px;
+  display: block;
+  float: left;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  color: white;
+  background-image: linear-gradient(to bottom, #5195bf 50%, transparent 50%);
+  background-size: 210%;
+  transition: all 300ms ease-in-out;
+  z-index: 7;
+}
+
+.bouton-choix-compte:hover, .bouton-choix-compte:focus {
+  outline: 0;
+  color: #5195bf;
+  background-position: 0 100%;
+}
+
+/*MARCHE PAS*/
+/*.bouton-choix-compte:active {
+  background-color: transparent;
+  border: 2px solid #5195bf;
+  color: #5195bf;
+}
+*/
