@@ -11,17 +11,6 @@
     tools:context="vocs.com.vocs.PagePrinc">
 
     <Button
-        android:text="Traduction"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="65dp"
-        android:id="@+id/traduction"
-        android:textColor="@android:color/background_dark"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/textView5"
-        android:layout_alignStart="@+id/textView5" />
-
-    <Button
         android:text="Liste"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,4 +39,25 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Traduction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="56dp"
+        android:id="@+id/traduction"
+        android:textColor="@android:color/background_dark"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/textView5"
+        android:layout_alignStart="@+id/textView5" />
+
+    <Button
+        android:text="Traduction à partir d'une liste"
+        android:textColor="@android:color/background_dark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tradliste"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/liste"
+        android:layout_alignEnd="@+id/liste" />
 </RelativeLayout>

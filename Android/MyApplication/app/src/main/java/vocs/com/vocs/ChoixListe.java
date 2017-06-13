@@ -22,57 +22,43 @@ import java.util.LinkedList;
 import static android.R.attr.button;
 import static android.R.attr.id;
 import static android.os.Build.VERSION_CODES.M;
+import static vocs.com.vocs.R.id.listView;
 import static vocs.com.vocs.R.id.retour;
 
-/**
- * Created by ASUS on 25/05/2017.
- */
-
-public class ViewListContents extends AppCompatActivity{
+public class ChoixListe extends AppCompatActivity {
 
     DataBaseHelper myDB;
-    Button retour,add;
+    Button retour;
     private ArrayList<MyList> tableauList = new ArrayList<>();
 
-
     @Override
-    public void onCreate (@Nullable Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.viewcontents_layout);
+        setContentView(R.layout.activity_choix_liste);
 
-        ListView listView=(ListView) findViewById(R.id.listView);
+        ListView listViewChoix=(ListView) findViewById(R.id.list_view_choix);
         myDB=new DataBaseHelper(this);
         retour=(Button) findViewById(R.id.retour);
-        add=(Button) findViewById(R.id.add);
 
         myDB.open();
+
+        listViewChoix.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent verstrad = new Intent (ChoixListe.this, Traduction.class);
+                Bundle b = new Bundle();
+                b.putString("key",tableauList.get(position).getIdList());
+                verstrad.putExtras(b);
+                startActivity(verstrad);
+                finish();
+            }
+        });
 
         retour.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent versliste = new Intent (ViewListContents.this, PagePrinc.class);
-                startActivity(versliste);
-            }
-        });
-
-       listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-           @Override
-           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               Intent versmots = new Intent (ViewListContents.this, Mots.class);
-               Bundle b = new Bundle();
-               b.putString("key",tableauList.get(position).getIdList());
-               b.putString("name",tableauList.get(position).getName());
-               versmots.putExtras(b);
-               startActivity(versmots);
-               finish();
-           }
-       });
-
-        add.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent versliste = new Intent (ViewListContents.this, LesListes.class);
-                startActivity(versliste);
+                Intent verspageprinc = new Intent (ChoixListe.this, PagePrinc.class);
+                startActivity(verspageprinc);
             }
         });
 
@@ -80,19 +66,17 @@ public class ViewListContents extends AppCompatActivity{
         Cursor data=myDB.getListContents();
 
         if(data.getCount()==0){
-            Toast.makeText(ViewListContents.this,"aucune liste trouvée",Toast.LENGTH_LONG).show();
+            Toast.makeText(ChoixListe.this,"aucune liste trouvée",Toast.LENGTH_LONG).show();
         }else{
             int i = 0;
             while(data.moveToNext()){
                 theList.add(data.getString(1));
                 tableauList.add(i, new MyList(data.getString(0),data.getString(1)));
                 ListAdapter listadapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,theList);
-                listView.setAdapter(listadapter);
+                listViewChoix.setAdapter(listadapter);
                 i++;
             }
         }data.close();
         myDB.close();
     }
 }
-
-

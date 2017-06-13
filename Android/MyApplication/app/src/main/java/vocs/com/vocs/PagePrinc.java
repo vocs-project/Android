@@ -16,7 +16,7 @@ import android.widget.Toast;
 public class PagePrinc extends AppCompatActivity {
 
     Intent PagePrinc = getIntent();
-    Button b,l,parametres;
+    Button b,l,parametres,tradliste;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +25,14 @@ public class PagePrinc extends AppCompatActivity {
 
         l=(Button) findViewById(R.id.liste);
         b=(Button) findViewById(R.id.traduction);
+        tradliste=(Button) findViewById(R.id.tradliste);
         parametres=(Button) findViewById(R.id.parametres);
-        b.setOnClickListener(new View.OnClickListener(){
+
+        tradliste.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent retour2 = new Intent (PagePrinc.this, MainActivity.class);
-                startActivity(retour2);
+                Intent tradliste = new Intent (PagePrinc.this, ChoixListe.class);
+                startActivity(tradliste);
             }
         });
         l.setOnClickListener(new View.OnClickListener(){
@@ -45,6 +47,13 @@ public class PagePrinc extends AppCompatActivity {
             public void onClick(View v){
                 Intent versparam= new Intent (PagePrinc.this, Parametres.class);
                 startActivity(versparam);
+            }
+        });
+        b.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent tradnorml = new Intent (PagePrinc.this, MainActivity.class);
+                startActivity(tradnorml);
             }
         });
     }

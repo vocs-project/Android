@@ -43,14 +43,14 @@ public class score extends AppCompatActivity {
         }
 
 
-        retour_traduction();
+        retour_pp();
     }
 
-    public void retour_traduction (){
+    public void retour_pp (){
         ok.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent retour = new Intent (score.this, MainActivity.class);
+                Intent retour = new Intent (score.this, PagePrinc.class);
                 startActivity(retour);
     }});
 }}
