@@ -16,7 +16,7 @@ import android.widget.Toast;
 public class PagePrinc extends AppCompatActivity {
 
     Intent PagePrinc = getIntent();
-    Button b,l,parametres,tradliste;
+    Button modejeux,l,parametres,tradliste;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class PagePrinc extends AppCompatActivity {
         setContentView(R.layout.activity_page_princ);
 
         l=(Button) findViewById(R.id.liste);
-        b=(Button) findViewById(R.id.traduction);
+        modejeux=(Button) findViewById(R.id.modejeux);
         tradliste=(Button) findViewById(R.id.tradliste);
         parametres=(Button) findViewById(R.id.parametres);
 
@@ -49,11 +49,11 @@ public class PagePrinc extends AppCompatActivity {
                 startActivity(versparam);
             }
         });
-        b.setOnClickListener(new View.OnClickListener(){
+        modejeux.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent tradnorml = new Intent (PagePrinc.this, MainActivity.class);
-                startActivity(tradnorml);
+                Intent modeJeux = new Intent (PagePrinc.this, ModeDeJeux.class);
+                startActivity(modeJeux);
             }
         });
     }

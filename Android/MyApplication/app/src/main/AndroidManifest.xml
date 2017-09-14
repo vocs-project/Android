@@ -26,7 +26,8 @@
         <activity android:name=".SupprimerMot" />
         <activity android:name=".Parametres" />
         <activity android:name=".ChoixListe" />
-        <activity android:name=".Traduction"></activity>
+        <activity android:name=".Traduction" />
+        <activity android:name=".ModeDeJeux"></activity>
     </application>
 
 </manifest>
