@@ -2,7 +2,9 @@ package vocs.com.vocs;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.Animation;
@@ -16,12 +18,17 @@ import android.widget.TextView;
 import java.text.Normalizer;
 import android.content.Intent;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+import static vocs.com.vocs.R.id.progressBar;
+
 public class vocs_logo extends AppCompatActivity {
 
     Intent vocs_logo = getIntent();
     ImageButton bout;
     ProgressBar progressbar;
-    int i=0;
+    CountDownTimer mCountDownTimer;
+    int m=0;
+
 
 
     @Override
@@ -30,24 +37,32 @@ public class vocs_logo extends AppCompatActivity {
         setContentView(R.layout.vocs_logo);
 
         bout = (ImageButton) findViewById(R.id.boutonvocs);
-        progressbar= (ProgressBar) findViewById(R.id.progressBar);
+        progressbar= (ProgressBar) findViewById(progressBar);
 
-        bout.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent retour1 = new Intent (vocs_logo.this, PagePrinc.class);
-                startActivity(retour1);
-            }
-    });
+
 
         progressbar.getProgressDrawable().setColorFilter(Color.WHITE, android.graphics.PorterDuff.Mode.SRC_IN);
+        progressbar.setProgress(m);
+        mCountDownTimer=new CountDownTimer(3000,1000) {
 
+            @Override
+            public void onTick(long millisUntilFinished) {
+                Log.v("Log_tag", "Tick of Progress"+ m + millisUntilFinished);
+                m++;
+                progressbar.setProgress((int)m*100/(5000/1000));
 
-        ProgressBarAnimation anim=new ProgressBarAnimation(progressbar,0,100);
-        anim.setDuration(3000);
-        progressbar.startAnimation(anim);
+            }
 
-
-
+            @Override
+            public void onFinish() {
+                m++;
+                progressbar.setProgress(100);
+                if(progressbar.getProgress()== progressbar.getMax()){
+                    Intent intent  = new Intent(vocs_logo.this , PagePrinc.class);
+                    startActivity(intent);
+                }
+            }
+        };
+        mCountDownTimer.start();
     }
 }

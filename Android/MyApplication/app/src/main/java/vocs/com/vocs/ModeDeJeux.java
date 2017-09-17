@@ -32,7 +32,7 @@ public class ModeDeJeux extends AppCompatActivity {
         TraductionNormale.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent TraductionNormale = new Intent (ModeDeJeux.this, MainActivity.class);
+                Intent TraductionNormale = new Intent (ModeDeJeux.this, ChoixListe.class);
                 startActivity(TraductionNormale);
             }
         });
