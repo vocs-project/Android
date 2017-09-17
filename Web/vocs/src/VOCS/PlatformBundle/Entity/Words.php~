@@ -26,7 +26,7 @@ class Words
      *
      * @ORM\Column(name="url_prononciation", type="string", length=255, nullable=true)
      */
-    private $urlPrononciation;
+    private $urPrononciation;
 
     /**
      * @var string
@@ -184,29 +184,5 @@ class Words
     public function getTrads()
     {
         return $this->trads;
-    }
-
-    /**
-     * Set urPrononciation
-     *
-     * @param string $urPrononciation
-     *
-     * @return Words
-     */
-    public function setUrPrononciation($urPrononciation)
-    {
-        $this->urPrononciation = $urPrononciation;
-
-        return $this;
-    }
-
-    /**
-     * Get urPrononciation
-     *
-     * @return string
-     */
-    public function getUrPrononciation()
-    {
-        return $this->urPrononciation;
     }
 }

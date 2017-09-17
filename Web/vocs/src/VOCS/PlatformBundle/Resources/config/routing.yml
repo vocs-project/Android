@@ -1,18 +1,23 @@
 vocs_platform_homepage:
     path:     /
-    defaults: { _controller: VOCSPlatformBundle:Default:index }
+    defaults: { _controller: VOCSPlatformBundle:Platform:index }
 
 vocs_platform_equipe:
     path: /equipe
     defaults: 
-        _controller: VOCSPlatformBundle:Default:equipe
+        _controller: VOCSPlatformBundle:Platform:equipe
 
 vocs_platform_connexion:
     path: /connexion
     defaults: 
-        _controller: VOCSPlatformBundle:Default:connexion
+        _controller: VOCSPlatformBundle:Platform:connexion
 
 vocs_platform_a_propos:
     path: /a_propos
     defaults: 
-        _controller: VOCSPlatformBundle:Default:apropos
+        _controller: VOCSPlatformBundle:Platform:apropos
+
+vocs_platform_add:
+    path: /add
+    defaults:
+        _controller: VOCSPlatformBundle:Platform:add

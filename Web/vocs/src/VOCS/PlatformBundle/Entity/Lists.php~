@@ -31,7 +31,7 @@ class Lists
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="creationDate", type="datetime")
+     * @ORM\Column(name="creationDate", type="datetimetz")
      */
     private $creationDate;
 
@@ -103,45 +103,5 @@ class Lists
     {
         return $this->creationDate;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->words = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add word
-     *
-     * @param \VOCS\PlatformBundle\Entity\Words $word
-     *
-     * @return Lists
-     */
-    public function addWord(\VOCS\PlatformBundle\Entity\Words $word)
-    {
-        $this->words[] = $word;
-
-        return $this;
-    }
-
-    /**
-     * Remove word
-     *
-     * @param \VOCS\PlatformBundle\Entity\Words $word
-     */
-    public function removeWord(\VOCS\PlatformBundle\Entity\Words $word)
-    {
-        $this->words->removeElement($word);
-    }
-
-    /**
-     * Get words
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getWords()
-    {
-        return $this->words;
-    }
 }
+
