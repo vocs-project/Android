@@ -1,40 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_mode_de_jeux"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
 
     tools:context="vocs.com.vocs.ModeDeJeux">
+
+    <android.support.design.widget.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/BottomBar"
+        app:itemBackground="@android:color/darker_gray"
+        app:menu="@menu/bottom_navigation_main"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+    </android.support.design.widget.BottomNavigationView>
 
     <Button
         android:text="retour"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/retourModePrinc" />
+        android:id="@+id/retourModePrinc"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <ImageButton
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:text="parametres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@drawable/parametre"
+        android:id="@+id/parametres"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/imageButton" />
+        android:layout_alignParentStart="true" />
 
     <Button
         android:text="Traduction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/TraductionNormale"
-        android:layout_marginTop="44dp"
-        android:layout_below="@+id/imageButton"
+        android:layout_marginTop="55dp"
+        android:layout_below="@+id/parametres"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

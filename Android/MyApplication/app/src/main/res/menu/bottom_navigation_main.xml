@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/legroupe"
+        android:enabled="true"
+        android:icon="@drawable/groupe"
+        android:title="groupe">
+    </item>
+
+    <item
+        android:id="@+id/lamanette"
+        android:enabled="true"
+        android:icon="@drawable/manettes"
+        android:title="jeux">
+
+    </item>
+
+    <item
+        android:id="@+id/laliste"
+        android:enabled="true"
+        android:icon="@drawable/liste"
+        android:title="liste">
+
+    </item>
+</menu>

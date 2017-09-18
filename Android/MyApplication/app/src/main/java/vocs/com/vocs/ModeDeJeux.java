@@ -2,7 +2,10 @@ package vocs.com.vocs;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +23,8 @@ public class ModeDeJeux extends AppCompatActivity {
 
     Intent ModeDeJeux = getIntent();
     Button TraductionNormale,retourModePrinc;
-
+    BottomNavigationView BottomBar;
+    ImageButton parametres;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +32,30 @@ public class ModeDeJeux extends AppCompatActivity {
 
         TraductionNormale=(Button) findViewById(R.id.TraductionNormale);
         retourModePrinc=(Button) findViewById(R.id.retourModePrinc);
+        parametres=(ImageButton) findViewById(R.id.parametres);
+        BottomBar=(BottomNavigationView) findViewById(R.id.BottomBar);
+
+        BottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.legroupe:
+                        Toast.makeText(ModeDeJeux.this, "groupe", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case R.id.lamanette:
+                        Intent modeJeux = new Intent (ModeDeJeux.this, ModeDeJeux.class);
+                        startActivity(modeJeux);
+                        break;
+
+                    case R.id.laliste:
+                        Intent versliste = new Intent (ModeDeJeux.this, ViewListContents.class);
+                        startActivity(versliste);
+                        break;
+                }
+                return true;
+            }
+        });
 
         TraductionNormale.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -41,6 +69,13 @@ public class ModeDeJeux extends AppCompatActivity {
             public void onClick(View v){
                 Intent retourModePrinc = new Intent (ModeDeJeux.this, PagePrinc.class);
                 startActivity(retourModePrinc);
+            }
+        });
+        parametres.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent versparam= new Intent (ModeDeJeux.this, Parametres.class);
+                startActivity(versparam);
             }
         });
     }
