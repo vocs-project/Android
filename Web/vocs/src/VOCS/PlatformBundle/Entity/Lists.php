@@ -3,6 +3,7 @@
 namespace VOCS\PlatformBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * Lists
@@ -40,7 +41,7 @@ class Lists
      * @ORM\ManyToMany(targetEntity="Words")
      * @ORM\JoinTable(name="lists_words",
      *      joinColumns={@ORM\JoinColumn(name="lists_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="words_id", referencedColumnName="id")}
+     *      inverseJoinColumns={@ORM\JoinColumn(name="words_content", referencedColumnName="content")}
      *      )
      */
     private $words;
@@ -109,6 +110,7 @@ class Lists
     public function __construct()
     {
         $this->words = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->setCreationDate(new \DateTime());
     }
 
     /**

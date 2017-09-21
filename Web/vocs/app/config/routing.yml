@@ -1,6 +1,8 @@
 vocs_platform:
-    resource: "@VOCSPlatformBundle/Resources/config/routing.yml"
-    prefix:   /
+    resource: "@VOCSPlatformBundle/Controller/"
+    type: annotation
+
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 

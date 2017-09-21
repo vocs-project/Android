@@ -2,25 +2,19 @@
 
 namespace VOCS\PlatformBundle\Form;
 
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use VOCS\PlatformBundle\Entity\Language;
 
-class WordsType extends AbstractType
+class LanguageType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('content', TextType::class)
-            ->add('language', EntityType::class, array(
-                'class' => Language::class
-            ));
+        $builder->add('code', TextType::class);
     }
     
     /**
@@ -29,7 +23,7 @@ class WordsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'VOCS\PlatformBundle\Entity\Words'
+            'data_class' => 'VOCS\PlatformBundle\Entity\Language'
         ));
     }
 
@@ -38,7 +32,7 @@ class WordsType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'vocs_platformbundle_words';
+        return 'vocs_platformbundle_language';
     }
 
 

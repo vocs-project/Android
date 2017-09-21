@@ -1,0 +1,10 @@
+{{ form(form) }}
+
+{% for word in words %}
+    mot : {{ word.content }}<br>
+    lang : {{ word.language }}<br>
+    {% for trad in word.trads %}
+        trad : {{ trad.content }}<br>
+    {% endfor %}
+    <br><br>
+{% endfor %}

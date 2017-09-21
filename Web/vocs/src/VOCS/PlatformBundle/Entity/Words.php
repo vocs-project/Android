@@ -3,23 +3,21 @@
 namespace VOCS\PlatformBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\ExclusionPolicy;
+use JMS\Serializer\Annotation\Expose;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\VirtualProperty;
 
 /**
  * Words
  *
  * @ORM\Table(name="words")
  * @ORM\Entity(repositoryClass="VOCS\PlatformBundle\Repository\WordsRepository")
+ *
+ * @ExclusionPolicy("all")
  */
 class Words
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
 
     /**
      * @var string
@@ -30,37 +28,54 @@ class Words
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="word", type="string", length=255)
+     * @ORM\Id
+     * @ORM\Column(name="content", type="string", length=255)
+     * @Expose
      */
-    private $word;
+    private $content;
+
+    /**
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Language")
+     * @ORM\JoinColumn(name="language_code", referencedColumnName="code")
+     * @Expose
+     */
+    private $language;
+
 
 
     /**
-     * Many Users have Many Users.
+     *
      * @ORM\ManyToMany(targetEntity="Words", mappedBy="trads")
      */
     private $words;
 
     /**
-     * Many Users have many Users.
+     *
      * @ORM\ManyToMany(targetEntity="Words", inversedBy="words")
      * @ORM\JoinTable(name="traductions",
-     *      joinColumns={@ORM\JoinColumn(name="words_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="trad_word_id", referencedColumnName="id")}
+     *      joinColumns={
+     *
+     *              @ORM\JoinColumn(name="words_content", referencedColumnName="content"),
+     *              @ORM\JoinColumn(name="words_language", referencedColumnName="language_code"),
+     *
+     *
+     *      },
+     *      inverseJoinColumns={
+     *
+     *              @ORM\JoinColumn(name="trad_word_language", referencedColumnName="language_code"),
+     *              @ORM\JoinColumn(name="trad_word_content", referencedColumnName="content"),
+     *
+     *
+     *      }
      *      )
+     * @Expose
      */
     private $trads;
 
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+
+
+
 
     /**
      * Set urlPrononciation
@@ -86,29 +101,7 @@ class Words
         return $this->urlPrononciation;
     }
 
-    /**
-     * Set word
-     *
-     * @param string $word
-     *
-     * @return Words
-     */
-    public function setWord($word)
-    {
-        $this->word = $word;
 
-        return $this;
-    }
-
-    /**
-     * Get word
-     *
-     * @return string
-     */
-    public function getWord()
-    {
-        return $this->word;
-    }
     /**
      * Constructor
      */
@@ -187,26 +180,55 @@ class Words
     }
 
     /**
-     * Set urPrononciation
+     * Set language
      *
-     * @param string $urPrononciation
+     * @param \VOCS\PlatformBundle\Entity\Language $language
      *
      * @return Words
      */
-    public function setUrPrononciation($urPrononciation)
+    public function setLanguage(\VOCS\PlatformBundle\Entity\Language $language = null)
     {
-        $this->urPrononciation = $urPrononciation;
+        $this->language = $language;
 
         return $this;
     }
 
     /**
-     * Get urPrononciation
+     * Get language
+     *
+     * @return \VOCS\PlatformBundle\Entity\Language
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * Set content
+     *
+     * @param string $content
+     *
+     * @return Words
+     */
+    public function setContent($content)
+    {
+        $this->content = $content;
+
+        return $this;
+    }
+
+    /**
+     * Get content
      *
      * @return string
      */
-    public function getUrPrononciation()
+    public function getContent()
     {
-        return $this->urPrononciation;
+        return $this->content;
+    }
+
+    function __toString()
+    {
+        return $this->content;
     }
 }

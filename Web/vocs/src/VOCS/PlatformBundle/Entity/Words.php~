@@ -26,24 +26,24 @@ class Words
      *
      * @ORM\Column(name="url_prononciation", type="string", length=255, nullable=true)
      */
-    private $urPrononciation;
+    private $urlPrononciation;
 
     /**
      * @var string
      *
      * @ORM\Column(name="word", type="string", length=255)
      */
-    private $word;
+    private $content;
 
 
     /**
-     * Many Users have Many Users.
+     *
      * @ORM\ManyToMany(targetEntity="Words", mappedBy="trads")
      */
     private $words;
 
     /**
-     * Many Users have many Users.
+     *
      * @ORM\ManyToMany(targetEntity="Words", inversedBy="words")
      * @ORM\JoinTable(name="traductions",
      *      joinColumns={@ORM\JoinColumn(name="words_id", referencedColumnName="id")},
@@ -51,6 +51,12 @@ class Words
      *      )
      */
     private $trads;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Language")
+     */
+    private $language;
+
 
     /**
      * Get id
@@ -86,29 +92,7 @@ class Words
         return $this->urlPrononciation;
     }
 
-    /**
-     * Set word
-     *
-     * @param string $word
-     *
-     * @return Words
-     */
-    public function setWord($word)
-    {
-        $this->word = $word;
 
-        return $this;
-    }
-
-    /**
-     * Get word
-     *
-     * @return string
-     */
-    public function getWord()
-    {
-        return $this->word;
-    }
     /**
      * Constructor
      */
@@ -184,5 +168,29 @@ class Words
     public function getTrads()
     {
         return $this->trads;
+    }
+
+    /**
+     * Set language
+     *
+     * @param \VOCS\PlatformBundle\Entity\Language $language
+     *
+     * @return Words
+     */
+    public function setLanguage(\VOCS\PlatformBundle\Entity\Language $language = null)
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * Get language
+     *
+     * @return \VOCS\PlatformBundle\Entity\Language
+     */
+    public function getLanguage()
+    {
+        return $this->language;
     }
 }

@@ -7,20 +7,17 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use VOCS\PlatformBundle\Entity\Language;
+use VOCS\PlatformBundle\Entity\Words;
+use Symfony\Component\Validator\Constraints as Assert;
 
-class WordsType extends AbstractType
+class ListsType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('content', TextType::class)
-            ->add('language', EntityType::class, array(
-                'class' => Language::class
-            ));
+        $builder->add('name', new Assert\NotBlank());
     }
     
     /**
@@ -29,7 +26,8 @@ class WordsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'VOCS\PlatformBundle\Entity\Words'
+            'data_class' => 'VOCS\PlatformBundle\Entity\Lists',
+            'csrf_protection' => false
         ));
     }
 
@@ -38,7 +36,7 @@ class WordsType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'vocs_platformbundle_words';
+        return 'vocs_platformbundle_lists';
     }
 
 
