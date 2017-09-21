@@ -45,13 +45,6 @@ class User extends BaseUser
 
 
 
-    public function __construct()
-    {
-        parent::__construct();
-        $this->lists = new \Doctrine\Common\Collections\ArrayCollection();
-
-    }
-
 
     public function setEmail($email)
     {
@@ -106,39 +99,5 @@ class User extends BaseUser
     public function getSurname()
     {
         return $this->surname;
-    }
-
-    /**
-     * Add list
-     *
-     * @param \VOCS\PlatformBundle\Entity\Lists $list
-     *
-     * @return User
-     */
-    public function addList(\VOCS\PlatformBundle\Entity\Lists $list)
-    {
-        $this->lists[] = $list;
-
-        return $this;
-    }
-
-    /**
-     * Remove list
-     *
-     * @param \VOCS\PlatformBundle\Entity\Lists $list
-     */
-    public function removeList(\VOCS\PlatformBundle\Entity\Lists $list)
-    {
-        $this->lists->removeElement($list);
-    }
-
-    /**
-     * Get lists
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getLists()
-    {
-        return $this->lists;
     }
 }
