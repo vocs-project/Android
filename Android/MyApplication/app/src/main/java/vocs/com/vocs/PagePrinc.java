@@ -18,6 +18,7 @@ import java.text.Normalizer;
 import android.content.Intent;
 import android.widget.Toast;
 
+import static vocs.com.vocs.R.id.lamanette;
 import static vocs.com.vocs.R.id.parametres;
 
 public class PagePrinc extends Activity {
@@ -37,6 +38,7 @@ public class PagePrinc extends Activity {
         parametres=(ImageButton) findViewById(R.id.parametres);
         BottomBar=(BottomNavigationView) findViewById(R.id.BottomBar);
 
+
         BottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -54,8 +56,10 @@ public class PagePrinc extends Activity {
                         Intent versliste = new Intent (PagePrinc.this, ViewListContents.class);
                         startActivity(versliste);
                         break;
+
                 }
                 return true;
+
             }
         });
 

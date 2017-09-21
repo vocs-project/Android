@@ -24,16 +24,6 @@
         android:layout_marginTop="137dp" />
 
 
-    <ImageButton
-        android:text="parametres"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/parametre"
-        android:id="@+id/parametres"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
     <android.support.design.widget.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,6 +31,8 @@
         android:layout_alignParentStart="true"
         android:id="@+id/BottomBar"
         app:itemBackground="@android:color/darker_gray"
+        app:itemIconTint="@drawable/selectordebar"
+        app:itemTextColor="@drawable/selectordebar"
         app:menu="@menu/bottom_navigation_main"
         android:layout_alignParentBottom="true"
         >
@@ -53,9 +45,39 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tradliste"
-        android:layout_marginTop="115dp"
+        android:layout_marginTop="72dp"
         android:layout_below="@+id/textView5"
         android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/navigationbar"
+        android:id="@+id/imageView3"
+        android:adjustViewBounds="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/more"
+        android:id="@+id/retourarriere"
+        android:background="@null"
+        android:layout_alignBottom="@+id/imageView3"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true" />
+    <ImageButton
+        android:text="parametres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/parametre"
+        android:id="@+id/parametres"
+        android:background="@null"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@+id/imageView3" />
 
 
 </RelativeLayout>

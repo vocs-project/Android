@@ -6,14 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
+
+import static vocs.com.vocs.R.id.retour;
 
 
 public class LesListes extends AppCompatActivity {
 
     DataBaseHelper myDB;
-    Button btnAdd,retour;
+    Button btnAdd;
     EditText editText;
+    ImageButton param,retour;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +26,8 @@ public class LesListes extends AppCompatActivity {
 
         editText=(EditText) findViewById(R.id.editText);
         btnAdd=(Button) findViewById(R.id.btnAdd);
-        retour=(Button) findViewById(R.id.retour);
+        retour=(ImageButton) findViewById(R.id.retourarriere);
+        param=(ImageButton) findViewById(R.id.parametres);
         myDB=new DataBaseHelper(this);
 
         retour.setOnClickListener(new View.OnClickListener(){
@@ -30,6 +35,13 @@ public class LesListes extends AppCompatActivity {
             public void onClick(View v){
                 Intent versliste = new Intent (LesListes.this, ViewListContents.class);
                 startActivity(versliste);
+            }
+        });
+        param.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent versparam = new Intent (LesListes.this, Parametres.class);
+                startActivity(versparam);
             }
         });
 

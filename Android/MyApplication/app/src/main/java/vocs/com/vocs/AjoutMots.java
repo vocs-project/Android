@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import static android.R.attr.value;
@@ -17,9 +18,10 @@ import static vocs.com.vocs.R.id.retours;
 public class AjoutMots extends AppCompatActivity {
 
     DataBaseHelper myDB;
-    Button retour_mots,ajout_mot;
+    Button ajout_mot;
     EditText editanglais,editfrancais;
     String var;
+    ImageButton retour_mots, param;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +30,9 @@ public class AjoutMots extends AppCompatActivity {
 
         editanglais= (EditText) findViewById(R.id.editanglais);
         editfrancais= (EditText) findViewById(R.id.editfrancais);
-        retour_mots = (Button) findViewById(R.id.retourversmots);
+        retour_mots = (ImageButton) findViewById(R.id.retourarriere);
         ajout_mot = (Button) findViewById(R.id.ajout_mot);
+        param=(ImageButton) findViewById(R.id.parametres);
         myDB=new DataBaseHelper(this);
 
         myDB.open();
@@ -39,6 +42,13 @@ public class AjoutMots extends AppCompatActivity {
         if(b != null) {
             var = b.getString("key");
         }
+        param.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent versparam = new Intent (AjoutMots.this, Parametres.class);
+                startActivity(versparam);
+            }
+        });
         retour_mots.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){

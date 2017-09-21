@@ -30,7 +30,7 @@ public class Traduction extends AppCompatActivity {
     ArrayList<MyWords> tableauanglais=new ArrayList<>();
     ArrayList<MyWords> tableaufrancais=new ArrayList<>();
     int nombreMax, nb;
-    String motaffiche,motreponse,motsolution;
+    String motaffiche,motreponse,motsolution,motsolution2;
     int bon,tt;
 
     TextView afficheur,bienmal,soluc,lemot;
@@ -134,6 +134,9 @@ public class Traduction extends AppCompatActivity {
 
             motaffiche = String.valueOf(tableaufrancais.get(nb).getMot());
             motsolution = String.valueOf(tableauanglais.get(nb).getMot());
+           motsolution2=motsolution;
+            motsolution = motsolution.toLowerCase();
+            motsolution = removeAccent(motsolution);
 
             afficheur.setText(motaffiche);
             anim_score();
@@ -148,7 +151,7 @@ public class Traduction extends AppCompatActivity {
                         bienmal.setTextColor(Color.GREEN);
                         edit.setText("");
                         soluc.setText("");
-                        lemot.setText(motsolution + " : " + motaffiche);
+                        lemot.setText(motsolution2 + " : " + motaffiche);
                         bon++;
                         nb=(int) (Math.random()*nombreMax);
                         afficheur.setText(motaffiche);
@@ -159,7 +162,7 @@ public class Traduction extends AppCompatActivity {
                         bienmal.setTextColor(Color.RED);
                         edit.setText("");
                         soluc.setText("");
-                        lemot.setText(motsolution + " : " + motaffiche);
+                        lemot.setText(motsolution2 + " : " + motaffiche);
                         nb=(int) (Math.random()*nombreMax);
                         afficheur.setText(motaffiche);
                         fonction();
@@ -172,6 +175,9 @@ public class Traduction extends AppCompatActivity {
 
             motaffiche = String.valueOf(tableauanglais.get(nb).getMot());
             motsolution = String.valueOf(tableaufrancais.get(nb).getMot());
+            motsolution2=motsolution;
+            motsolution = motsolution.toLowerCase();
+            motsolution = removeAccent(motsolution);
             anim_score();
             config();
             afficheur.setText(motaffiche);
@@ -186,7 +192,7 @@ public class Traduction extends AppCompatActivity {
                         bienmal.setTextColor(Color.GREEN);
                         edit.setText("");
                         soluc.setText("");
-                        lemot.setText(motsolution + " : " + motaffiche);
+                        lemot.setText(motsolution2 + " : " + motaffiche);
                         bon++;
                         nb=(int) (Math.random()*nombreMax);
                         afficheur.setText(motaffiche);
@@ -197,7 +203,7 @@ public class Traduction extends AppCompatActivity {
                         bienmal.setTextColor(Color.RED);
                         edit.setText("");
                         soluc.setText("");
-                        lemot.setText(motsolution + " : " + motaffiche);
+                        lemot.setText(motsolution2 + " : " + motaffiche);
                         nb=(int) (Math.random()*nombreMax);
                         afficheur.setText(motaffiche);
                         fonction();

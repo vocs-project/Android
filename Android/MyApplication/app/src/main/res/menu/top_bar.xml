@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+
+    <item
+        android:id="@+id/parametre"
+        android:enabled="true"
+        android:icon="@drawable/parametre"
+        android:title="parametres"
+        android:checked="false">
+    </item>
+    <item
+        android:id="@+id/retour"
+        android:enabled="true"
+        android:title="retour"
+        android:checked="false">
+
+    </item>
+</menu>

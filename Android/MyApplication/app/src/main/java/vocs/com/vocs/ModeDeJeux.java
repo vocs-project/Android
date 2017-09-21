@@ -22,16 +22,16 @@ import static vocs.com.vocs.R.id.tradliste;
 public class ModeDeJeux extends AppCompatActivity {
 
     Intent ModeDeJeux = getIntent();
-    Button TraductionNormale,retourModePrinc;
+    Button TraductionNormale;
     BottomNavigationView BottomBar;
-    ImageButton parametres;
+    ImageButton parametres,retourModePrinc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mode_de_jeux);
 
         TraductionNormale=(Button) findViewById(R.id.TraductionNormale);
-        retourModePrinc=(Button) findViewById(R.id.retourModePrinc);
+        retourModePrinc=(ImageButton) findViewById(R.id.retourarriere);
         parametres=(ImageButton) findViewById(R.id.parametres);
         BottomBar=(BottomNavigationView) findViewById(R.id.BottomBar);
 

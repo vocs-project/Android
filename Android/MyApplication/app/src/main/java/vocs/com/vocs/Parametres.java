@@ -5,17 +5,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 public class Parametres extends AppCompatActivity {
 
-    Button retourdeparam;
+    ImageButton retourdeparam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parametres);
 
-        retourdeparam=(Button) findViewById(R.id.retourdeparam);
+        retourdeparam=(ImageButton) findViewById(R.id.retourarriere);
 
         retourdeparam.setOnClickListener(new View.OnClickListener(){
             @Override

@@ -3,6 +3,7 @@ package vocs.com.vocs;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Application;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -28,7 +30,7 @@ import static vocs.com.vocs.R.id.retour;
 public class ChoixListe extends AppCompatActivity {
 
     DataBaseHelper myDB;
-    Button retour;
+    ImageButton retour,param;
     private ArrayList<MyList> tableauList = new ArrayList<>();
 
     @Override
@@ -38,7 +40,8 @@ public class ChoixListe extends AppCompatActivity {
 
         ListView listViewChoix=(ListView) findViewById(R.id.list_view_choix);
         myDB=new DataBaseHelper(this);
-        retour=(Button) findViewById(R.id.retour);
+        retour=(ImageButton) findViewById(R.id.retourarriere);
+        param=(ImageButton) findViewById(R.id.parametres);
 
         myDB.open();
 
@@ -57,8 +60,16 @@ public class ChoixListe extends AppCompatActivity {
         retour.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent verspageprinc = new Intent (ChoixListe.this, PagePrinc.class);
+                Intent verspageprinc = new Intent (ChoixListe.this, ModeDeJeux.class);
                 startActivity(verspageprinc);
+            }
+        });
+
+        param.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent versparam = new Intent (ChoixListe.this, Parametres.class);
+                startActivity(versparam);
             }
         });
 
