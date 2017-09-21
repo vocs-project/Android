@@ -10,4 +10,23 @@ namespace VOCS\PlatformBundle\Repository;
  */
 class ListsRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getListOfUser($listId, $usersId) {
+
+        $qb = $this->createQueryBuilder('l');
+        $list = $qb
+            ->join('l.users', 'u')
+            ->where($qb
+                ->expr()
+                ->eq('u.id', $usersId))
+            ->where($qb
+                ->expr()
+                ->eq('l.id', $listId))
+            ->addSelect('l')
+            ->getQuery()
+            ->getSingleResult();
+
+
+        return $list;
+    }
+
 }

@@ -48,6 +48,13 @@ class Lists
 
 
     /**
+     *
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="lists")
+     */
+    private $users;
+
+
+    /**
      * Get id
      *
      * @return int
@@ -110,6 +117,7 @@ class Lists
     public function __construct()
     {
         $this->words = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
         $this->setCreationDate(new \DateTime());
     }
 
@@ -145,5 +153,39 @@ class Lists
     public function getWords()
     {
         return $this->words;
+    }
+
+    /**
+     * Add user
+     *
+     * @param \VOCS\PlatformBundle\Entity\User $user
+     *
+     * @return Lists
+     */
+    public function addUser(\VOCS\PlatformBundle\Entity\User $user)
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \VOCS\PlatformBundle\Entity\User $user
+     */
+    public function removeUser(\VOCS\PlatformBundle\Entity\User $user)
+    {
+        $this->users->removeElement($user);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }

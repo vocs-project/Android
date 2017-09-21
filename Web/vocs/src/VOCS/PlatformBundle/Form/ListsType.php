@@ -17,7 +17,7 @@ class ListsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', new Assert\NotBlank());
+        $builder->add('name');
     }
     
     /**

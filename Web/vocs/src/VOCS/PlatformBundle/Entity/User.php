@@ -34,12 +34,8 @@ class User extends BaseUser
     private $surname;
 
     /**
-     *
-     * @ORM\ManyToMany(targetEntity="Lists")
-     * @ORM\JoinTable(name="users_lists",
-     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="lists_id", referencedColumnName="id")}
-     *      )
+     * @ORM\ManyToMany(targetEntity="Lists", inversedBy="users", cascade={"persist"})
+     * @ORM\JoinTable(name="users_lists")
      */
     private $lists;
 
