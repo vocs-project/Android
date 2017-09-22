@@ -41,7 +41,10 @@ class Lists
      * @ORM\ManyToMany(targetEntity="Words")
      * @ORM\JoinTable(name="lists_words",
      *      joinColumns={@ORM\JoinColumn(name="lists_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="words_content", referencedColumnName="content")}
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="words_content", referencedColumnName="content"),
+     *          @ORM\JoinColumn(name="words_language", referencedColumnName="language_code")
+     *      }
      *      )
      */
     private $words;

@@ -4,6 +4,7 @@ namespace VOCS\PlatformBundle\Form;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,9 +19,8 @@ class WordsType extends AbstractType
     {
         $builder
             ->add('content', TextType::class)
-            ->add('language', EntityType::class, array(
-                'class' => Language::class
-            ));
+            ->add('language', LanguageType::class);
+
     }
     
     /**
@@ -29,7 +29,8 @@ class WordsType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'VOCS\PlatformBundle\Entity\Words'
+            'data_class' => 'VOCS\PlatformBundle\Entity\Words',
+            'csrf_protection' => false
         ));
     }
 

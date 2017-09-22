@@ -36,7 +36,7 @@ class Words
 
     /**
      * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Language")
+     * @ORM\ManyToOne(targetEntity="Language", cascade={"persist"})
      * @ORM\JoinColumn(name="language_code", referencedColumnName="code")
      * @Expose
      */
@@ -46,13 +46,13 @@ class Words
 
     /**
      *
-     * @ORM\ManyToMany(targetEntity="Words", mappedBy="trads")
+     * @ORM\ManyToMany(targetEntity="Words", mappedBy="trads", cascade={"persist"})
      */
     private $words;
 
     /**
      *
-     * @ORM\ManyToMany(targetEntity="Words", inversedBy="words")
+     * @ORM\ManyToMany(targetEntity="Words", inversedBy="words", cascade={"persist"})
      * @ORM\JoinTable(name="traductions",
      *      joinColumns={
      *
