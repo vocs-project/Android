@@ -69,17 +69,17 @@ class UserController extends Controller
     {
         $user = $this->getDoctrine()->getRepository(User::class)->find($request->get('id'));
 
-        $formatted = [];
+
         $formattedLists = [];
 
 
         $lists = $user->getLists();
 
         foreach ($lists as $list) {
-            $formattedLists[] = ['id' => $list->getId(), 'name' => $list->getName(),];
+            $formattedLists = ['id' => $list->getId(), 'name' => $list->getName(),];
         }
 
-        $formatted[] = [
+        $formatted = [
             'id' => $user->getId(),
             'email' => $user->getEmail(),
             'firstname' => $user->getFirstname(),
@@ -154,6 +154,45 @@ class UserController extends Controller
     /**
      * POST
      */
+
+
+    /**
+     * @Rest\View()
+     * @Rest\Post("/rest/users/authentification")
+     */
+    public function authentificationAction(Request $request) {
+        $repUser = $this->getDoctrine()->getRepository('VOCSPlatformBundle:User');
+        $user = $repUser->findOneBy(array('email' => $request->get('email')));
+        if($user == null || $user->getPassword() != $request->get('password')) {
+            $formatted[] = [
+                'code' => 401,
+                'message' => 'Authenfication failed'
+            ];
+        }else {
+            $formatted;
+            $formattedLists = [];
+
+            $lists = $user->getLists();
+
+            foreach ($lists as $list) {
+                $formattedLists[] = ['id' => $list->getId(), 'name' => $list->getName(),];
+            }
+
+            $formatted = [
+                'id' => $user->getId(),
+                'email' => $user->getEmail(),
+                'firstname' => $user->getFirstname(),
+                'surname' => $user->getSurname(),
+                'lists' => $formattedLists
+            ];
+
+        }
+        $view = View::create($formatted);
+        $view->setFormat('json');
+
+        return $view;
+
+    }
 
 
     /**
