@@ -164,12 +164,12 @@ class UserController extends Controller
         $repUser = $this->getDoctrine()->getRepository('VOCSPlatformBundle:User');
         $user = $repUser->findOneBy(array('email' => $request->get('email')));
         if($user == null || $user->getPassword() != $request->get('password')) {
-            $formatted[] = [
+            $formatted = [
                 'code' => 401,
                 'message' => 'Authenfication failed'
             ];
         }else {
-            $formatted;
+
             $formattedLists = [];
 
             $lists = $user->getLists();
