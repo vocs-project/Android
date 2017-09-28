@@ -35,7 +35,30 @@ class UserController extends Controller
     {
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
 
-        return $users;
+        $formatted = [];
+        $formattedLists = [];
+
+        foreach ($users as $user) {
+            $lists = $user->getLists();
+
+            foreach ($lists as $list) {
+                $formattedLists[] = ['id' => $list->getId(), 'name' => $list->getName(),];
+            }
+
+            $formatted[] = [
+                'id' => $user->getId(),
+                'email' => $user->getEmail(),
+                'firstname' => $user->getFirstname(),
+                'surname' => $user->getSurname(),
+                'lists' => $formattedLists
+            ];
+
+        }
+
+        $view = View::create($formatted);
+        $view->setFormat('json');
+
+        return $view;
     }
 
     /**
@@ -46,7 +69,30 @@ class UserController extends Controller
     {
         $user = $this->getDoctrine()->getRepository(User::class)->find($request->get('id'));
 
-        return $user;
+        $formatted = [];
+        $formattedLists = [];
+
+
+        $lists = $user->getLists();
+
+        foreach ($lists as $list) {
+            $formattedLists[] = ['id' => $list->getId(), 'name' => $list->getName(),];
+        }
+
+        $formatted[] = [
+            'id' => $user->getId(),
+            'email' => $user->getEmail(),
+            'firstname' => $user->getFirstname(),
+            'surname' => $user->getSurname(),
+            'lists' => $formattedLists
+        ];
+
+
+
+        $view = View::create($formatted);
+        $view->setFormat('json');
+
+        return $view;
     }
 
     /**
