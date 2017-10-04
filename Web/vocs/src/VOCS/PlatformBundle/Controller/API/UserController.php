@@ -45,13 +45,7 @@ class UserController extends Controller
                 $formattedLists[] = ['id' => $list->getId(), 'name' => $list->getName(),];
             }
 
-            $formatted[] = [
-                'id' => $user->getId(),
-                'email' => $user->getEmail(),
-                'firstname' => $user->getFirstname(),
-                'surname' => $user->getSurname(),
-                'lists' => $formattedLists
-            ];
+            $formatted[] = ['id' => $user->getId(), 'email' => $user->getEmail(), 'firstname' => $user->getFirstname(), 'surname' => $user->getSurname(), 'lists' => $formattedLists];
 
         }
 
@@ -75,18 +69,10 @@ class UserController extends Controller
 
         $lists = $user->getLists();
 
-        foreach ($lists as $list) {
-            $formattedLists = ['id' => $list->getId(), 'name' => $list->getName(),];
-        }
 
-        $formatted = [
-            'id' => $user->getId(),
-            'email' => $user->getEmail(),
-            'firstname' => $user->getFirstname(),
-            'surname' => $user->getSurname(),
-            'lists' => $formattedLists
+        $formatted = ['id' => $user->getId(), 'email' => $user->getEmail(), 'firstname' => $user->getFirstname(), 'surname' => $user->getSurname()
+
         ];
-
 
 
         $view = View::create($formatted);
@@ -160,15 +146,13 @@ class UserController extends Controller
      * @Rest\View()
      * @Rest\Post("/rest/users/authentification")
      */
-    public function authentificationAction(Request $request) {
+    public function authentificationAction(Request $request)
+    {
         $repUser = $this->getDoctrine()->getRepository('VOCSPlatformBundle:User');
         $user = $repUser->findOneBy(array('email' => $request->get('email')));
-        if($user == null || $user->getPassword() != $request->get('password')) {
-            $formatted = [
-                'code' => 401,
-                'message' => 'Authenfication failed'
-            ];
-        }else {
+        if ($user == null || $user->getPassword() != $request->get('password')) {
+            $formatted = ['code' => 401, 'message' => 'Authenfication failed'];
+        } else {
 
             $formattedLists = [];
 
@@ -178,13 +162,7 @@ class UserController extends Controller
                 $formattedLists[] = ['id' => $list->getId(), 'name' => $list->getName(),];
             }
 
-            $formatted = [
-                'id' => $user->getId(),
-                'email' => $user->getEmail(),
-                'firstname' => $user->getFirstname(),
-                'surname' => $user->getSurname(),
-                'lists' => $formattedLists
-            ];
+            $formatted = ['id' => $user->getId(), 'email' => $user->getEmail(), 'firstname' => $user->getFirstname(), 'surname' => $user->getSurname(), 'lists' => $formattedLists];
 
         }
         $view = View::create($formatted);
@@ -252,56 +230,46 @@ class UserController extends Controller
      */
     public function postUsersListsWordsAction(Request $request)
     {
+        $em = $this->getDoctrine()->getManager();
+
         $list = $this->getDoctrine()->getRepository(Lists::class)->getListOfUser($request->get('list_id'), $request->get('id'));
 
-        $word = new Words();
-        $word->setContent($request->get('word')['content']);
-        $lang = $this->getDoctrine()->getRepository(Language::class)->find($request->get('word')['language']);
-        $word->setLanguage($lang);
+        $repWords = $em->getRepository('VOCSPlatformBundle:Words');
 
+        $word = $repWords->find(array('content' => $request->get('word')['content'], 'language' => $request->get('word')['language']));
+        echo $word;
+        if (!isset($word)) {
 
-        $trad = new Words();
-        $trad->setContent($request->get('trad')['content']);
-        $lang = $this->getDoctrine()->getRepository(Language::class)->find($request->get('trad')['language']);
-        $trad->setLanguage($lang);
-
-
-
-
-        $em = $this->getDoctrine()->getManager();
-        $errors = 0;
-        $em->persist($word);
-        try {
-            $em->flush();
-        } catch (UniqueConstraintViolationException $exception) {
-            $word = $em->getRepository(Words::class)->find(array('content' => $word->getContent(), 'language' => $word->getLanguage()->getCode()));
-            $em = $this->getDoctrine()->resetEntityManager();
-            $em = $this->getDoctrine()->getManager();
-            $errors++;
-        }
-        $em->persist($trad);
-        try {
-            $em->flush();
-        } catch (UniqueConstraintViolationException $exception) {
-            $trad = $em->getRepository(Words::class)->find(array('content' => $trad->getContent(), 'language' => $trad->getLanguage()->getCode()));
-            $em = $this->getDoctrine()->resetEntityManager();
-            $em = $this->getDoctrine()->getManager();
-            $errors++;
+            $word = new Words();
+            $lang = $em->getRepository('VOCSPlatformBundle:Language')->find($request->get('word')['language']);
+            $word->setLanguage($lang);
+            $word->setContent($request->get('word')['content']);
+            $em->persist($word);
         }
 
+        $trad = $repWords->find(array('content' => $request->get('trad')['content'], 'language' => $request->get('trad')['language']));
+        if (!isset($trad)) {
+            $trad = new Words();
+            $lang = $em->getRepository('VOCSPlatformBundle:Language')->find($request->get('trad')['language']);
+            $trad->setLanguage($lang);
+            $trad->setContent($request->get('trad')['content']);
+            $em->persist($trad);
+        }
 
-        $word->addTrad($trad);
-        $trad->addTrad($word);
+        if (!$word->getTrads()->contains($trad)) {
+            $word->addTrad($trad);
+        }
 
-        $em->persist($word);
-        $em->persist($trad);
+        if (!$trad->getTrads()->contains($word)) {
+            $trad->addTrad($word);
+        }
 
+        if (!$list->getWords()->contains($word)) {
 
-        $list->addWord($word);
+            $list->addWord($word);
+        }
 
-        $em->persist($list);
         $em->flush();
-
 
 
         $words = $list->getWords();
@@ -309,24 +277,13 @@ class UserController extends Controller
         $tradsArray = [];
         foreach ($words as $word) {
             foreach ($word->getTrads() as $trad) {
-                $tradsArray[] = [
-                    'content' => $trad->getContent(),
-                    'lang' => $trad->getLanguage()->getCode(),
-                ];
+                $tradsArray[] = ['content' => $trad->getContent(), 'lang' => $trad->getLanguage()->getCode(),];
             }
-            $wordsArray[] = [
-                'content' => $word->getContent(),
-                'lang' => $word->getLanguage()->getCode(),
-                'trads' => $tradsArray,
-            ];
+            $wordsArray[] = ['content' => $word->getContent(), 'lang' => $word->getLanguage()->getCode(), 'trads' => $tradsArray,];
             $tradsArray = null;
         }
 
-        $formatted = [
-            'id' => $list->getId(),
-            'name' => $list->getName(),
-            'words' => $wordsArray,
-        ];
+        $formatted = ['id' => $list->getId(), 'name' => $list->getName(), 'words' => $wordsArray,];
 
         // Création d'une vue FOSRestBundle
         $view = View::create($formatted);
