@@ -36,19 +36,6 @@ class Lists
      */
     private $creationDate;
 
-    /**
-     * Many Users have Many Groups.
-     * @ORM\ManyToMany(targetEntity="Words")
-     * @ORM\JoinTable(name="lists_words",
-     *      joinColumns={@ORM\JoinColumn(name="lists_id", referencedColumnName="id")},
-     *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="words_content", referencedColumnName="content"),
-     *          @ORM\JoinColumn(name="words_language", referencedColumnName="language_code")
-     *      }
-     *      )
-     */
-    private $words;
-
 
     /**
      *

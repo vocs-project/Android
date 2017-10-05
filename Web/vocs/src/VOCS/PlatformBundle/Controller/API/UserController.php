@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use VOCS\PlatformBundle\Entity\Language;
 use VOCS\PlatformBundle\Entity\Lists;
+use VOCS\PlatformBundle\Entity\ListsWords;
 use VOCS\PlatformBundle\Entity\User;
 use VOCS\PlatformBundle\Entity\Words;
 use VOCS\PlatformBundle\Form\LanguageType;
@@ -36,17 +37,9 @@ class UserController extends Controller
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
 
         $formatted = [];
-        $formattedLists = [];
 
         foreach ($users as $user) {
-            $lists = $user->getLists();
-
-            foreach ($lists as $list) {
-                $formattedLists[] = ['id' => $list->getId(), 'name' => $list->getName(),];
-            }
-
-            $formatted[] = ['id' => $user->getId(), 'email' => $user->getEmail(), 'firstname' => $user->getFirstname(), 'surname' => $user->getSurname(), 'lists' => $formattedLists];
-
+            $formatted[] = ['id' => $user->getId(), 'email' => $user->getEmail(), 'firstname' => $user->getFirstname(), 'surname' => $user->getSurname()];
         }
 
         $view = View::create($formatted);
@@ -63,17 +56,7 @@ class UserController extends Controller
     {
         $user = $this->getDoctrine()->getRepository(User::class)->find($request->get('id'));
 
-
-        $formattedLists = [];
-
-
-        $lists = $user->getLists();
-
-
-        $formatted = ['id' => $user->getId(), 'email' => $user->getEmail(), 'firstname' => $user->getFirstname(), 'surname' => $user->getSurname()
-
-        ];
-
+        $formatted = ['id' => $user->getId(), 'email' => $user->getEmail(), 'firstname' => $user->getFirstname(), 'surname' => $user->getSurname()];
 
         $view = View::create($formatted);
         $view->setFormat('json');
@@ -110,21 +93,52 @@ class UserController extends Controller
      */
     public function getUserListAction(Request $request)
     {
-        $list = $this->getDoctrine()->getRepository(Lists::class)->getListOfUser($request->get('list_id'), $request->get('id'));
+        $list = $this->getDoctrine()->getRepository(Lists::class)->find($request->get('list_id'));
+        $listWords = $this->getDoctrine()->getRepository(ListsWords::class)->findBy(array('list' => $list));
 
-        $words = $list->getWords();
+
         $wordsArray = [];
-        $tradsArray = [];
-        foreach ($words as $word) {
-            foreach ($word->getTrads() as $trad) {
-                $tradsArray[] = ['content' => $trad->getContent(), 'lang' => $trad->getLanguage()->getCode(),];
+        $wordTrads = [];
+        $tradTrads = [];
+        foreach ($listWords as $listWord) {
+
+            foreach ($listWord->getWord()->getTrads() as $trad) {
+                $wordTrads[] = [
+                    'content' => $trad->getContent(),
+                    'lang' => $trad->getLanguage()->getCode(),
+                ];
             }
-            $wordsArray[] = ['content' => $word->getContent(), 'lang' => $word->getLanguage()->getCode(), 'trads' => $tradsArray,];
-            $tradsArray = null;
+
+            foreach ($listWord->getTrad()->getTrads() as $trad) {
+                $tradTrads[] = [
+                    'content' => $trad->getContent(),
+                    'lang' => $trad->getLanguage()->getCode(),
+                ];
+            }
+
+            $word = [
+                'content' => $listWord->getWord()->getContent(),
+                'lang' => $listWord->getWord()->getLanguage()->getCode(),
+                'trads' => $wordTrads
+            ];
+
+            $trad = [
+                'content' => $listWord->getTrad()->getContent(),
+                'lang' => $listWord->getTrad()->getLanguage()->getCode(),
+                'trads' => $tradTrads
+            ];
+
+            $wordsArray[] = [
+                'word' => $word,
+                'trad' => $trad
+            ];
         }
 
-        $formatted = ['id' => $list->getId(), 'name' => $list->getName(), 'words' => $wordsArray,];
-
+        $formatted = [
+            'id' => $list->getId(),
+            'name' => $list->getName(),
+            'words' => $wordsArray,
+        ];
         // Création d'une vue FOSRestBundle
         $view = View::create($formatted);
         $view->setFormat('json');
@@ -237,7 +251,7 @@ class UserController extends Controller
         $repWords = $em->getRepository('VOCSPlatformBundle:Words');
 
         $word = $repWords->find(array('content' => $request->get('word')['content'], 'language' => $request->get('word')['language']));
-        echo $word;
+
         if (!isset($word)) {
 
             $word = new Words();
@@ -264,27 +278,69 @@ class UserController extends Controller
             $trad->addTrad($word);
         }
 
-        if (!$list->getWords()->contains($word)) {
+        $repListWords = $this->getDoctrine()->getRepository(ListsWords::class);
 
-            $list->addWord($word);
+        $listWord = $repListWords->findOneBy(array('list' => $list, 'word' => $word, 'trad' => $trad));
+        $listTrad = $repListWords->findOneBy(array('list' => $list, 'word' => $trad, 'trad' => $word));
+
+        if($listWord == null && $listTrad == null) {
+            $listWord = new ListsWords();
+            $listWord->setList($list);
+            $listWord->setWord($word);
+            $listWord->setTrad($trad);
+            $em->persist($listWord);
         }
+
+
 
         $em->flush();
 
 
-        $words = $list->getWords();
+        $listWords = $repListWords->findBy(array('list' => $list));
+
+
         $wordsArray = [];
-        $tradsArray = [];
-        foreach ($words as $word) {
-            foreach ($word->getTrads() as $trad) {
-                $tradsArray[] = ['content' => $trad->getContent(), 'lang' => $trad->getLanguage()->getCode(),];
+
+        foreach ($listWords as $listWord) {
+            $wordTrads = [];
+            $tradTrads = [];
+            foreach ($listWord->getWord()->getTrads() as $trad) {
+                $wordTrads[] = [
+                    'content' => $trad->getContent(),
+                    'lang' => $trad->getLanguage()->getCode(),
+                ];
             }
-            $wordsArray[] = ['content' => $word->getContent(), 'lang' => $word->getLanguage()->getCode(), 'trads' => $tradsArray,];
-            $tradsArray = null;
+
+            foreach ($listWord->getTrad()->getTrads() as $trad) {
+                $tradTrads[] = [
+                    'content' => $trad->getContent(),
+                    'lang' => $trad->getLanguage()->getCode(),
+                ];
+            }
+
+            $word = [
+                'content' => $listWord->getWord()->getContent(),
+                'lang' => $listWord->getWord()->getLanguage()->getCode(),
+                'trads' => $wordTrads
+            ];
+
+            $trad = [
+                'content' => $listWord->getTrad()->getContent(),
+                'lang' => $listWord->getTrad()->getLanguage()->getCode(),
+                'trads' => $tradTrads
+            ];
+
+            $wordsArray[] = [
+                'word' => $word,
+                'trad' => $trad
+            ];
         }
 
-        $formatted = ['id' => $list->getId(), 'name' => $list->getName(), 'words' => $wordsArray,];
-
+        $formatted = [
+            'id' => $list->getId(),
+            'name' => $list->getName(),
+            'words' => $wordsArray,
+        ];
         // Création d'une vue FOSRestBundle
         $view = View::create($formatted);
         $view->setFormat('json');
