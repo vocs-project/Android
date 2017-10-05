@@ -40,6 +40,14 @@ class User extends BaseUser
     private $lists;
 
 
+    /**
+     * Many Users have One classe.
+     * @ORM\ManyToOne(targetEntity="Classes")
+     * @ORM\JoinColumn(name="classes_id", referencedColumnName="id")
+     */
+    private $classe;
+
+
 
     public function __construct()
     {
@@ -136,5 +144,29 @@ class User extends BaseUser
     public function getLists()
     {
         return $this->lists;
+    }
+
+    /**
+     * Set classe
+     *
+     * @param \VOCS\PlatformBundle\Entity\Classes $classe
+     *
+     * @return User
+     */
+    public function setClasse(\VOCS\PlatformBundle\Entity\Classes $classe = null)
+    {
+        $this->classe = $classe;
+
+        return $this;
+    }
+
+    /**
+     * Get classe
+     *
+     * @return \VOCS\PlatformBundle\Entity\Classes
+     */
+    public function getClasse()
+    {
+        return $this->classe;
     }
 }

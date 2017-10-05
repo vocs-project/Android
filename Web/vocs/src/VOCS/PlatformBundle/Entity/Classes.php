@@ -36,6 +36,8 @@ class Classes
     private $urlAvatar;
 
 
+
+
     /**
      * Get id
      *
