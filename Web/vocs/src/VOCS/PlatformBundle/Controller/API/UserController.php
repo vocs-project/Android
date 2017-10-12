@@ -98,10 +98,10 @@ class UserController extends Controller
 
 
         $wordsArray = [];
-        $wordTrads = [];
-        $tradTrads = [];
-        foreach ($listWords as $listWord) {
 
+        foreach ($listWords as $listWord) {
+            $wordTrads = [];
+            $tradTrads = [];
             foreach ($listWord->getWord()->getTrads() as $trad) {
                 $wordTrads[] = [
                     'content' => $trad->getContent(),
@@ -132,6 +132,7 @@ class UserController extends Controller
                 'word' => $word,
                 'trad' => $trad
             ];
+
         }
 
         $formatted = [
@@ -279,11 +280,8 @@ class UserController extends Controller
         }
 
         $repListWords = $this->getDoctrine()->getRepository(ListsWords::class);
-
-        $listWord = $repListWords->findOneBy(array('list' => $list, 'word' => $word, 'trad' => $trad));
-        $listTrad = $repListWords->findOneBy(array('list' => $list, 'word' => $trad, 'trad' => $word));
-
-        if($listWord == null && $listTrad == null) {
+        $listWord = $repListWords->testListWord($list, $word, $trad);
+        if($listWord == null) {
             $listWord = new ListsWords();
             $listWord->setList($list);
             $listWord->setWord($word);
