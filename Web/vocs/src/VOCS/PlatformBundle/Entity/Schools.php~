@@ -9,8 +9,6 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="schools")
  * @ORM\Entity
- *  * @ORM\Entity(repositoryClass="VOCS\PlatformBundle\Repository\SchoolsRepository")
-
  */
 class Schools
 {
@@ -152,7 +150,7 @@ class Schools
 
     /**
      *
-     * @ORM\OneToMany(targetEntity="Classes", mappedBy="school")
+     * @ORM\OneToMany(targetEntity="Classes", mappedBy="schools")
      */
     private $classes;
 
@@ -597,51 +595,5 @@ class Schools
     public function getLien()
     {
         return $this->lien;
-    }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->classes = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add class
-     *
-     * @param \VOCS\PlatformBundle\Entity\Classes $class
-     *
-     * @return Schools
-     */
-    public function addClass(\VOCS\PlatformBundle\Entity\Classes $class)
-    {
-        $this->classes[] = $class;
-
-        return $this;
-    }
-
-    /**
-     * Remove class
-     *
-     * @param \VOCS\PlatformBundle\Entity\Classes $class
-     */
-    public function removeClass(\VOCS\PlatformBundle\Entity\Classes $class)
-    {
-        $this->classes->removeElement($class);
-    }
-
-    /**
-     * Get classes
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getClasses()
-    {
-        return $this->classes;
-    }
-
-    function __toString()
-    {
-        return $this->nom;
     }
 }

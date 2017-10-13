@@ -10,4 +10,5 @@ namespace VOCS\PlatformBundle\Repository;
  */
 class ClassesRepository extends \Doctrine\ORM\EntityRepository
 {
+
 }

@@ -133,45 +133,4 @@ class Classes
     {
         return $this->school;
     }
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-
-    /**
-     * Add user
-     *
-     * @param \VOCS\PlatformBundle\Entity\Classes $user
-     *
-     * @return Classes
-     */
-    public function addUser(\VOCS\PlatformBundle\Entity\Classes $user)
-    {
-        $this->users[] = $user;
-
-        return $this;
-    }
-
-    /**
-     * Remove user
-     *
-     * @param \VOCS\PlatformBundle\Entity\Classes $user
-     */
-    public function removeUser(\VOCS\PlatformBundle\Entity\Classes $user)
-    {
-        $this->users->removeElement($user);
-    }
-
-    /**
-     * Get users
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getUsers()
-    {
-        return $this->users;
-    }
 }

@@ -10,4 +10,12 @@ namespace VOCS\PlatformBundle\Repository;
  */
 class SchoolsRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getCp() {
+
+        $qb = $this->createQueryBuilder('c');
+        return $qb->select('c.cp')->addSelect('c.id')->distinct()->orderBy('c.cp')->getQuery()->getResult();
+    }
+
+
+
 }
