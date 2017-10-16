@@ -10,4 +10,13 @@ namespace VOCS\PlatformBundle\Repository;
  */
 class ListsWordsRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function testListWord($list, $word, $trad)
+    {
+        //        $qb = $this->createQueryBuilder('lw');
+        //        return $qb
+        //            ->select('lw')
+        //            ->where('') // $word = $wordContent + $wordLanguage
+        //            ->orWhere()
+        //    }
+    }
 }
