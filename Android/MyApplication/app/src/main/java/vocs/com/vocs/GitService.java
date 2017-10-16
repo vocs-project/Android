@@ -10,7 +10,7 @@ import retrofit.Callback;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
-public interface GitService {           //classe
+public interface GitService {
 
     public static final String ENDPOINT = "http://vocs.lebarillier.fr/rest";
 
@@ -20,10 +20,5 @@ public interface GitService {           //classe
    @GET("/lists")
    void accederliste(retrofit.Callback<List<Liste>> callback);
 
-   /* public interface lesusers {
-
-        @GET("/users")
-        void getData(Callback<User> response);
-    }*/
 }
 
