@@ -82,6 +82,8 @@ class UserController extends Controller
 
         $view = View::create($formatted);
         $view->setFormat('json');
+        $view->setHeader('Access-Control-Allow-Origin', '*');
+
 
         return $view;
     }
