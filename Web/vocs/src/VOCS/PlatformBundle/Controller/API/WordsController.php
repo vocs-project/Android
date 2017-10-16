@@ -45,6 +45,8 @@ class WordsController extends Controller
         // Création d'une vue FOSRestBundle
         $view = View::create($formatted);
         $view->setFormat('json');
+        $view->setHeader('Access-Control-Allow-Origin', '*');
+
 
         return $view;
 
@@ -76,6 +78,8 @@ class WordsController extends Controller
         // Création d'une vue FOSRestBundle
         $view = View::create($formatted);
         $view->setFormat('json');
+        $view->setHeader('Access-Control-Allow-Origin', '*');
+
 
         return $view;
 
@@ -118,6 +122,8 @@ class WordsController extends Controller
         // Création d'une vue FOSRestBundle
         $view = View::create($formatted);
         $view->setFormat('json');
+        $view->setHeader('Access-Control-Allow-Origin', '*');
+
 
         return $view;
 
