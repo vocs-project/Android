@@ -66,4 +66,16 @@
         android:background="@null"
         android:layout_alignParentTop="true"
         android:layout_alignBottom="@+id/imageView3" />
+
+    <Button
+        android:text="QCM"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/qcm"
+        android:layout_below="@+id/TraductionNormale"
+        android:layout_alignLeft="@+id/TraductionNormale"
+        android:layout_alignStart="@+id/TraductionNormale"
+        android:layout_marginTop="43dp"
+        android:layout_alignRight="@+id/TraductionNormale"
+        android:layout_alignEnd="@+id/TraductionNormale" />
 </RelativeLayout>

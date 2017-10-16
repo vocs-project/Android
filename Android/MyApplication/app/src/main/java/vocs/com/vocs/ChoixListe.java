@@ -45,18 +45,40 @@ public class ChoixListe extends AppCompatActivity {
 
         myDB.open();
 
-        listViewChoix.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent verstrad = new Intent (ChoixListe.this, Traduction.class);
-                Bundle b = new Bundle();
-                b.putString("key",tableauList.get(position).getIdList());
-                verstrad.putExtras(b);
-                startActivity(verstrad);
-                finish();
-            }
-        });
+        Bundle b = getIntent().getExtras();
+        int value = -1;
 
+        if (b != null) {
+            value = b.getInt("key");
+        }
+
+        if(value ==1) {
+            listViewChoix.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent verstrad = new Intent(ChoixListe.this, Traduction.class);
+                    Bundle b = new Bundle();
+                    b.putString("key", tableauList.get(position).getIdList());
+                    verstrad.putExtras(b);
+                    startActivity(verstrad);
+                    finish();
+                }
+            });
+        }
+
+        if(value == 2){
+            listViewChoix.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent versqcm = new Intent(ChoixListe.this, Qcm.class);
+                    Bundle b = new Bundle();
+                    b.putString("key", tableauList.get(position).getIdList());
+                    versqcm.putExtras(b);
+                    startActivity(versqcm);
+                    finish();
+                }
+            });
+        }
         retour.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){

@@ -32,18 +32,6 @@
         android:id="@+id/retour" />
 
 
-    <Switch
-        android:text=""
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/bswitch"
-        android:fontFamily="sans-serif-medium"
-        android:checked="true"
-        android:thumbTint="@android:color/holo_blue_dark"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        />
-
     <TextView
         android:text="anglais"
         android:layout_width="wrap_content"
@@ -155,4 +143,14 @@
         android:layout_above="@+id/valider"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="19dp" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bswitch"
+        android:fontFamily="sans-serif-medium"
+        android:checked="true"
+        android:thumbTint="@android:color/holo_blue_dark"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>

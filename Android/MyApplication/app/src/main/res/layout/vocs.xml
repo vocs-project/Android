@@ -10,7 +10,15 @@
     android:paddingRight="0dp"
     android:paddingTop="0dp"
     tools:context="vocs.com.vocs.score">
-
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/navigationbar"
+        android:id="@+id/imageView3"
+        android:adjustViewBounds="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
     <TextView
         android:text="/"
         android:layout_width="wrap_content"
@@ -67,23 +75,20 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView4"
         android:textColor="@android:color/background_dark"
-        android:layout_marginTop="41dp"
         android:textSize="20sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_above="@+id/scorebon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="54dp" />
 
-    <android.support.design.widget.BottomNavigationView
-        android:layout_width="match_parent"
+    <TextView
+        android:text="Score"
+        android:textColor="@android:color/white"
+        android:textSize="30dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/BottomBar"
-        app:itemBackground="@android:color/darker_gray"
-        app:itemIconTint="@drawable/selectordebar"
-        app:itemTextColor="@drawable/selectordebar"
-        app:menu="@menu/bottom_navigation_main"
-        android:layout_alignParentBottom="true"
-        >
+        android:layout_alignBottom="@+id/imageView3"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="14dp"
+        android:id="@+id/textView23" />
 
-    </android.support.design.widget.BottomNavigationView>
 </RelativeLayout>

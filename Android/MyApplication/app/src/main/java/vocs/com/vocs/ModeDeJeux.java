@@ -16,13 +16,16 @@ import java.text.Normalizer;
 import android.content.Intent;
 import android.widget.Toast;
 
+
+import static android.R.attr.button;
+import static vocs.com.vocs.R.id.TraductionNormale;
 import static vocs.com.vocs.R.id.parametres;
 import static vocs.com.vocs.R.id.tradliste;
 
 public class ModeDeJeux extends AppCompatActivity {
 
     Intent ModeDeJeux = getIntent();
-    Button TraductionNormale;
+    Button TraductionNormale,qcm;
     BottomNavigationView BottomBar;
     ImageButton parametres,retourModePrinc;
     @Override
@@ -34,6 +37,9 @@ public class ModeDeJeux extends AppCompatActivity {
         retourModePrinc=(ImageButton) findViewById(R.id.retourarriere);
         parametres=(ImageButton) findViewById(R.id.parametres);
         BottomBar=(BottomNavigationView) findViewById(R.id.BottomBar);
+        qcm=(Button) findViewById(R.id.qcm);
+
+
 
         BottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -61,7 +67,22 @@ public class ModeDeJeux extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Intent TraductionNormale = new Intent (ModeDeJeux.this, ChoixListe.class);
+                Bundle b = new Bundle();
+                b.putInt("key",1);
+               TraductionNormale.putExtras(b);
                 startActivity(TraductionNormale);
+                finish();
+            }
+        });
+        qcm.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent qcm = new Intent (ModeDeJeux.this, ChoixListe.class);
+                Bundle b = new Bundle();
+                b.putInt("key",2);
+                qcm.putExtras(b);
+                startActivity(qcm);
+                finish();
             }
         });
         retourModePrinc.setOnClickListener(new View.OnClickListener(){

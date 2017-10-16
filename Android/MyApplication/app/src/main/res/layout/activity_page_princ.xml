@@ -79,5 +79,14 @@
         android:layout_alignParentTop="true"
         android:layout_alignBottom="@+id/imageView3" />
 
+    <Button
+        android:text="Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tradliste"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+        android:id="@+id/button" />
+
 
 </RelativeLayout>

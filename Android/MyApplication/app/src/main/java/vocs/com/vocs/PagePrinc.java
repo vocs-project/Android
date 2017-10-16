@@ -24,7 +24,7 @@ import static vocs.com.vocs.R.id.parametres;
 public class PagePrinc extends Activity {
 
     Intent PagePrinc = getIntent();
-    Button tradliste;
+    Button tradliste,button;
     ImageButton parametres;
     BottomNavigationView BottomBar;
 
@@ -37,6 +37,7 @@ public class PagePrinc extends Activity {
         tradliste=(Button) findViewById(R.id.tradliste);
         parametres=(ImageButton) findViewById(R.id.parametres);
         BottomBar=(BottomNavigationView) findViewById(R.id.BottomBar);
+        button=(Button) findViewById(R.id.button);
 
 
         BottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -68,6 +69,14 @@ public class PagePrinc extends Activity {
             public void onClick(View v){
                 Intent tradliste = new Intent (PagePrinc.this, MainActivity.class);
                 startActivity(tradliste);
+            }
+        });
+
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent test = new Intent (PagePrinc.this, Connexion.class);
+                startActivity(test);
             }
         });
 
