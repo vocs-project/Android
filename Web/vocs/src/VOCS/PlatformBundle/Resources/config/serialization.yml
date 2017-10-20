@@ -1,0 +1,34 @@
+VOCS\PlatformBundle\Entity\Classes:
+    attributes:
+        id:
+            groups: ['classe', 'user']
+        name:
+            groups: ['classe']
+
+
+VOCS\PlatformBundle\Entity\User:
+    attributes:
+        id:
+            groups: ['user']
+        email:
+            groups: ['user']
+        firstname:
+            groups: ['user']
+        surname:
+            groups: ['user']
+        roles:
+            groups: ['user']
+        classes:
+            groups: ['user']
+
+VOCS\PlatformBundle\Entity\Lists:
+    attributes:
+        id:
+            groups: ['list']
+        name:
+            groups: ['list']
+        creationDate:
+            groups: ['list']
+
+
+

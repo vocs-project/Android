@@ -20,27 +20,49 @@ class ClassesController extends Controller
      */
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"classe"})
      * @Rest\Get("/rest/classes")
      */
     public function getClassesAction(Request $request)
     {
         $classes = $this->getDoctrine()->getRepository(Classes::class)->findAll();
 
-        return $classes;
+        $view = View::create($classes);
+        $view->setHeader('Access-Control-Allow-Origin', '*');
+
+        return $view;
     }
 
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"classe"})
      * @Rest\Get("/rest/classes/{id}")
      */
     public function getClasseAction(Request $request)
     {
         $classe = $this->getDoctrine()->getRepository(Classes::class)->find($request->get('id'));
 
-        return $classe;
+        $view = View::create($classe);
+        $view->setHeader('Access-Control-Allow-Origin', '*');
+
+        return $view;
     }
+
+    /**
+     * @Rest\View(serializerGroups={"classe"})
+     * @Rest\Get("/rest/classes/{id}/lists")
+     */
+    public function getClasseListsAction(Request $request)
+    {
+        $classe = $this->getDoctrine()->getRepository(Classes::class)->find($request->get('id'));
+        $lists = $classe->getLists();
+
+        $view = View::create($lists);
+        $view->setHeader('Access-Control-Allow-Origin', '*');
+
+        return $view;
+    }
+
 
 
     /**
@@ -48,7 +70,7 @@ class ClassesController extends Controller
      */
 
     /**
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"classe"})
      * @Rest\Post("/rest/classes")
      *
      */
@@ -65,11 +87,64 @@ class ClassesController extends Controller
             // il est utilisé juste par soucis de clarté
             $em->persist($classe);
             $em->flush();
-            return $classe;
+            $view = View::create($classe);
+            $view->setHeader('Access-Control-Allow-Origin', '*');
+
+            return $view;
         } else {
-            return $form;
+            $view = View::create($form);
+            $view->setHeader('Access-Control-Allow-Origin', '*');
+
+            return $view;
         }
 
+    }
+
+    /**
+     * PUT
+     */
+
+    /**
+     * @Rest\View(serializerGroups={"classe"})
+     * @Rest\Put("/rest/classes/{id}")
+     */
+    public function putClassesAction(Request $request)
+    {
+        return $this->updateClasse($request, true);
+    }
+
+    /**
+     * @Rest\View(serializerGroups={"classe"})
+     * @Rest\Patch("/rest/classes/{id}")
+     */
+    public function patchClassesAction(Request $request)
+    {
+        return $this->updateClasse($request, false);
+    }
+
+
+    private function updateClasse(Request $request, $clearMissing) {
+        $classe = $this->getDoctrine()->getRepository(Classes::class)->find($request->get('id'));
+
+        if (empty($classe)) {
+            return new JsonResponse(['message' => 'Classe not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $form = $this->createForm(ClassesType::class, $classe);
+
+        $form->submit($request->request->all(), $clearMissing);
+
+
+        if ($form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->merge($classe);
+            $em->flush();
+
+            return View::create($classe)->setHeader('Access-Control-Allow-Origin', '*');
+        } else {
+            return View::create($form)->setHeader('Access-Control-Allow-Origin', '*');
+        }
     }
 
 }

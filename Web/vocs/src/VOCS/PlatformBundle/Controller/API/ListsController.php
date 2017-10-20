@@ -16,25 +16,14 @@ class ListsController extends Controller
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"list"})
      * @Rest\Get("/rest/lists")
      */
     public function getListsAction(Request $request)
     {
         $lists = $this->getDoctrine()->getRepository(Lists::class)->findAll();
 
-
-        $formatted = [];
-
-        foreach ($lists as $list) {
-
-            $formatted[] = ['id' => $list->getId(), 'name' => $list->getName(),];
-
-        }
-
-        // Création d'une vue FOSRestBundle
-        $view = View::create($formatted);
-        $view->setFormat('json');
+        $view = View::create($lists);
         $view->setHeader('Access-Control-Allow-Origin', '*');
 
         return $view;
@@ -86,6 +75,51 @@ class ListsController extends Controller
         return $list;
     }
 
+    /**
+     * PUT
+     */
 
+    /**
+     * @Rest\View(serializerGroups={"list"})
+     * @Rest\Put("/rest/lists/{id}")
+     */
+    public function putListsAction(Request $request)
+    {
+        return $this->updateList($request, true);
+    }
+
+    /**
+     * @Rest\View(serializerGroups={"list"})
+     * @Rest\Patch("/rest/lists/{id}")
+     */
+    public function patchListsAction(Request $request)
+    {
+        return $this->updateList($request, false);
+    }
+
+
+    private function updateList(Request $request, $clearMissing) {
+        $list = $this->getDoctrine()->getRepository(Lists::class)->find($request->get('id'));
+
+        if (empty($list)) {
+            return new JsonResponse(['message' => 'List not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $form = $this->createForm(ListsType::class, $list);
+
+        $form->submit($request->request->all(), $clearMissing);
+
+
+        if ($form->isValid()) {
+
+            $em = $this->getDoctrine()->getManager();
+            $em->merge($list);
+            $em->flush();
+
+            return View::create($list)->setHeader('Access-Control-Allow-Origin', '*');
+        } else {
+            return View::create($form)->setHeader('Access-Control-Allow-Origin', '*');
+        }
+    }
 
 }

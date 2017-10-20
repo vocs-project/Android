@@ -16,6 +16,10 @@ class CitiesController extends Controller
 {
 
     /**
+     * GET
+     */
+    
+    /**
      * @Rest\View()
      * @Rest\Get("/rest/cities")
      */
@@ -36,4 +40,6 @@ class CitiesController extends Controller
 
         return $cities;
     }
+
+
 }

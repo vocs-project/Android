@@ -28,3 +28,8 @@ security:
               target:     fos_user_security_login
             remember_me:
               secret:     %secret%
+    role_hierarchy:
+            ROLE_STUDENT:     ROLE_USER
+            ROLE_PROFESOR:    ROLE_STUDENT
+            ROLE_ADMIN:       ROLE_PROFESOR
+            ROLE_SUPER_ADMIN: ROLE_ADMIN

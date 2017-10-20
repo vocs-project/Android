@@ -2,27 +2,18 @@
 
 namespace VOCS\PlatformBundle\Form;
 
-
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use VOCS\PlatformBundle\Entity\Schools;
 
-class ClassesType extends AbstractType
+class SchoolsType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('name', TextType::class)
-            ->add('urlAvatar', TextType::class)
-            ->add('school', EntityType::class,  array(
-                'class' => Schools::class,
-            ));
+        $builder->add('uai')->add('type')->add('nom')->add('sigle')->add('universite')->add('cp')->add('commune')->add('communecog')->add('cedex')->add('phone')->add('arrondissement')->add('department')->add('academie')->add('region')->add('regioncog')->add('longitude')->add('latitude')->add('lien');
     }
     
     /**
@@ -31,8 +22,7 @@ class ClassesType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'VOCS\PlatformBundle\Entity\Classes',
-            'csrf_protection' => false
+            'data_class' => 'VOCS\PlatformBundle\Entity\Schools'
         ));
     }
 
@@ -41,7 +31,7 @@ class ClassesType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'vocs_platformbundle_classes';
+        return 'vocs_platformbundle_schools';
     }
 
 

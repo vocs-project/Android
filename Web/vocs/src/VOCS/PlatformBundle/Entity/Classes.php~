@@ -37,19 +37,26 @@ class Classes
     private $school;
 
     /**
-     *
-     * @ORM\OneToMany(targetEntity="Classes", mappedBy="classe")
+     * @ORM\OneToMany(targetEntity="Classes", mappedBy="classes")
      */
     private $users;
 
     /**
+     *
+     * @ORM\ManyToMany(targetEntity="Lists")
+     * @ORM\JoinTable(name="classes_lists",
+     *      joinColumns={@ORM\JoinColumn(name="classes_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="lists_id", referencedColumnName="id")}
+     *      )
+     */
+    private $lists;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="url_avatar", type="string", length=255)
+     * @ORM\Column(name="url_avatar", type="string", length=255, nullable=true)
      */
     private $urlAvatar;
-
-
 
 
     /**
@@ -132,5 +139,47 @@ class Classes
     public function getSchool()
     {
         return $this->school;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add user
+     *
+     * @param \VOCS\PlatformBundle\Entity\Classes $user
+     *
+     * @return Classes
+     */
+    public function addUser(\VOCS\PlatformBundle\Entity\Classes $user)
+    {
+        $this->users[] = $user;
+
+        return $this;
+    }
+
+    /**
+     * Remove user
+     *
+     * @param \VOCS\PlatformBundle\Entity\Classes $user
+     */
+    public function removeUser(\VOCS\PlatformBundle\Entity\Classes $user)
+    {
+        $this->users->removeElement($user);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }

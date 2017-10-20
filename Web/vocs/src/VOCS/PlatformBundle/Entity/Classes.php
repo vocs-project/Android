@@ -37,19 +37,26 @@ class Classes
     private $school;
 
     /**
-     *
-     * @ORM\OneToMany(targetEntity="Classes", mappedBy="classe")
+     * @ORM\OneToMany(targetEntity="Classes", mappedBy="classes")
      */
     private $users;
 
     /**
+     *
+     * @ORM\ManyToMany(targetEntity="Lists")
+     * @ORM\JoinTable(name="classes_lists",
+     *      joinColumns={@ORM\JoinColumn(name="classes_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="lists_id", referencedColumnName="id")}
+     *      )
+     */
+    private $lists;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="url_avatar", type="string", length=255)
+     * @ORM\Column(name="url_avatar", type="string", length=255, nullable=true)
      */
     private $urlAvatar;
-
-
 
 
     /**
@@ -133,12 +140,14 @@ class Classes
     {
         return $this->school;
     }
+
     /**
      * Constructor
      */
     public function __construct()
     {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->lists = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -173,5 +182,39 @@ class Classes
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Add list
+     *
+     * @param \VOCS\PlatformBundle\Entity\Lists $list
+     *
+     * @return Classes
+     */
+    public function addList(\VOCS\PlatformBundle\Entity\Lists $list)
+    {
+        $this->lists[] = $list;
+
+        return $this;
+    }
+
+    /**
+     * Remove list
+     *
+     * @param \VOCS\PlatformBundle\Entity\Lists $list
+     */
+    public function removeList(\VOCS\PlatformBundle\Entity\Lists $list)
+    {
+        $this->lists->removeElement($list);
+    }
+
+    /**
+     * Get lists
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLists()
+    {
+        return $this->lists;
     }
 }

@@ -39,20 +39,18 @@ class User extends BaseUser
      */
     private $lists;
 
-
     /**
-     * Many Users have One classe.
-     * @ORM\ManyToOne(targetEntity="Classes")
-     * @ORM\JoinColumn(name="classes_id", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="Classes", inversedBy="users")
+     * @ORM\JoinTable(name="users_classes")
      */
-    private $classe;
-
+    private $classes;
 
 
     public function __construct()
     {
         parent::__construct();
         $this->lists = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->classes = new \Doctrine\Common\Collections\ArrayCollection();
 
     }
 
@@ -146,27 +144,39 @@ class User extends BaseUser
         return $this->lists;
     }
 
+
+
     /**
-     * Set classe
+     * Add class
      *
-     * @param \VOCS\PlatformBundle\Entity\Classes $classe
+     * @param \VOCS\PlatformBundle\Entity\Classes $class
      *
      * @return User
      */
-    public function setClasse(\VOCS\PlatformBundle\Entity\Classes $classe = null)
+    public function addClass(\VOCS\PlatformBundle\Entity\Classes $class)
     {
-        $this->classe = $classe;
+        $this->classes[] = $class;
 
         return $this;
     }
 
     /**
-     * Get classe
+     * Remove class
      *
-     * @return \VOCS\PlatformBundle\Entity\Classes
+     * @param \VOCS\PlatformBundle\Entity\Classes $class
      */
-    public function getClasse()
+    public function removeClass(\VOCS\PlatformBundle\Entity\Classes $class)
     {
-        return $this->classe;
+        $this->classes->removeElement($class);
+    }
+
+    /**
+     * Get classes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getClasses()
+    {
+        return $this->classes;
     }
 }

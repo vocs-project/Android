@@ -39,14 +39,11 @@ class User extends BaseUser
      */
     private $lists;
 
-
     /**
-     * Many Users have One classe.
-     * @ORM\ManyToOne(targetEntity="Classes")
-     * @ORM\JoinColumn(name="classes_id", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="Classes", inversedBy="users")
+     * @ORM\JoinTable(name="users_classes")
      */
-    private $classe;
-
+    private $classes;
 
 
     public function __construct()
@@ -145,4 +142,6 @@ class User extends BaseUser
     {
         return $this->lists;
     }
+
+
 }

@@ -2,7 +2,10 @@
 
 namespace VOCS\PlatformBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,8 +19,19 @@ class UserType extends AbstractType
         $builder
             ->add('firstname')
             ->add('surname')
-            ->add('email')
+            ->add('email', EmailType::class)
             ->add('password')
+            ->add('roles', ChoiceType::class, array(
+                'choices' => array(
+                    'ROLE_PROFESOR',
+                    'ROLE_STUDENT'
+                ),
+                'multiple' => true
+            ))
+            ->add('classes', EntityType::class, array(
+                'class' => 'VOCSPlatformBundle:Classes',
+                'multiple' => true
+            ))
             ->remove('username');
     }
     
