@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use VOCS\PlatformBundle\Entity\Classes;
 use VOCS\PlatformBundle\Form\ClassesType;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 
 class ClassesController extends Controller
@@ -20,6 +21,11 @@ class ClassesController extends Controller
      */
 
     /**
+     * @ApiDoc(
+     *     description="Récupère tous les classes",
+     *     output= { "class"=Classes::class, "collection"=true, "groups"={"classe"} }
+     *     )
+     *
      * @Rest\View(serializerGroups={"classe"})
      * @Rest\Get("/rest/classes")
      */
@@ -35,6 +41,11 @@ class ClassesController extends Controller
 
 
     /**
+     * @ApiDoc(
+     *     description="Récupère une classe",
+     *     output= { "class"=Classes::class, "collection"=false, "groups"={"classe"} }
+     *     )
+     *
      * @Rest\View(serializerGroups={"classe"})
      * @Rest\Get("/rest/classes/{id}")
      */
@@ -49,6 +60,11 @@ class ClassesController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *     description="Récupère les listes d'une classe",
+     *     output= { "class"=Classes::class, "collection"=true, "groups"={"classe"} }
+     *     )
+     *
      * @Rest\View(serializerGroups={"classe"})
      * @Rest\Get("/rest/classes/{id}/lists")
      */
@@ -70,6 +86,11 @@ class ClassesController extends Controller
      */
 
     /**
+     *  @ApiDoc(
+     *    description="Crée une classe",
+     *    input={"class"=ClassesType::class, "name"=""}
+     * )
+     *
      * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"classe"})
      * @Rest\Post("/rest/classes")
      *
@@ -105,6 +126,11 @@ class ClassesController extends Controller
      */
 
     /**
+     * @ApiDoc(
+     *    description="Change une classe",
+     *    input={"class"=ClassesType::class, "name"=""}
+     * )
+     *
      * @Rest\View(serializerGroups={"classe"})
      * @Rest\Put("/rest/classes/{id}")
      */
@@ -114,6 +140,11 @@ class ClassesController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *    description="Patch une classe",
+     *    input={"class"=ClassesType::class, "name"=""}
+     * )
+     *
      * @Rest\View(serializerGroups={"classe"})
      * @Rest\Patch("/rest/classes/{id}")
      */

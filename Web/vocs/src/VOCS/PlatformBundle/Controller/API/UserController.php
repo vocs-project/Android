@@ -21,6 +21,7 @@ use VOCS\PlatformBundle\Form\LanguageType;
 use VOCS\PlatformBundle\Form\ListsType;
 use VOCS\PlatformBundle\Form\UserType;
 use VOCS\PlatformBundle\Form\WordsType;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 
 class UserController extends Controller
@@ -31,6 +32,12 @@ class UserController extends Controller
      */
 
     /**
+     * @ApiDoc(
+     *     description="Récupère tous les utilisateurs",
+     *     output= { "class"=User::class, "collection"=true, "groups"={"user"} }
+     *     )
+     *
+     *
      * @Rest\View(serializerGroups={"user"})
      * @Rest\Get("/rest/users")
      */
@@ -136,6 +143,8 @@ class UserController extends Controller
 
 
     /**
+     *
+     *
      * @Rest\View()
      * @Rest\Post("/rest/users/authentification")
      */
@@ -164,6 +173,11 @@ class UserController extends Controller
 
 
     /**
+     * @ApiDoc(
+     *    description="Crée un utilisateur",
+     *    input={"class"=UserType::class, "name"=""}
+     * )
+     *
      * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"user"})
      * @Rest\Post("/rest/users")
      */
