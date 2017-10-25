@@ -4,6 +4,8 @@ VOCS\PlatformBundle\Entity\Classes:
             groups: ['classe', 'user']
         name:
             groups: ['classe']
+        lists:
+            groups: ['classe']
 
 
 VOCS\PlatformBundle\Entity\User:

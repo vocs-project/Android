@@ -3,11 +3,13 @@
 namespace VOCS\PlatformBundle\Form;
 
 
+use Nelmio\ApiDocBundle\Tests\Fixtures\Form\CollectionType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use VOCS\PlatformBundle\Entity\Lists;
 use VOCS\PlatformBundle\Entity\Schools;
 
 class ClassesType extends AbstractType
@@ -22,6 +24,10 @@ class ClassesType extends AbstractType
             ->add('urlAvatar', TextType::class)
             ->add('school', EntityType::class,  array(
                 'class' => Schools::class,
+            ))
+            ->add('lists', EntityType::class, array(
+                'class' => 'VOCSPlatformBundle:Lists',
+                'multiple' => true
             ));
     }
     
