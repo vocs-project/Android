@@ -37,7 +37,7 @@ class Classes
     private $school;
 
     /**
-     * @ORM\OneToMany(targetEntity="Classes", mappedBy="classes")
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="classes")
      */
     private $users;
 
