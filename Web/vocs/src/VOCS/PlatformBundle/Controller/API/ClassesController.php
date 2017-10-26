@@ -165,7 +165,10 @@ class ClassesController extends Controller
         if ($form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
-            $em->merge($classe);
+            foreach ($classe->getUsers() as $user) {
+                $user->addClass($classe);
+
+            }
             $em->flush();
 
             return View::create($classe)->setHeader('Access-Control-Allow-Origin', '*');

@@ -37,7 +37,7 @@ class Classes
     private $school;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="classes")
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="classes", cascade={"persist", "merge"})
      */
     private $users;
 
@@ -159,7 +159,8 @@ class Classes
      */
     public function addUser(\VOCS\PlatformBundle\Entity\Classes $user)
     {
-        $this->users[] = $user;
+
+        $this->users->add($user);
 
         return $this;
     }

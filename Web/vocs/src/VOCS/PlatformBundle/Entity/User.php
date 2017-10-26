@@ -181,7 +181,8 @@ class User extends BaseUser
      */
     public function addClass(\VOCS\PlatformBundle\Entity\Classes $class)
     {
-        $this->classes[] = $class;
+
+        $this->classes->add($class);
 
         return $this;
     }
