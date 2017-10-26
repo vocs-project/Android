@@ -180,7 +180,7 @@ class UserController extends Controller
             $formatted = ['id' => $user->getId(), 'email' => $user->getEmail(), 'firstname' => $user->getFirstname(), 'surname' => $user->getSurname(), 'lists' => $formattedLists];
 
         }
-        return View::create($formatted)->setHeader('Access-Control-Allow-Origin', '*');
+        return View::create($formatted)->setHeader('Access-Control-Allow-Origin', '*')->setStatusCode(401);
 
     }
 
