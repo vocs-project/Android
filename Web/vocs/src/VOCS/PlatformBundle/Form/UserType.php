@@ -23,7 +23,7 @@ class UserType extends AbstractType
             ->add('password')
             ->add('roles', ChoiceType::class, array(
                 'choices' => array(
-                    'ROLE_PROFESOR',
+                    'ROLE_PROFESSOR',
                     'ROLE_STUDENT'
                 ),
                 'multiple' => true

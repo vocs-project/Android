@@ -11,7 +11,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use VOCS\PlatformBundle\Entity\Lists;
 use VOCS\PlatformBundle\Entity\Schools;
 use VOCS\PlatformBundle\Form\SchoolsType;
-
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class SchoolsController extends Controller
 {

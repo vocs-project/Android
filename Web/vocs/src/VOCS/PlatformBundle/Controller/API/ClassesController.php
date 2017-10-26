@@ -21,8 +21,8 @@ class ClassesController extends Controller
      */
 
     /**
-     * @ApiDoc(
-     *     description="Récupère tous les classes",
+     *@ApiDoc(
+     *     description="Récupère toutes les classes",
      *     output= { "class"=Classes::class, "collection"=true, "groups"={"classe"} }
      *     )
      *

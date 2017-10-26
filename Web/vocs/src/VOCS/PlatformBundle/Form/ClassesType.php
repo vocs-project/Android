@@ -28,6 +28,10 @@ class ClassesType extends AbstractType
             ->add('lists', EntityType::class, array(
                 'class' => 'VOCSPlatformBundle:Lists',
                 'multiple' => true
+            ))
+            ->add('users', EntityType::class, array(
+                'class' => 'VOCSPlatformBundle:User',
+                'multiple' => true
             ));
     }
     

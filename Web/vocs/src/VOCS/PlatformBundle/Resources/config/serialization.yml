@@ -3,15 +3,17 @@ VOCS\PlatformBundle\Entity\Classes:
         id:
             groups: ['classe', 'user']
         name:
-            groups: ['classe']
+            groups: ['classe', 'user']
         lists:
+            groups: ['classe']
+        users:
             groups: ['classe']
 
 
 VOCS\PlatformBundle\Entity\User:
     attributes:
         id:
-            groups: ['user']
+            groups: ['user', 'classe']
         email:
             groups: ['user']
         firstname:
@@ -19,7 +21,7 @@ VOCS\PlatformBundle\Entity\User:
         surname:
             groups: ['user']
         roles:
-            groups: ['user']
+            groups: ['user', 'classe']
         classes:
             groups: ['user']
 

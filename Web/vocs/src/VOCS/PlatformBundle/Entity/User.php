@@ -45,12 +45,38 @@ class User extends BaseUser
      */
     private $classes;
 
+    /**
+     *
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="demandReceive", cascade={"persist"})
+     */
+    private $demandSend;
+
+    /**
+     *
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="demandSend", cascade={"persist"})
+     * @ORM\JoinTable(name="demands",
+     *      joinColumns={
+     *
+     *              @ORM\JoinColumn(name="prof_id", referencedColumnName="id"),
+     *      },
+     *      inverseJoinColumns={
+     *
+     *              @ORM\JoinColumn(name="student_id", referencedColumnName="id"),
+     *
+     *      }
+     *      )
+     *
+     */
+    private $demandReceive;
+
 
     public function __construct()
     {
         parent::__construct();
         $this->lists = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->classes = new \Doctrine\Common\Collections\ArrayCollection();
+         $this->classes = new \Doctrine\Common\Collections\ArrayCollection();
+         $this->demandSend = new \Doctrine\Common\Collections\ArrayCollection();
+         $this->demandReceive = new \Doctrine\Common\Collections\ArrayCollection();
 
     }
 
@@ -178,5 +204,73 @@ class User extends BaseUser
     public function getClasses()
     {
         return $this->classes;
+    }
+
+    /**
+     * Add demandSend
+     *
+     * @param \VOCS\PlatformBundle\Entity\User $demandSend
+     *
+     * @return User
+     */
+    public function addDemandSend(\VOCS\PlatformBundle\Entity\User $demandSend)
+    {
+        $this->demandSend[] = $demandSend;
+
+        return $this;
+    }
+
+    /**
+     * Remove demandSend
+     *
+     * @param \VOCS\PlatformBundle\Entity\User $demandSend
+     */
+    public function removeDemandSend(\VOCS\PlatformBundle\Entity\User $demandSend)
+    {
+        $this->demandSend->removeElement($demandSend);
+    }
+
+    /**
+     * Get demandSend
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDemandSend()
+    {
+        return $this->demandSend;
+    }
+
+    /**
+     * Add demandReceive
+     *
+     * @param \VOCS\PlatformBundle\Entity\User $demandReceive
+     *
+     * @return User
+     */
+    public function addDemandReceive(\VOCS\PlatformBundle\Entity\User $demandReceive)
+    {
+        $this->demandReceive[] = $demandReceive;
+
+        return $this;
+    }
+
+    /**
+     * Remove demandReceive
+     *
+     * @param \VOCS\PlatformBundle\Entity\User $demandReceive
+     */
+    public function removeDemandReceive(\VOCS\PlatformBundle\Entity\User $demandReceive)
+    {
+        $this->demandReceive->removeElement($demandReceive);
+    }
+
+    /**
+     * Get demandReceive
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getDemandReceive()
+    {
+        return $this->demandReceive;
     }
 }

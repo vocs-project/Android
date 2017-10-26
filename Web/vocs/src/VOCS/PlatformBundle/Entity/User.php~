@@ -45,11 +45,35 @@ class User extends BaseUser
      */
     private $classes;
 
+    /**
+     *
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="demandReceive", cascade={"persist"})
+     */
+    private $demandSend;
+
+    /**
+     *
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="demandSend", cascade={"persist"})
+     * @ORM\JoinTable(name="demands",
+     *      joinColumns={
+     *
+     *              @ORM\JoinColumn(name="prof_id", referencedColumnName="id"),
+     *      },
+     *      inverseJoinColumns={
+     *
+     *              @ORM\JoinColumn(name="student_id", referencedColumnName="id"),
+     *
+     *      }
+     *      )
+     *
+     */
+    private $demandReceive;
 
     public function __construct()
     {
         parent::__construct();
         $this->lists = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->classes = new \Doctrine\Common\Collections\ArrayCollection();
 
     }
 
@@ -144,4 +168,38 @@ class User extends BaseUser
     }
 
 
+
+    /**
+     * Add class
+     *
+     * @param \VOCS\PlatformBundle\Entity\Classes $class
+     *
+     * @return User
+     */
+    public function addClass(\VOCS\PlatformBundle\Entity\Classes $class)
+    {
+        $this->classes[] = $class;
+
+        return $this;
+    }
+
+    /**
+     * Remove class
+     *
+     * @param \VOCS\PlatformBundle\Entity\Classes $class
+     */
+    public function removeClass(\VOCS\PlatformBundle\Entity\Classes $class)
+    {
+        $this->classes->removeElement($class);
+    }
+
+    /**
+     * Get classes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getClasses()
+    {
+        return $this->classes;
+    }
 }

@@ -10,12 +10,17 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 
 use VOCS\PlatformBundle\Entity\Lists;
 use VOCS\PlatformBundle\Form\ListsType;
-
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class ListsController extends Controller
 {
 
     /**
+     *  @ApiDoc(
+     *  description="Récupère toutes les listes",
+     *  output= { "class"=Lists::class, "collection"=true,  "groups"={"list"} }
+     *  )
+     *
      * @Rest\View(serializerGroups={"list"})
      * @Rest\Get("/rest/lists")
      */
@@ -30,6 +35,11 @@ class ListsController extends Controller
     }
 
     /**
+     *  @ApiDoc(
+     *  description="Récupère une liste",
+     *  output= { "class"=Lists::class, "collection"=false, "groups"={"list"} }
+     *  )
+     *
      * @Rest\View()
      * @Rest\Get("/rest/lists/{id}")
      */
@@ -60,7 +70,17 @@ class ListsController extends Controller
     }
 
 
+
     /**
+     * POST
+     */
+
+    /**
+     * @ApiDoc(
+     *    description="Crée une liste",
+     *    input={"class"=ListsType::class, "name"=""}
+     * )
+     *
      * @Rest\View(statusCode=Response::HTTP_CREATED)
      * @Rest\Post("/rest/lists")
      */
@@ -80,6 +100,11 @@ class ListsController extends Controller
      */
 
     /**
+     * @ApiDoc(
+     *    description="Change une liste",
+     *    input={"class"=ListsType::class, "name"=""}
+     * )
+     *
      * @Rest\View(serializerGroups={"list"})
      * @Rest\Put("/rest/lists/{id}")
      */
@@ -89,6 +114,11 @@ class ListsController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *    description="Patch une liste",
+     *    input={"class"=ListsType::class, "name"=""}
+     * )
+     *
      * @Rest\View(serializerGroups={"list"})
      * @Rest\Patch("/rest/lists/{id}")
      */

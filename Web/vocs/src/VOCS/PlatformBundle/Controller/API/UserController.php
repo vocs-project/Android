@@ -52,6 +52,11 @@ class UserController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *     description="Récupère un utilisateur",
+     *     output= { "class"=User::class, "collection"=false, "groups"={"user"} }
+     *     )
+     *
      * @Rest\View(serializerGroups={"user"})
      * @Rest\Get("/rest/users/{id}")
      */
@@ -67,6 +72,12 @@ class UserController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *     description="Récupère tous les classes d'un utilisateur",
+     *     output= { "class"=Classes::class, "collection"=true, "groups"={"classe"} }
+     *     )
+     *
+     *
      * @Rest\View(serializerGroups={"classe"})
      * @Rest\Get("/rest/users/{id}/classes")
      */
@@ -80,6 +91,8 @@ class UserController extends Controller
     }
 
     /**
+     *
+     *
      * @Rest\View(serializerGroups={"list"})
      * @Rest\Get("/rest/users/{id}/lists")
      */
@@ -201,6 +214,11 @@ class UserController extends Controller
     }
 
     /**
+     * @ApiDoc(
+     *    description="Crée une liste à un utilisateur",
+     *    input={"class"=ListsType::class, "name"=""}
+     * )
+     *
      * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"list"})
      * @Rest\Post("/rest/users/{id}/lists")
      */
@@ -228,6 +246,11 @@ class UserController extends Controller
     }
 
     /**
+     *  @ApiDoc(
+     *    description="Crée une classe à un utilisateur (professeur)",
+     *    input={"class"=ListsType::class, "name"=""}
+     * )
+     *
      * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"classe"})
      * @Rest\Post("/rest/users/{id}/classes")
      */
@@ -255,6 +278,10 @@ class UserController extends Controller
     }
 
     /**
+     *   @ApiDoc(
+     *    description="Crée/ajoute un mot dans une liste d'un utilisateur"
+     * )
+     *
      * @Rest\View(statusCode=Response::HTTP_CREATED)
      * @Rest\Post("/rest/users/{id}/lists/{list_id}/words")
      */
@@ -348,6 +375,8 @@ class UserController extends Controller
      */
 
     /**
+     *
+     *
      * @Rest\View()
      * @Rest\Delete("/rest/users/{id}/lists/{list_id}")
      */

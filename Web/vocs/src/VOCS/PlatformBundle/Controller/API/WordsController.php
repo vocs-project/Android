@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Doctrine\Common\Annotations\AnnotationReader;
-
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class WordsController extends Controller
 {
