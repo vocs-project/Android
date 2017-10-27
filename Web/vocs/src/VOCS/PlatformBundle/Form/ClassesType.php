@@ -31,7 +31,8 @@ class ClassesType extends AbstractType
             ))
             ->add('users', EntityType::class, array(
                 'class' => 'VOCSPlatformBundle:User',
-                'multiple' => true
+                'multiple' => true,
+                'by_reference' => false
             ));
     }
     

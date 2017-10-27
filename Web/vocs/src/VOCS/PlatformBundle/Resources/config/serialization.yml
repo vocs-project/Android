@@ -3,7 +3,7 @@ VOCS\PlatformBundle\Entity\Classes:
         id:
             groups: ['classe', 'user']
         name:
-            groups: ['classe', 'user']
+            groups: ['classe']
         lists:
             groups: ['classe']
         users:
@@ -33,6 +33,26 @@ VOCS\PlatformBundle\Entity\Lists:
             groups: ['list']
         creationDate:
             groups: ['list']
+
+
+
+VOCS\PlatformBundle\Entity\Schools:
+    attributes:
+        id:
+            groups: ['school']
+        nom:
+            groups: ['school']
+        cp:
+            groups: ['school']
+
+VOCS\PlatformBundle\Entity\ListsWords:
+    attributes:
+        id:
+            groups: ['school']
+        nom:
+            groups: ['school']
+        cp:
+            groups: ['school']
 
 
 

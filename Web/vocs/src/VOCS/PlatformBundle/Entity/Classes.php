@@ -153,13 +153,14 @@ class Classes
     /**
      * Add user
      *
-     * @param \VOCS\PlatformBundle\Entity\Classes $user
+     * @param \VOCS\PlatformBundle\Entity\User $user
      *
      * @return Classes
      */
-    public function addUser(\VOCS\PlatformBundle\Entity\Classes $user)
+    public function addUser(\VOCS\PlatformBundle\Entity\User $user)
     {
 
+        $user->addClass($this);
         $this->users->add($user);
 
         return $this;
@@ -168,9 +169,9 @@ class Classes
     /**
      * Remove user
      *
-     * @param \VOCS\PlatformBundle\Entity\Classes $user
+     * @param \VOCS\PlatformBundle\Entity\User $user
      */
-    public function removeUser(\VOCS\PlatformBundle\Entity\Classes $user)
+    public function removeUser(\VOCS\PlatformBundle\Entity\User $user)
     {
         $this->users->removeElement($user);
     }

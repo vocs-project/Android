@@ -116,30 +116,30 @@ class UserController extends Controller
         $listWords = $this->getDoctrine()->getRepository(ListsWords::class)->findBy(array('list' => $list));
 
 
-        $wordsArray = [];
-
-        foreach ($listWords as $listWord) {
-            $wordTrads = [];
-            $tradTrads = [];
-            foreach ($listWord->getWord()->getTrads() as $trad) {
-                $wordTrads[] = ['content' => $trad->getContent(), 'lang' => $trad->getLanguage()->getCode(),];
-            }
-
-            foreach ($listWord->getTrad()->getTrads() as $trad) {
-                $tradTrads[] = ['content' => $trad->getContent(), 'lang' => $trad->getLanguage()->getCode(),];
-            }
-
-            $word = ['content' => $listWord->getWord()->getContent(), 'lang' => $listWord->getWord()->getLanguage()->getCode(), 'trads' => $wordTrads];
-
-            $trad = ['content' => $listWord->getTrad()->getContent(), 'lang' => $listWord->getTrad()->getLanguage()->getCode(), 'trads' => $tradTrads];
-
-            $wordsArray[] = ['word' => $word, 'trad' => $trad];
-
-        }
-
-        $formatted = ['id' => $list->getId(), 'name' => $list->getName(), 'words' => $wordsArray,];
+//        $wordsArray = [];
+//
+//        foreach ($listWords as $listWord) {
+//            $wordTrads = [];
+//            $tradTrads = [];
+//            foreach ($listWord->getWord()->getTrads() as $trad) {
+//                $wordTrads[] = ['content' => $trad->getContent(), 'lang' => $trad->getLanguage()->getCode(),];
+//            }
+//
+//            foreach ($listWord->getTrad()->getTrads() as $trad) {
+//                $tradTrads[] = ['content' => $trad->getContent(), 'lang' => $trad->getLanguage()->getCode(),];
+//            }
+//
+//            $word = ['content' => $listWord->getWord()->getContent(), 'lang' => $listWord->getWord()->getLanguage()->getCode(), 'trads' => $wordTrads];
+//
+//            $trad = ['content' => $listWord->getTrad()->getContent(), 'lang' => $listWord->getTrad()->getLanguage()->getCode(), 'trads' => $tradTrads];
+//
+//            $wordsArray[] = ['word' => $word, 'trad' => $trad];
+//
+//        }
+//
+//        $formatted = ['id' => $list->getId(), 'name' => $list->getName(), 'words' => $wordsArray,];
         // Création d'une vue FOSRestBundle
-        $view = View::create($formatted);
+        $view = View::create($listWords);
         $view->setHeader('Access-Control-Allow-Origin', '*');
 
 
@@ -165,8 +165,10 @@ class UserController extends Controller
     {
         $repUser = $this->getDoctrine()->getRepository('VOCSPlatformBundle:User');
         $user = $repUser->findOneBy(array('email' => $request->get('email')));
+        $view = View::create();
         if ($user == null || $user->getPassword() != $request->get('password')) {
             $formatted = ['code' => 401, 'message' => 'Authenfication failed'];
+            $view->setStatusCode(401);
         } else {
 
             $formattedLists = [];
@@ -180,7 +182,7 @@ class UserController extends Controller
             $formatted = ['id' => $user->getId(), 'email' => $user->getEmail(), 'firstname' => $user->getFirstname(), 'surname' => $user->getSurname(), 'lists' => $formattedLists];
 
         }
-        return View::create($formatted)->setHeader('Access-Control-Allow-Origin', '*')->setStatusCode(401);
+        return $view->setData($formatted)->setHeader('Access-Control-Allow-Origin', '*');
 
     }
 
@@ -375,7 +377,10 @@ class UserController extends Controller
      */
 
     /**
-     *
+     *@ApiDoc(
+     *     description="Delete un utilisateur",
+     *     output= { "class"=Lists::class, "collection"=false, "groups"={"list"} }
+     *     )
      *
      * @Rest\View()
      * @Rest\Delete("/rest/users/{id}/lists/{list_id}")
@@ -415,12 +420,42 @@ class UserController extends Controller
         return null;
     }
 
+    /**
+     * @ApiDoc(
+     *     description="Remove une classe à un user",
+     *     output= { "class"=User::class, "collection"=false, "groups"={"user"} }
+     *     )
+     *
+     * @Rest\View(serializerGroups={"user"})
+     * @Rest\Delete("/rest/users/{id}/classes/{classe_id}")
+     */
+    public function deleteUserClasse(Request $request) {
+
+        $user = $this->getDoctrine()->getRepository(User::class)->find($request->get('id'));
+        $classe = $this->getDoctrine()->getRepository(Classes::class)->find($request->get('classe_id'));
+
+        $user->removeClass($classe);
+        $classe->removeUser($user);
+
+        $this->getDoctrine()->getManager()->flush();
+
+        $view = View::create($user);
+        $view->setHeader('Access-Control-Allow-Origin', '*');
+
+        return $view;
+    }
+
 
     /**
      * PUT
      */
 
     /**
+     * @ApiDoc(
+     *    description="Change un utilisateur",
+     *    input={"class"=UserType::class, "name"=""}
+     * )
+     *
      * @Rest\View(serializerGroups={"user"})
      * @Rest\Put("/rest/users/{id}")
      */
@@ -430,6 +465,11 @@ class UserController extends Controller
     }
 
     /**
+     *  @ApiDoc(
+     *    description="Patch un utilisateur",
+     *    input={"class"=UserType::class, "name"=""}
+     * )
+     *
      * @Rest\View(serializerGroups={"user"})
      * @Rest\Patch("/rest/users/{id}")
      */

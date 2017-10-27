@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use VOCS\PlatformBundle\Entity\Classes;
+use VOCS\PlatformBundle\Entity\User;
 use VOCS\PlatformBundle\Form\ClassesType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
@@ -21,7 +22,11 @@ class ClassesController extends Controller
      */
 
     /**
-*
+     *  @ApiDoc(
+     *     description="Récupère toutes les classes",
+     *     output= { "class"=Classes::class, "collection"=true, "groups"={"classe"} }
+     *     )
+     *
      * @Rest\View(serializerGroups={"classe"})
      * @Rest\Get("/rest/classes")
      */
@@ -165,10 +170,6 @@ class ClassesController extends Controller
         if ($form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
-            foreach ($classe->getUsers() as $user) {
-                $user->addClass($classe);
-
-            }
             $em->flush();
 
             return View::create($classe)->setHeader('Access-Control-Allow-Origin', '*');
@@ -177,5 +178,32 @@ class ClassesController extends Controller
         }
     }
 
+    /**
+     * DELETE
+     */
 
+    /**
+     * @ApiDoc(
+     *     description="Remove un user d'une classe",
+     *     output= { "class"=Classes::class, "collection"=false, "groups"={"classe"} }
+     *     )
+     *
+     * @Rest\View(serializerGroups={"classe"})
+     * @Rest\Delete("/rest/classes/{id}/users/{user_id}")
+     */
+    public function deleteUserClasse(Request $request) {
+
+        $user = $this->getDoctrine()->getRepository(User::class)->find($request->get('user_id'));
+        $classe = $this->getDoctrine()->getRepository(Classes::class)->find($request->get('id'));
+
+        $user->removeClass($classe);
+        $classe->removeUser($user);
+
+        $this->getDoctrine()->getManager()->flush();
+
+        $view = View::create($classe);
+        $view->setHeader('Access-Control-Allow-Origin', '*');
+
+        return $view;
+    }
 }

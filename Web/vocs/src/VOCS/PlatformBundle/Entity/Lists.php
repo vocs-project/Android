@@ -111,39 +111,6 @@ class Lists
         $this->setCreationDate(new \DateTime());
     }
 
-    /**
-     * Add word
-     *
-     * @param \VOCS\PlatformBundle\Entity\Words $word
-     *
-     * @return Lists
-     */
-    public function addWord(\VOCS\PlatformBundle\Entity\Words $word)
-    {
-        $this->words[] = $word;
-
-        return $this;
-    }
-
-    /**
-     * Remove word
-     *
-     * @param \VOCS\PlatformBundle\Entity\Words $word
-     */
-    public function removeWord(\VOCS\PlatformBundle\Entity\Words $word)
-    {
-        $this->words->removeElement($word);
-    }
-
-    /**
-     * Get words
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getWords()
-    {
-        return $this->words;
-    }
 
     /**
      * Add user
