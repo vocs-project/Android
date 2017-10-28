@@ -19,7 +19,9 @@ class WordsType extends AbstractType
     {
         $builder
             ->add('content', TextType::class)
-            ->add('language', LanguageType::class);
+            ->add('language', EntityType::class, array(
+                'class' => 'VOCSPlatformBundle:Language',
+            ));
 
     }
     

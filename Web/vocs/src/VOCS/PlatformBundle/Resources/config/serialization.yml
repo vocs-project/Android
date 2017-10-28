@@ -33,7 +33,24 @@ VOCS\PlatformBundle\Entity\Lists:
             groups: ['list']
         creationDate:
             groups: ['list']
+        wordTrads:
+            groups: ['list']
 
+VOCS\PlatformBundle\Entity\WordTrad:
+    attributes:
+        word:
+            groups: ['list']
+        trad:
+            groups: ['list']
+
+VOCS\PlatformBundle\Entity\Words:
+    attributes:
+        content:
+            groups: ['list']
+        language:
+            groups: ['list']
+        trads:
+            groups: ['list']
 
 
 VOCS\PlatformBundle\Entity\Schools:
@@ -45,14 +62,12 @@ VOCS\PlatformBundle\Entity\Schools:
         cp:
             groups: ['school']
 
-VOCS\PlatformBundle\Entity\ListsWords:
+
+
+VOCS\PlatformBundle\Entity\Language:
     attributes:
-        id:
-            groups: ['school']
-        nom:
-            groups: ['school']
-        cp:
-            groups: ['school']
+        code:
+            groups: ['list']
 
 
 

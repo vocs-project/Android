@@ -89,7 +89,7 @@ class ClassesController extends Controller
     /**
      *  @ApiDoc(
      *    description="Crée une classe",
-     *    input={"class"=ClassesType::class, "name"=""}
+     *    input={"class"=ClassesType::class, "name"="", "groups"={"classe"}}
      * )
      *
      * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"classe"})

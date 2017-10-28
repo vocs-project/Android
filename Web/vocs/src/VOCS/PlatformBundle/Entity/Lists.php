@@ -43,6 +43,16 @@ class Lists
      */
     private $users;
 
+    /**
+     * Many User have Many Phonenumbers.
+     * @ORM\ManyToMany(targetEntity="WordTrad")
+     * @ORM\JoinTable(name="list_wordTrad",
+     *      joinColumns={@ORM\JoinColumn(name="list_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="wordTrad_id", referencedColumnName="id", unique=true)}
+     *      )
+     */
+    private $wordTrads;
+
 
     /**
      * Get id
@@ -106,7 +116,7 @@ class Lists
      */
     public function __construct()
     {
-        $this->words = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->wordTrads = new \Doctrine\Common\Collections\ArrayCollection();
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
         $this->setCreationDate(new \DateTime());
     }
@@ -144,5 +154,39 @@ class Lists
     public function getUsers()
     {
         return $this->users;
+    }
+
+    /**
+     * Add wordTrad
+     *
+     * @param \VOCS\PlatformBundle\Entity\WordTrad $wordTrad
+     *
+     * @return Lists
+     */
+    public function addWordTrad(\VOCS\PlatformBundle\Entity\WordTrad $wordTrad)
+    {
+        $this->wordTrads[] = $wordTrad;
+
+        return $this;
+    }
+
+    /**
+     * Remove wordTrad
+     *
+     * @param \VOCS\PlatformBundle\Entity\WordTrad $wordTrad
+     */
+    public function removeWordTrad(\VOCS\PlatformBundle\Entity\WordTrad $wordTrad)
+    {
+        $this->wordTrads->removeElement($wordTrad);
+    }
+
+    /**
+     * Get wordTrads
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWordTrads()
+    {
+        return $this->wordTrads;
     }
 }
