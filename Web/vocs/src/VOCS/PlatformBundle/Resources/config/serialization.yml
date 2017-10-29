@@ -28,7 +28,7 @@ VOCS\PlatformBundle\Entity\User:
 VOCS\PlatformBundle\Entity\Lists:
     attributes:
         id:
-            groups: ['list']
+            groups: ['list', 'classe']
         name:
             groups: ['list']
         creationDate:

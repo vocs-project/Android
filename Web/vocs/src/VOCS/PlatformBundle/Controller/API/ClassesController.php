@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use VOCS\PlatformBundle\Entity\Classes;
+use VOCS\PlatformBundle\Entity\Lists;
 use VOCS\PlatformBundle\Entity\User;
 use VOCS\PlatformBundle\Form\ClassesType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
@@ -75,6 +76,35 @@ class ClassesController extends Controller
         $lists = $classe->getLists();
 
         $view = View::create($lists);
+        $view->setHeader('Access-Control-Allow-Origin', '*');
+
+        return $view;
+    }
+
+ /**
+     * @ApiDoc(
+     *     description="Récupère une liste d'une classe",
+     *     output= { "class"=Classes::class, "collection"=false, "groups"={"list"} }
+     *     )
+     *
+     * @Rest\View(serializerGroups={"list"})
+     * @Rest\Get("/rest/classes/{id}/lists/{list_id}")
+     */
+    public function getClasseListAction(Request $request)
+    {
+        $classe = $this->getDoctrine()->getRepository(Classes::class)->find($request->get('id'));
+        $list = $this->getDoctrine()->getRepository(Lists::class)->find($request->get('list_id'));
+
+        if($classe->getLists()->contains($list)) {
+            $view = View::create($list);
+        } else {
+            $response = [
+                "code" => 404,
+                "message" => "la classe " . $classe->getId() . " ne contient pas la liste " . $list->getId(),
+            ];
+            $view = View::create($response)->setStatusCode(404);
+        }
+
         $view->setHeader('Access-Control-Allow-Origin', '*');
 
         return $view;
