@@ -9,8 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
 
 use VOCS\PlatformBundle\Entity\Lists;
+use VOCS\PlatformBundle\Entity\Words;
+use VOCS\PlatformBundle\Entity\WordTrad;
 use VOCS\PlatformBundle\Form\ListsType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use VOCS\PlatformBundle\Form\WordTradType;
 
 class ListsController extends Controller
 {
@@ -40,30 +43,14 @@ class ListsController extends Controller
      *  output= { "class"=Lists::class, "collection"=false, "groups"={"list"} }
      *  )
      *
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"list"})
      * @Rest\Get("/rest/lists/{id}")
      */
     public function getListAction(Request $request)
     {
         $list = $this->getDoctrine()->getRepository(Lists::class)->find($request->get('id'));
 
-
-        $words = $list->getWords();
-        $wordsArray = [];
-        $tradsArray = [];
-        foreach ($words as $word) {
-            foreach ($word->getTrads() as $trad) {
-                $tradsArray[] = ['content' => $trad->getContent(), 'lang' => $trad->getLanguage()->getCode(),];
-            }
-            $wordsArray[] = ['content' => $word->getContent(), 'lang' => $word->getLanguage()->getCode(), 'trads' => $tradsArray,];
-            $tradsArray = null;
-        }
-
-        $formatted = ['id' => $list->getId(), 'name' => $list->getName(), 'words' => $wordsArray,];
-
-        // Création d'une vue FOSRestBundle
-        $view = View::create($formatted);
-        $view->setFormat('json');
+        $view = View::create($list);
         $view->setHeader('Access-Control-Allow-Origin', '*');
 
         return $view;
@@ -81,18 +68,80 @@ class ListsController extends Controller
      *    input={"class"=ListsType::class, "name"=""}
      * )
      *
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"list"})
      * @Rest\Post("/rest/lists")
      */
     public function postListsAction(Request $request)
     {
         $list = new Lists();
-        $em = $this->get('doctrine.orm.entity_manager');
-        $list->setName($request->get('name'));
-        $em->persist($list);
-        $em->flush();
 
-        return $list;
+        $form = $this->createForm(ListsType::class, $list);
+
+        $form->submit($request->request->all());
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            // l'entité vient de la base, donc le merge n'est pas nécessaire.
+            // il est utilisé juste par soucis de clarté
+            $em->persist($list);
+            $em->flush();
+            $view = View::create($list);
+            $view->setHeader('Access-Control-Allow-Origin', '*');
+
+            return $view;
+        } else {
+            $view = View::create($form);
+            $view->setHeader('Access-Control-Allow-Origin', '*');
+
+            return $view;
+        }
+
+    }
+
+
+    /**
+     * @ApiDoc(
+     *    description="Crée des mots dans une liste",
+     *    input={"class"=WordTradType::class, "name"="", "groups"={"list"} }
+     * )
+     *
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"list"})
+     * @Rest\Post("/rest/lists/{id}/wordTrad")
+     */
+    public function postListsWordTradAction(Request $request) {
+
+        $list = $this->getDoctrine()->getRepository(Lists::class)->find($request->get('id'));
+        $wordTrad = new WordTrad();
+
+        $form = $this->createForm(WordTradType::class, $wordTrad);
+
+        $form->submit($request->request->all());
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $repWord = $em->getRepository(Words::class);
+            $word = $repWord->find(array('content' => $wordTrad->getWord()->getContent(), 'language' => $wordTrad->getWord()->getLanguage()));
+            if($word != null) {
+                $wordTrad->setWord($word);
+            }
+            $trad = $repWord->find(array('content' => $wordTrad->getTrad()->getContent(), 'language' => $wordTrad->getTrad()->getLanguage()));
+            if($trad != null) {
+                $wordTrad->setTrad($trad);
+            }
+
+            $list->addWordTrad($wordTrad);
+            $em->persist($wordTrad);
+            $em->flush();
+            $view = View::create($list);
+
+
+        } else {
+            $view = View::create($form);
+        }
+
+        return $view->setHeader('Access-Control-Allow-Origin', '*');
+
     }
 
     /**

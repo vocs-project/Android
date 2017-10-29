@@ -13,15 +13,16 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use VOCS\PlatformBundle\Entity\Classes;
 use VOCS\PlatformBundle\Entity\Language;
 use VOCS\PlatformBundle\Entity\Lists;
-use VOCS\PlatformBundle\Entity\ListsWords;
 use VOCS\PlatformBundle\Entity\User;
 use VOCS\PlatformBundle\Entity\Words;
+use VOCS\PlatformBundle\Entity\WordTrad;
 use VOCS\PlatformBundle\Form\ClassesType;
 use VOCS\PlatformBundle\Form\LanguageType;
 use VOCS\PlatformBundle\Form\ListsType;
 use VOCS\PlatformBundle\Form\UserType;
 use VOCS\PlatformBundle\Form\WordsType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use VOCS\PlatformBundle\Form\WordTradType;
 
 
 class UserController extends Controller
@@ -91,7 +92,10 @@ class UserController extends Controller
     }
 
     /**
-     *
+     *@ApiDoc(
+     *     description="Récupère tous les listes d'un utilisateur",
+     *     output= { "class"=Listes::class, "collection"=true, "groups"={"list"} }
+     *     )
      *
      * @Rest\View(serializerGroups={"list"})
      * @Rest\Get("/rest/users/{id}/lists")
@@ -101,45 +105,40 @@ class UserController extends Controller
 
         $user = $this->getDoctrine()->getRepository(User::class)->find($request->get('id'));
         $lists = $user->getLists();
-
-        return $lists;
+        $view = View::create($lists);
+        $view->setHeader('Access-Control-Allow-Origin', '*');
+        return $view;
     }
 
 
     /**
-     * @Rest\View()
+     * @ApiDoc(
+     *     description="Récupère une liste d'un utilisateur",
+     *     output= { "class"=Listes::class, "collection"=false, "groups"={"list"} }
+     *     )
+     *
+     * @Rest\View(serializerGroups={"list"})
      * @Rest\Get("/rest/users/{id}/lists/{list_id}")
      */
     public function getUserListAction(Request $request)
     {
-        $list = $this->getDoctrine()->getRepository(Lists::class)->getListOfUser($request->get('list_id'), $request->get('id'));
-        $listWords = $this->getDoctrine()->getRepository(ListsWords::class)->findBy(array('list' => $list));
+        $list = $this->getDoctrine()->getRepository(Lists::class)->find($request->get('list_id'));
+
+        $user = $this->getDoctrine()->getRepository(User::class)->find($request->get('id'));
 
 
-        $wordsArray = [];
-
-        foreach ($listWords as $listWord) {
-            $wordTrads = [];
-            $tradTrads = [];
-            foreach ($listWord->getWord()->getTrads() as $trad) {
-                $wordTrads[] = ['content' => $trad->getContent(), 'lang' => $trad->getLanguage()->getCode(),];
-            }
-
-            foreach ($listWord->getTrad()->getTrads() as $trad) {
-                $tradTrads[] = ['content' => $trad->getContent(), 'lang' => $trad->getLanguage()->getCode(),];
-            }
-
-            $word = ['content' => $listWord->getWord()->getContent(), 'lang' => $listWord->getWord()->getLanguage()->getCode(), 'trads' => $wordTrads];
-
-            $trad = ['content' => $listWord->getTrad()->getContent(), 'lang' => $listWord->getTrad()->getLanguage()->getCode(), 'trads' => $tradTrads];
-
-            $wordsArray[] = ['word' => $word, 'trad' => $trad];
-
+        if($user->getLists()->contains($list)) {
+            $view = View::create($list);
+        }
+        else {
+            $reponse = [
+                "code" => "404",
+                "message" => "l'user " . $request->get('id') . " n'a pas de liste " . $request->get('list_id')
+            ];
+            $view = View::create($reponse);
+            $view->setStatusCode(404);
         }
 
-        $formatted = ['id' => $list->getId(), 'name' => $list->getName(), 'words' => $wordsArray,];
-        // Création d'une vue FOSRestBundle
-        $view = View::create($formatted);
         $view->setHeader('Access-Control-Allow-Origin', '*');
 
 
@@ -165,8 +164,10 @@ class UserController extends Controller
     {
         $repUser = $this->getDoctrine()->getRepository('VOCSPlatformBundle:User');
         $user = $repUser->findOneBy(array('email' => $request->get('email')));
+        $view = View::create();
         if ($user == null || $user->getPassword() != $request->get('password')) {
             $formatted = ['code' => 401, 'message' => 'Authenfication failed'];
+            $view->setStatusCode(401);
         } else {
 
             $formattedLists = [];
@@ -180,7 +181,7 @@ class UserController extends Controller
             $formatted = ['id' => $user->getId(), 'email' => $user->getEmail(), 'firstname' => $user->getFirstname(), 'surname' => $user->getSurname(), 'lists' => $formattedLists];
 
         }
-        return View::create($formatted)->setHeader('Access-Control-Allow-Origin', '*')->setStatusCode(401);
+        return $view->setData($formatted)->setHeader('Access-Control-Allow-Origin', '*');
 
     }
 
@@ -282,86 +283,61 @@ class UserController extends Controller
      *    description="Crée/ajoute un mot dans une liste d'un utilisateur"
      * )
      *
-     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"list"})
      * @Rest\Post("/rest/users/{id}/lists/{list_id}/words")
      */
     public function postUsersListsWordsAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $list = $this->getDoctrine()->getRepository(Lists::class)->find($request->get('list_id'));
 
-        $list = $this->getDoctrine()->getRepository(Lists::class)->getListOfUser($request->get('list_id'), $request->get('id'));
-
-        $repWords = $em->getRepository('VOCSPlatformBundle:Words');
-
-        $word = $repWords->find(array('content' => $request->get('word')['content'], 'language' => $request->get('word')['language']));
-
-        if (!isset($word)) {
-
-            $word = new Words();
-            $lang = $em->getRepository('VOCSPlatformBundle:Language')->find($request->get('word')['language']);
-            $word->setLanguage($lang);
-            $word->setContent($request->get('word')['content']);
-            $em->persist($word);
-        }
-
-        $trad = $repWords->find(array('content' => $request->get('trad')['content'], 'language' => $request->get('trad')['language']));
-        if (!isset($trad)) {
-            $trad = new Words();
-            $lang = $em->getRepository('VOCSPlatformBundle:Language')->find($request->get('trad')['language']);
-            $trad->setLanguage($lang);
-            $trad->setContent($request->get('trad')['content']);
-            $em->persist($trad);
-        }
-
-        if (!$word->getTrads()->contains($trad)) {
-            $word->addTrad($trad);
-        }
-
-        if (!$trad->getTrads()->contains($word)) {
-            $trad->addTrad($word);
-        }
-
-        $repListWords = $this->getDoctrine()->getRepository(ListsWords::class);
-        $listWord = $repListWords->testListWord($list, $word, $trad);
-        if ($listWord == null) {
-            $listWord = new ListsWords();
-            $listWord->setList($list);
-            $listWord->setWord($word);
-            $listWord->setTrad($trad);
-            $em->persist($listWord);
-        }
+        $user = $this->getDoctrine()->getRepository(User::class)->find($request->get('id'));
 
 
-        $em->flush();
+        if($user->getLists()->contains($list)) {
+            $wordTrad = new WordTrad();
+
+            $form = $this->createForm(WordTradType::class, $wordTrad);
+
+            $form->submit($request->request->all());
+
+            if ($form->isValid()) {
+                $em = $this->getDoctrine()->getManager();
+
+                $repWord = $em->getRepository(Words::class);
+                $word = $repWord->find(array('content' => $wordTrad->getWord()->getContent(), 'language' => $wordTrad->getWord()->getLanguage()));
+                if($word != null) {
+                    $wordTrad->setWord($word);
+                }
+                $trad = $repWord->find(array('content' => $wordTrad->getTrad()->getContent(), 'language' => $wordTrad->getTrad()->getLanguage()));
+                if($trad != null) {
+                    $wordTrad->setTrad($trad);
+                }
+
+                $list->addWordTrad($wordTrad);
+                $em->persist($wordTrad);
+                $em->flush();
+                $view = View::create($list);
 
 
-        $listWords = $repListWords->findBy(array('list' => $list));
-
-
-        $wordsArray = [];
-
-        foreach ($listWords as $listWord) {
-            $wordTrads = [];
-            $tradTrads = [];
-            foreach ($listWord->getWord()->getTrads() as $trad) {
-                $wordTrads[] = ['content' => $trad->getContent(), 'lang' => $trad->getLanguage()->getCode(),];
+            } else {
+                $view = View::create($form);
             }
 
-            foreach ($listWord->getTrad()->getTrads() as $trad) {
-                $tradTrads[] = ['content' => $trad->getContent(), 'lang' => $trad->getLanguage()->getCode(),];
-            }
-
-            $word = ['content' => $listWord->getWord()->getContent(), 'lang' => $listWord->getWord()->getLanguage()->getCode(), 'trads' => $wordTrads];
-
-            $trad = ['content' => $listWord->getTrad()->getContent(), 'lang' => $listWord->getTrad()->getLanguage()->getCode(), 'trads' => $tradTrads];
-
-            $wordsArray[] = ['word' => $word, 'trad' => $trad];
+        }
+        else {
+            $reponse = [
+                "code" => "404",
+                "message" => "l'user " . $request->get('id') . " n'a pas de liste " . $request->get('list_id')
+            ];
+            $view = View::create($reponse);
+            $view->setStatusCode(404);
         }
 
-        $formatted = ['id' => $list->getId(), 'name' => $list->getName(), 'words' => $wordsArray,];
-        // Création d'une vue FOSRestBundle
-        return View::create($formatted)->setHeader('Access-Control-Allow-Origin', '*');
 
+        $view->setHeader('Access-Control-Allow-Origin', '*');
+
+
+        return $view;
     }
 
 
@@ -375,7 +351,10 @@ class UserController extends Controller
      */
 
     /**
-     *
+     *@ApiDoc(
+     *     description="Delete une liste d'un utilisateur",
+     *     output= { "class"=Lists::class, "collection"=false, "groups"={"list"} }
+     *     )
      *
      * @Rest\View()
      * @Rest\Delete("/rest/users/{id}/lists/{list_id}")
@@ -415,12 +394,42 @@ class UserController extends Controller
         return null;
     }
 
+    /**
+     * @ApiDoc(
+     *     description="Remove une classe à un user",
+     *     output= { "class"=User::class, "collection"=false, "groups"={"user"} }
+     *     )
+     *
+     * @Rest\View(serializerGroups={"user"})
+     * @Rest\Delete("/rest/users/{id}/classes/{classe_id}")
+     */
+    public function deleteUserClasse(Request $request) {
+
+        $user = $this->getDoctrine()->getRepository(User::class)->find($request->get('id'));
+        $classe = $this->getDoctrine()->getRepository(Classes::class)->find($request->get('classe_id'));
+
+        $user->removeClass($classe);
+        $classe->removeUser($user);
+
+        $this->getDoctrine()->getManager()->flush();
+
+        $view = View::create($user);
+        $view->setHeader('Access-Control-Allow-Origin', '*');
+
+        return $view;
+    }
+
 
     /**
      * PUT
      */
 
     /**
+     * @ApiDoc(
+     *    description="Change un utilisateur",
+     *    input={"class"=UserType::class, "name"=""}
+     * )
+     *
      * @Rest\View(serializerGroups={"user"})
      * @Rest\Put("/rest/users/{id}")
      */
@@ -430,6 +439,11 @@ class UserController extends Controller
     }
 
     /**
+     *  @ApiDoc(
+     *    description="Patch un utilisateur",
+     *    input={"class"=UserType::class, "name"=""}
+     * )
+     *
      * @Rest\View(serializerGroups={"user"})
      * @Rest\Patch("/rest/users/{id}")
      */

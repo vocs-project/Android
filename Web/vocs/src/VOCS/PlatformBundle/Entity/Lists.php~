@@ -36,39 +36,22 @@ class Lists
      */
     private $creationDate;
 
-    /**
-     * Many Users have Many Groups.
-     * @ORM\ManyToMany(targetEntity="Words")
-     * @ORM\JoinTable(name="lists_words",
-     *      joinColumns={@ORM\JoinColumn(name="lists_id", referencedColumnName="id")},
-     *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="words_content", referencedColumnName="content"),
-     *          @ORM\JoinColumn(name="words_language", referencedColumnName="language_code"),
-     *      }
-     *      )
-     */
-    private $words;
-
-    /**
-     * Many Users have Many Groups.
-     * @ORM\ManyToMany(targetEntity="Words")
-     * @ORM\JoinTable(name="lists_words",
-     *      joinColumns={@ORM\JoinColumn(name="lists_id", referencedColumnName="id")},
-     *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="trads_content", referencedColumnName="content"),
-     *          @ORM\JoinColumn(name="trads_language", referencedColumnName="language_code"),
-     *      }
-     *      )
-     */
-    private $trads;
-
-
 
     /**
      *
      * @ORM\ManyToMany(targetEntity="User", mappedBy="lists")
      */
     private $users;
+
+    /**
+     * Many User have Many Phonenumbers.
+     * @ORM\ManyToMany(targetEntity="WordTrad")
+     * @ORM\JoinTable(name="list_wordTrad",
+     *      joinColumns={@ORM\JoinColumn(name="list_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="wordTrad_id", referencedColumnName="id", unique=true)}
+     *      )
+     */
+    private $wordTrads;
 
 
     /**
@@ -138,39 +121,6 @@ class Lists
         $this->setCreationDate(new \DateTime());
     }
 
-    /**
-     * Add word
-     *
-     * @param \VOCS\PlatformBundle\Entity\Words $word
-     *
-     * @return Lists
-     */
-    public function addWord(\VOCS\PlatformBundle\Entity\Words $word)
-    {
-        $this->words[] = $word;
-
-        return $this;
-    }
-
-    /**
-     * Remove word
-     *
-     * @param \VOCS\PlatformBundle\Entity\Words $word
-     */
-    public function removeWord(\VOCS\PlatformBundle\Entity\Words $word)
-    {
-        $this->words->removeElement($word);
-    }
-
-    /**
-     * Get words
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getWords()
-    {
-        return $this->words;
-    }
 
     /**
      * Add user

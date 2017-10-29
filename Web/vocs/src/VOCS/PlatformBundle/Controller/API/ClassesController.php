@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use VOCS\PlatformBundle\Entity\Classes;
+use VOCS\PlatformBundle\Entity\Lists;
+use VOCS\PlatformBundle\Entity\User;
 use VOCS\PlatformBundle\Form\ClassesType;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
@@ -21,7 +23,11 @@ class ClassesController extends Controller
      */
 
     /**
-*
+     *  @ApiDoc(
+     *     description="Récupère toutes les classes",
+     *     output= { "class"=Classes::class, "collection"=true, "groups"={"classe"} }
+     *     )
+     *
      * @Rest\View(serializerGroups={"classe"})
      * @Rest\Get("/rest/classes")
      */
@@ -75,6 +81,35 @@ class ClassesController extends Controller
         return $view;
     }
 
+ /**
+     * @ApiDoc(
+     *     description="Récupère une liste d'une classe",
+     *     output= { "class"=Classes::class, "collection"=false, "groups"={"list"} }
+     *     )
+     *
+     * @Rest\View(serializerGroups={"list"})
+     * @Rest\Get("/rest/classes/{id}/lists/{list_id}")
+     */
+    public function getClasseListAction(Request $request)
+    {
+        $classe = $this->getDoctrine()->getRepository(Classes::class)->find($request->get('id'));
+        $list = $this->getDoctrine()->getRepository(Lists::class)->find($request->get('list_id'));
+
+        if($classe->getLists()->contains($list)) {
+            $view = View::create($list);
+        } else {
+            $response = [
+                "code" => 404,
+                "message" => "la classe " . $classe->getId() . " ne contient pas la liste " . $list->getId(),
+            ];
+            $view = View::create($response)->setStatusCode(404);
+        }
+
+        $view->setHeader('Access-Control-Allow-Origin', '*');
+
+        return $view;
+    }
+
 
 
     /**
@@ -84,7 +119,7 @@ class ClassesController extends Controller
     /**
      *  @ApiDoc(
      *    description="Crée une classe",
-     *    input={"class"=ClassesType::class, "name"=""}
+     *    input={"class"=ClassesType::class, "name"="", "groups"={"classe"}}
      * )
      *
      * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"classe"})
@@ -165,10 +200,6 @@ class ClassesController extends Controller
         if ($form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
-            foreach ($classe->getUsers() as $user) {
-                $user->addClass($classe);
-
-            }
             $em->flush();
 
             return View::create($classe)->setHeader('Access-Control-Allow-Origin', '*');
@@ -177,5 +208,32 @@ class ClassesController extends Controller
         }
     }
 
+    /**
+     * DELETE
+     */
 
+    /**
+     * @ApiDoc(
+     *     description="Remove un user d'une classe",
+     *     output= { "class"=Classes::class, "collection"=false, "groups"={"classe"} }
+     *     )
+     *
+     * @Rest\View(serializerGroups={"classe"})
+     * @Rest\Delete("/rest/classes/{id}/users/{user_id}")
+     */
+    public function deleteUserClasse(Request $request) {
+
+        $user = $this->getDoctrine()->getRepository(User::class)->find($request->get('user_id'));
+        $classe = $this->getDoctrine()->getRepository(Classes::class)->find($request->get('id'));
+
+        $user->removeClass($classe);
+        $classe->removeUser($user);
+
+        $this->getDoctrine()->getManager()->flush();
+
+        $view = View::create($classe);
+        $view->setHeader('Access-Control-Allow-Origin', '*');
+
+        return $view;
+    }
 }
