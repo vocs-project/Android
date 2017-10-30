@@ -201,4 +201,56 @@ class ListsController extends Controller
         }
     }
 
+    /**
+     * @ApiDoc(
+     *     description="Remove une liste",
+     *     output= { "class"=Liste::class, "collection"=false, "groups"={"list"} }
+     *     )
+     *
+     * @Rest\View(serializerGroups={"list"})
+     * @Rest\Delete("/rest/lists/{id}")
+     */
+    public function deleteList(Request $request) {
+        $list = $this->getDoctrine()->getRepository(Lists::class)->find($request->get('id'));
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($list);
+        $em->flush();
+
+        return View::create($list)->setHeader('Access-Control-Allow-Origin', '*');
+    }
+
+    /**
+     * @ApiDoc(
+     *     description="Remove un wordTrad d'une liste",
+     *     output= { "class"=WordTrad::class, "collection"=false, "groups"={"wordTrad"} }
+     *     )
+     *
+     * @Rest\View(serializerGroups={"wordTrad"})
+     * @Rest\Delete("/rest/lists/{id}/wordTrad/{wordTrad_id}")
+     */
+    public function deleteListWordTrad(Request $request) {
+        $list = $this->getDoctrine()->getRepository(Lists::class)->find($request->get('id'));
+        $wordTrad = $this->getDoctrine()->getRepository(WordTrad::class)->find($request->get('wordTrad_id'));
+
+        if($list->getWordTrads()->contains($wordTrad)) {
+            $em = $this->getDoctrine()->getManager();
+            $list->removeWordTrad($wordTrad);
+            $em->remove($wordTrad);
+            $em->flush();
+
+            $view = View::create($wordTrad);
+        }else {
+            $response = [
+                "code" => 404,
+                "message" => "La liste " . $list->getId() . " ne contient le wordTrad " . $wordTrad->getId(),
+            ];
+            $view = View::create($response);
+        }
+
+        return $view->setHeader('Access-Control-Allow-Origin', '*');
+    }
+
+
 }

@@ -280,11 +280,12 @@ class UserController extends Controller
 
     /**
      *   @ApiDoc(
-     *    description="Crée/ajoute un mot dans une liste d'un utilisateur"
+     *    description="Crée/ajoute un mot dans une liste d'un utilisateur",
+     *    input={"class"=WordTradType::class, "name"=""}
      * )
      *
      * @Rest\View(statusCode=Response::HTTP_CREATED, serializerGroups={"list"})
-     * @Rest\Post("/rest/users/{id}/lists/{list_id}/words")
+     * @Rest\Post("/rest/users/{id}/lists/{list_id}/wordTrad")
      */
     public function postUsersListsWordsAction(Request $request)
     {
@@ -352,7 +353,7 @@ class UserController extends Controller
 
     /**
      *@ApiDoc(
-     *     description="Delete une liste d'un utilisateur",
+     *     description="Delete une liste d'un utilisateur (à changer)",
      *     output= { "class"=Lists::class, "collection"=false, "groups"={"list"} }
      *     )
      *
@@ -407,13 +408,22 @@ class UserController extends Controller
 
         $user = $this->getDoctrine()->getRepository(User::class)->find($request->get('id'));
         $classe = $this->getDoctrine()->getRepository(Classes::class)->find($request->get('classe_id'));
+        if($user->getClasses()->contains($classe)) {
+            $user->removeClass($classe);
+            $classe->removeUser($user);
 
-        $user->removeClass($classe);
-        $classe->removeUser($user);
+            $this->getDoctrine()->getManager()->flush();
+            $view = View::create($user);
+        }else {
+            $response = [
+                "code" => 404,
+                "message" => "L'user " . $user->getId() . " n'a pas la classe " . $classe->getId(),
+            ];
+            $view = View::create($response)->setStatusCode(404);
+        }
 
-        $this->getDoctrine()->getManager()->flush();
 
-        $view = View::create($user);
+
         $view->setHeader('Access-Control-Allow-Origin', '*');
 
         return $view;

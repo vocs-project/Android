@@ -38,19 +38,21 @@ VOCS\PlatformBundle\Entity\Lists:
 
 VOCS\PlatformBundle\Entity\WordTrad:
     attributes:
+        id:
+            groups: ['list', 'wordTrad']
         word:
-            groups: ['list']
+            groups: ['list', 'wordTrad']
         trad:
-            groups: ['list']
+            groups: ['list', 'wordTrad']
 
 VOCS\PlatformBundle\Entity\Words:
     attributes:
         content:
-            groups: ['list']
+            groups: ['list', 'wordTrad']
         language:
-            groups: ['list']
+            groups: ['list', 'wordTrad']
         trads:
-            groups: ['list']
+            groups: ['list', 'wordTrad']
 
 
 VOCS\PlatformBundle\Entity\Schools:
