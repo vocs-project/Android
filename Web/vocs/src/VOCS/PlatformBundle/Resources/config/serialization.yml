@@ -30,7 +30,7 @@ VOCS\PlatformBundle\Entity\Lists:
         id:
             groups: ['list', 'classe']
         name:
-            groups: ['list']
+            groups: ['list', 'classe']
         creationDate:
             groups: ['list']
         wordTrads:

@@ -195,6 +195,7 @@ class Classes
      */
     public function addList(\VOCS\PlatformBundle\Entity\Lists $list)
     {
+
         $this->lists[] = $list;
 
         return $this;

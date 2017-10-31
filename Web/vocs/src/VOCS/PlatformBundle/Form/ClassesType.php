@@ -27,7 +27,8 @@ class ClassesType extends AbstractType
             ))
             ->add('lists', EntityType::class, array(
                 'class' => 'VOCSPlatformBundle:Lists',
-                'multiple' => true
+                'multiple' => true,
+                'by_reference' => false
             ))
             ->add('users', EntityType::class, array(
                 'class' => 'VOCSPlatformBundle:User',
