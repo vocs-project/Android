@@ -25,10 +25,10 @@ class ClassesController extends Controller
     /**
      *  @ApiDoc(
      *     description="Récupère toutes les classes",
-     *     output= { "class"=Classes::class, "collection"=true, "groups"={"classe"} }
+     *     output= { "class"=Classes::class, "collection"=true, "groups"={"classes"} }
      *     )
      *
-     * @Rest\View(serializerGroups={"classe"})
+     * @Rest\View(serializerGroups={"classes"})
      * @Rest\Get("/rest/classes")
      */
     public function getClassesAction(Request $request)

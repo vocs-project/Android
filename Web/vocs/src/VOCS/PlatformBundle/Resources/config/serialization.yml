@@ -1,12 +1,14 @@
 VOCS\PlatformBundle\Entity\Classes:
     attributes:
         id:
-            groups: ['classe', 'user', 'demand']
+            groups: ['classe', 'user', 'demand', 'classes']
         name:
-            groups: ['classe', 'demand']
+            groups: ['classe', 'demand', 'classes']
         lists:
             groups: ['classe']
         users:
+            groups: ['classe']
+        school:
             groups: ['classe']
 
 
@@ -17,9 +19,9 @@ VOCS\PlatformBundle\Entity\User:
         email:
             groups: ['user']
         firstname:
-            groups: ['user', 'demand']
+            groups: ['user', 'demand', 'classe']
         surname:
-            groups: ['user', 'demand']
+            groups: ['user', 'demand', 'classe']
         roles:
             groups: ['user', 'classe', 'demand']
         classes:
