@@ -43,7 +43,7 @@ class Classes
 
     /**
      *
-     * @ORM\ManyToMany(targetEntity="Lists")
+     * @ORM\ManyToMany(targetEntity="Lists", cascade={"persist", "merge"})
      * @ORM\JoinTable(name="classes_lists",
      *      joinColumns={@ORM\JoinColumn(name="classes_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="lists_id", referencedColumnName="id")}
@@ -196,7 +196,7 @@ class Classes
     public function addList(\VOCS\PlatformBundle\Entity\Lists $list)
     {
 
-        $this->lists[] = $list;
+        $this->lists->add($list);
 
         return $this;
     }

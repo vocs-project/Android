@@ -200,6 +200,7 @@ class ClassesController extends Controller
         if ($form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
+            var_dump($classe->getLists());
             $em->flush();
 
             return View::create($classe)->setHeader('Access-Control-Allow-Origin', '*');

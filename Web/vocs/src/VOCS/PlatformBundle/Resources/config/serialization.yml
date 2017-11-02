@@ -1,9 +1,9 @@
 VOCS\PlatformBundle\Entity\Classes:
     attributes:
         id:
-            groups: ['classe', 'user']
+            groups: ['classe', 'user', 'demand']
         name:
-            groups: ['classe']
+            groups: ['classe', 'demand']
         lists:
             groups: ['classe']
         users:
@@ -13,15 +13,15 @@ VOCS\PlatformBundle\Entity\Classes:
 VOCS\PlatformBundle\Entity\User:
     attributes:
         id:
-            groups: ['user', 'classe']
+            groups: ['user', 'classe', 'demand']
         email:
             groups: ['user']
         firstname:
-            groups: ['user']
+            groups: ['user', 'demand']
         surname:
-            groups: ['user']
+            groups: ['user', 'demand']
         roles:
-            groups: ['user', 'classe']
+            groups: ['user', 'classe', 'demand']
         classes:
             groups: ['user']
 
@@ -70,6 +70,16 @@ VOCS\PlatformBundle\Entity\Language:
     attributes:
         code:
             groups: ['list']
+
+VOCS\PlatformBundle\Entity\Demands:
+    attributes:
+        userSend:
+            groups: ['demand']
+        userReceive:
+            groups: ['demand']
+        classe:
+            groups: ['demand']
+
 
 
 

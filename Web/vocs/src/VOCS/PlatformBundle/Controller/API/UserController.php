@@ -47,7 +47,7 @@ class UserController extends Controller
         $users = $this->getDoctrine()->getRepository(User::class)->findAll();
 
         $view = View::create($users);
-        $view->setHeader('Access-Control-Allow-Origin', '*');
+//        $view->setHeader('Access-Control-Allow-Origin', '*');
 
         return $view;
     }
@@ -208,9 +208,9 @@ class UserController extends Controller
             $em->persist($user);
             $em->flush();
 
-            return View::create($user)->setHeader('Access-Control-Allow-Origin', '*');
+            return View::create($user);
         } else {
-            return View::create($form)->setHeader('Access-Control-Allow-Origin', '*');
+            return View::create($form);
         }
     }
 
@@ -479,6 +479,7 @@ class UserController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $em->merge($user);
+
             $em->flush();
 
             return View::create($user)->setHeader('Access-Control-Allow-Origin', '*');
