@@ -39,7 +39,7 @@ class UserController extends Controller
      *     )
      *
      *
-     * @Rest\View(serializerGroups={"user"})
+     * @Rest\View(serializerGroups={"users"})
      * @Rest\Get("/rest/users")
      */
     public function getUsersAction(Request $request)
@@ -206,11 +206,22 @@ class UserController extends Controller
 
             $em = $this->get('doctrine')->getManager();
             $em->persist($user);
-            $em->flush();
+            try {
 
-            return View::create($user);
+                $em->flush();
+            } catch (UniqueConstraintViolationException $exception) {
+                $response = [
+                    "code" => 409,
+                    "message" => "Email déjà utilisé "
+                ];
+
+                return View::create($response)->setStatusCode(409);
+
+            }
+
+            return $user;
         } else {
-            return View::create($form);
+            return $form;
         }
     }
 

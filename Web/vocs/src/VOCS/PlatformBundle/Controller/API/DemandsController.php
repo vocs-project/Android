@@ -61,6 +61,31 @@ class DemandsController extends Controller
         return $view;
     }
 
+    /**
+     * @ApiDoc(
+     *     description="Récupère les demands d'un user",
+     *     output= { "class"=Demands::class, "collection"=false }
+     *     )
+     *
+     * @Rest\View(serializerGroups={"demand"})
+     * @Rest\Get("/rest/demands/users/{user_id}")
+     */
+    public function getDemandsUserAction(Request $request)
+    {
+        $demandSend = $this->getDoctrine()->getRepository(Demands::class)->findByUserSend($request->get('user_id'));
+        $demandReceive = $this->getDoctrine()->getRepository(Demands::class)->findByUserReceive($request->get('user_id'));
+
+        $demands = [
+            "demandSend" => $demandSend,
+            "demandReceive" => $demandReceive
+        ];
+
+        return $demands;
+    }
+
+
+
+
 
 
     /**

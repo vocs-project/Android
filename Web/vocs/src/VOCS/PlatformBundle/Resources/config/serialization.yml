@@ -3,36 +3,38 @@ VOCS\PlatformBundle\Entity\Classes:
         id:
             groups: ['classe', 'user', 'demand', 'classes']
         name:
-            groups: ['classe', 'demand', 'classes']
+            groups: ['classe', 'user', 'demand', 'classes']
         lists:
             groups: ['classe']
         users:
             groups: ['classe']
         school:
-            groups: ['classe']
+            groups: ['classe', 'user']
 
 
 VOCS\PlatformBundle\Entity\User:
     attributes:
         id:
-            groups: ['user', 'classe', 'demand']
+            groups: ['user', 'users', 'classe', 'demand']
         email:
             groups: ['user']
         firstname:
-            groups: ['user', 'demand', 'classe']
+            groups: ['user', 'users', 'demand', 'classe']
         surname:
-            groups: ['user', 'demand', 'classe']
+            groups: ['user', 'users', 'demand', 'classe']
         roles:
-            groups: ['user', 'classe', 'demand']
+            groups: ['user', 'users', 'classe', 'demand']
         classes:
+            groups: ['user']
+        lists:
             groups: ['user']
 
 VOCS\PlatformBundle\Entity\Lists:
     attributes:
         id:
-            groups: ['list', 'classe']
+            groups: ['list', 'classe', 'user']
         name:
-            groups: ['list', 'classe']
+            groups: ['list', 'classe', 'user']
         creationDate:
             groups: ['list']
         wordTrads:

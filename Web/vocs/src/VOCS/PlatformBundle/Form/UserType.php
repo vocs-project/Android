@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class UserType extends AbstractType
 {
@@ -19,11 +20,32 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstname', TextType::class)
-            ->add('surname', TextType::class)
-            ->add('email', EmailType::class)
-            ->add('password', PasswordType::class)
+            ->add('firstname', TextType::class, array(
+                'required' => true,
+                'constraints' => array(
+                    new NotBlank()
+                )
+            ))
+            ->add('surname', TextType::class, array(
+                'required' => true,
+                'constraints' => array(
+                    new NotBlank()
+                )
+            ))
+            ->add('email', EmailType::class, array(
+                'required' => true,
+                'constraints' => array(
+                    new NotBlank()
+                )
+            ))
+            ->add('password', PasswordType::class, array(
+                'required' => true,
+                'constraints' => array(
+                    new NotBlank()
+                )
+            ))
             ->add('roles', ChoiceType::class, array(
+
                 'choices' => array(
                     'ROLE_PROFESSOR',
                     'ROLE_STUDENT'
@@ -36,7 +58,7 @@ class UserType extends AbstractType
             ))
             ->remove('username');
     }
-    
+
     /**
      * {@inheritdoc}
      */
