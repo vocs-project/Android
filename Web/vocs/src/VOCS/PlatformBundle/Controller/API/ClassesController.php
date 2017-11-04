@@ -223,7 +223,7 @@ class ClassesController extends Controller
      * @Rest\View(serializerGroups={"classe"})
      * @Rest\Delete("/rest/classes/{id}")
      */
-    public function deleteUserClasse(Request $request) {
+    public function deleteClasse(Request $request) {
 
         $classe = $this->getDoctrine()->getRepository(Classes::class)->find($request->get('id'));
 
