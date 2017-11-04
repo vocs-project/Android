@@ -77,6 +77,8 @@ VOCS\PlatformBundle\Entity\Language:
 
 VOCS\PlatformBundle\Entity\Demands:
     attributes:
+        id:
+            groups: ['demand']
         userSend:
             groups: ['demand']
         userReceive:

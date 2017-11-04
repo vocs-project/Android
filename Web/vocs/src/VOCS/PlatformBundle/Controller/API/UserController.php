@@ -139,20 +139,13 @@ class UserController extends Controller
             $view->setStatusCode(404);
         }
 
-        $view->setHeader('Access-Control-Allow-Origin', '*');
-
-
         return $view;
     }
-
-
-
 
 
     /**
      * POST
      */
-
 
     /**
      *

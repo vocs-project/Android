@@ -12,22 +12,32 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Demands
 {
+
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="userSend_id", referencedColumnName="id")
      */
     private $userSend;
 
     /**
-     * @ORM\Id
+     *
      * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="userReceive_id", referencedColumnName="id")
      */
     private $userReceive;
 
     /**
-     * @ORM\Id
+     *
      * @ORM\ManyToOne(targetEntity="Classes")
      * @ORM\JoinColumn(name="classe_id", referencedColumnName="id")
      */
@@ -103,5 +113,15 @@ class Demands
     public function getClasse()
     {
         return $this->classe;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

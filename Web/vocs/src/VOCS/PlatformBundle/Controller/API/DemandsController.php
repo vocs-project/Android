@@ -185,5 +185,28 @@ class DemandsController extends Controller
         }
     }
 
+    /**
+     *DELETE
+     */
 
+    /**
+     * @ApiDoc(
+     *     description="Remove une demand",
+     *     output= { "class"=Demands::class, "collection"=false, "groups"={"demand"} }
+     *     )
+     *
+     * @Rest\View(serializerGroups={"demand"})
+     * @Rest\Delete("/rest/demands/{id}")
+     */
+    public function deleteUserClasse(Request $request) {
+
+        $demand = $this->getDoctrine()->getRepository(Demands::class)->find($request->get('id'));
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($demand);
+        $em->flush();
+
+       return $demand;
+    }
 }

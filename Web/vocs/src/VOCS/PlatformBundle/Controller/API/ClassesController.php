@@ -213,6 +213,29 @@ class ClassesController extends Controller
      * DELETE
      */
 
+
+    /**
+     * @ApiDoc(
+     *     description="Remove une classe",
+     *     output= { "class"=Classes::class, "collection"=false, "groups"={"classe"} }
+     *     )
+     *
+     * @Rest\View(serializerGroups={"classe"})
+     * @Rest\Delete("/rest/classes/{id}")
+     */
+    public function deleteUserClasse(Request $request) {
+
+        $classe = $this->getDoctrine()->getRepository(Classes::class)->find($request->get('id'));
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->remove($classe);
+        $em->flush();
+
+        return $classe;
+    }
+    
+    
     /**
      * @ApiDoc(
      *     description="Remove un user d'une classe",
