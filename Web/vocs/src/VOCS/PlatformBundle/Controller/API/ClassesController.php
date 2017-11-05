@@ -188,9 +188,6 @@ class ClassesController extends Controller
     private function updateClasse(Request $request, $clearMissing) {
         $classe = $this->getDoctrine()->getRepository(Classes::class)->find($request->get('id'));
 
-        if (empty($classe)) {
-            return new JsonResponse(['message' => 'Classe not found'], Response::HTTP_NOT_FOUND);
-        }
 
         $form = $this->createForm(ClassesType::class, $classe);
 
@@ -203,9 +200,9 @@ class ClassesController extends Controller
             var_dump($classe->getLists());
             $em->flush();
 
-            return View::create($classe)->setHeader('Access-Control-Allow-Origin', '*');
+            return $classe;
         } else {
-            return View::create($form)->setHeader('Access-Control-Allow-Origin', '*');
+            return $form;
         }
     }
 
