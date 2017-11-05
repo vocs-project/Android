@@ -197,7 +197,6 @@ class ClassesController extends Controller
         if ($form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
-            var_dump($classe->getLists());
             $em->flush();
 
             return $classe;
