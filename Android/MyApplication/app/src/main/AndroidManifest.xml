@@ -18,7 +18,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ViewListContents" />
-        <activity android:name=".MainActivity" />
         <activity android:name=".score" />
         <activity android:name=".PagePrinc" />
         <activity android:name=".LesListes" />
@@ -30,8 +29,28 @@
         <activity android:name=".ChoixListe" />
         <activity android:name=".Traduction" />
         <activity android:name=".ModeDeJeux" />
-        <activity android:name=".Connexion" />
-        <activity android:name=".Qcm"></activity>
+        <activity android:name=".Qcm" />
+        <activity android:name=".ConnexionAppli" />
+        <activity android:name=".CreerCompte" />
+        <activity android:name=".ChoixListeAvantJeux" />
+        <activity android:name=".Groupe" />
+        <activity android:name=".SavoirRole" />
+        <activity android:name=".GroupeProf" />
+        <activity android:name=".GererClasses" />
+        <activity android:name=".Integrerclasse" />
+        <activity android:name=".Envoyerdemandeetudiant" />
+        <activity android:name=".CreerClasse" />
+        <activity android:name=".Classeduprof" />
+        <activity android:name=".GererDemandes" />
+        <activity android:name=".DemandsAcceptDelete" />
+        <activity android:name=".SupprimerClasse" />
+        <activity android:name=".AjouterListeClasse" />
+        <activity android:name=".ListesDuneClasse" />
+        <activity android:name=".ChangerNomClasse" />
+        <activity android:name=".DeleteUserDeClasse" />
+        <activity android:name=".DeleteListeClasse" />
+        <activity android:name=".RechAjouterEleveAClasse" />
+        <activity android:name=".Envoyerdemandeprof"></activity>
     </application>
 
 </manifest>

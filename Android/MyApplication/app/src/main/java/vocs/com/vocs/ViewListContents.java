@@ -3,10 +3,13 @@ package vocs.com.vocs;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Application;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,10 +21,18 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 import static android.R.attr.button;
 import static android.R.attr.id;
 import static android.os.Build.VERSION_CODES.M;
+import static vocs.com.vocs.GitService.ENDPOINT;
+import static vocs.com.vocs.R.id.BottomBar;
+import static vocs.com.vocs.R.id.listviewtest;
 import static vocs.com.vocs.R.id.retour;
 
 /**
@@ -30,9 +41,9 @@ import static vocs.com.vocs.R.id.retour;
 
 public class ViewListContents extends AppCompatActivity{
 
-    DataBaseHelper myDB;
     Button retour,add;
-    private ArrayList<MyList> tableauList = new ArrayList<>();
+    BottomNavigationView BottomBar;
+    String idreçu, tableaudelistes[],idliste,tableauidliste[];
 
 
     @Override
@@ -40,59 +51,110 @@ public class ViewListContents extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewcontents_layout);
 
-        ListView listView=(ListView) findViewById(R.id.listView);
-        myDB=new DataBaseHelper(this);
+        final ListView listView=(ListView) findViewById(R.id.listView);
         retour=(Button) findViewById(R.id.retour);
         add=(Button) findViewById(R.id.add);
+        BottomBar=(BottomNavigationView) findViewById(R.id.BottomBar);
 
-        myDB.open();
+        Bundle b = getIntent().getExtras();
 
-        retour.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent versliste = new Intent (ViewListContents.this, PagePrinc.class);
-                startActivity(versliste);
-            }
-        });
+        if(b != null) {
+            idreçu = b.getString("id");
+        }
 
        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
            @Override
            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               idliste = tableauidliste[position];
                Intent versmots = new Intent (ViewListContents.this, Mots.class);
                Bundle b = new Bundle();
-               b.putString("key",tableauList.get(position).getIdList());
-               b.putString("name",tableauList.get(position).getName());
+               b.putString("id",idreçu);
+               b.putString("idliste",idliste);
                versmots.putExtras(b);
                startActivity(versmots);
                finish();
            }
        });
 
+        BottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch(item.getItemId()){
+                    case R.id.legroupe:
+                        Intent groupe = new Intent (ViewListContents.this,SavoirRole.class);
+                        Bundle y = new Bundle();
+                        y.putString("id", idreçu);
+                        groupe.putExtras(y);
+                        startActivity(groupe);
+                        finish();
+                        break;
+
+                    case R.id.lamanette:
+                        Intent modeJeux = new Intent (ViewListContents.this, ModeDeJeux.class);
+                        Bundle d = new Bundle();
+                        d.putString("id", idreçu);
+                        System.out.println(idreçu);
+                        modeJeux.putExtras(d);
+                        startActivity(modeJeux);
+                        finish();
+                        break;
+
+                    case R.id.laliste:
+                        Intent versliste = new Intent (ViewListContents.this, ViewListContents.class);
+                        Bundle b = new Bundle();
+                        b.putString("id",idreçu);
+                        versliste.putExtras(b);
+                        startActivity(versliste);
+                        finish();
+                        break;
+                }
+                return true;
+            }
+        });
+
+
         add.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Intent versliste = new Intent (ViewListContents.this, LesListes.class);
+                Bundle b = new Bundle();
+                b.putString("id",idreçu);
+                versliste.putExtras(b);
                 startActivity(versliste);
+                finish();
             }
         });
 
-        ArrayList<String> theList=new ArrayList<>();
-        Cursor data=myDB.getListContents();
+        GitService githubService = new RestAdapter.Builder()
+                .setEndpoint(ENDPOINT)
+                .build()
+                .create(GitService.class);
+        System.out.println(idreçu);
+        githubService.accederlistedunuser(idreçu,new retrofit.Callback<List<Liste>>() {
+            @Override
+            public void success(List<Liste> listes, Response response) {
+                int lenght = listes.size();
+                tableaudelistes = new String[listes.size()];
+                tableauidliste = new String[listes.size()];
+                for(int i = 0; i<lenght ; i++){
+                    tableaudelistes[i] = listes.get(i).getName();
+                    tableauidliste[i] = Integer.toString(listes.get(i).getId());
+                }
 
-        if(data.getCount()==0){
-            Toast.makeText(ViewListContents.this,"aucune liste trouvée",Toast.LENGTH_LONG).show();
-        }else{
-            int i = 0;
-            while(data.moveToNext()){
-                theList.add(data.getString(1));
-                tableauList.add(i, new MyList(data.getString(0),data.getString(1)));
-                ListAdapter listadapter = new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,theList);
-                listView.setAdapter(listadapter);
-                i++;
+                final ArrayAdapter<String> adapterliste = new ArrayAdapter<String>(ViewListContents.this,
+                        android.R.layout.simple_list_item_1, tableaudelistes);
+                listView.setAdapter(adapterliste);
             }
-        }data.close();
-        myDB.close();
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                Toast.makeText(ViewListContents.this, "erreur", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
+
 }
 
 

@@ -58,7 +58,7 @@ public class vocs_logo extends AppCompatActivity {
                 m++;
                 progressbar.setProgress(100);
                 if(progressbar.getProgress()== progressbar.getMax()){
-                    Intent intent  = new Intent(vocs_logo.this , PagePrinc.class);
+                    Intent intent  = new Intent(vocs_logo.this , ConnexionAppli.class);
                     startActivity(intent);
                 }
             }

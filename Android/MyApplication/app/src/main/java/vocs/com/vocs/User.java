@@ -1,5 +1,7 @@
 package vocs.com.vocs;
 
+import java.util.List;
+
 /**
  * Created by ASUS on 05/10/2017.
  */
@@ -45,4 +47,42 @@ public class User {
 
     private String firstname;
     private String surname;
+    private String password;
+    private List<Classes> classes;
+    private String roles[];
+
+    public List<Liste> getListes() {
+        return lists;
+    }
+
+    public void setListes(List<Liste> listes) {
+        this.lists = listes;
+    }
+
+    private List<Liste> lists;
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+
+    public String[] getRoles() {
+        return roles;
+    }
+
+    public List<Classes> getClasses() {
+        return classes;
+    }
+
+    public void setClasses(List<Classes> classes) {
+        this.classes = classes;
+    }
+
+    public void setRoles(String[] role) {
+        this.roles = role;
+    }
 }

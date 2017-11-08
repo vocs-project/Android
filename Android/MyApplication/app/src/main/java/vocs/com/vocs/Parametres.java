@@ -10,11 +10,18 @@ import android.widget.ImageButton;
 public class Parametres extends AppCompatActivity {
 
     ImageButton retourdeparam;
+    String idreçu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parametres);
+
+        Bundle b = getIntent().getExtras();
+
+        if(b != null) {
+            idreçu = b.getString("id");
+        }
 
         retourdeparam=(ImageButton) findViewById(R.id.retourarriere);
 
@@ -22,7 +29,11 @@ public class Parametres extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Intent verspageprinc = new Intent (Parametres.this, PagePrinc.class);
+                Bundle b = new Bundle();
+                b.putString("id",idreçu);
+                verspageprinc.putExtras(b);
                 startActivity(verspageprinc);
+                finish();
             }
         });
     }

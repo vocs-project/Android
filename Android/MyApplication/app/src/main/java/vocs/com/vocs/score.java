@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.text.Normalizer;
 import android.content.Intent;
 
+import static vocs.com.vocs.R.drawable.groupe;
 import static vocs.com.vocs.R.id.score;
 
 
@@ -18,6 +19,7 @@ public class score extends AppCompatActivity {
 
     TextView scorebon,scorett;
     Button ok;
+    String idreçu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class score extends AppCompatActivity {
 
         if(b != null)
             value = b.getInt("key");
+            idreçu = b.getString("id");
             scorebon.setText(String.valueOf(value));
 
         Bundle t = getIntent().getExtras();
@@ -51,6 +54,10 @@ public class score extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Intent retour = new Intent (score.this, PagePrinc.class);
+                Bundle y = new Bundle();
+                y.putString("id", idreçu);
+                retour.putExtras(y);
                 startActivity(retour);
+                finish();
     }});
 }}

@@ -20,7 +20,7 @@ import android.widget.Toast;
 import static android.R.attr.button;
 import static vocs.com.vocs.R.id.TraductionNormale;
 import static vocs.com.vocs.R.id.parametres;
-import static vocs.com.vocs.R.id.tradliste;
+
 
 public class ModeDeJeux extends AppCompatActivity {
 
@@ -28,6 +28,7 @@ public class ModeDeJeux extends AppCompatActivity {
     Button TraductionNormale,qcm;
     BottomNavigationView BottomBar;
     ImageButton parametres,retourModePrinc;
+    String idreçu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,24 +40,41 @@ public class ModeDeJeux extends AppCompatActivity {
         BottomBar=(BottomNavigationView) findViewById(R.id.BottomBar);
         qcm=(Button) findViewById(R.id.qcm);
 
+        Bundle d = getIntent().getExtras();
 
+        if(d != null) {
+            idreçu = d.getString("id");
+        }
 
         BottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
                     case R.id.legroupe:
-                        Toast.makeText(ModeDeJeux.this, "groupe", Toast.LENGTH_SHORT).show();
+                        Intent groupe = new Intent (ModeDeJeux.this,SavoirRole.class);
+                        Bundle y = new Bundle();
+                        y.putString("id", idreçu);
+                        groupe.putExtras(y);
+                        startActivity(groupe);
+                        finish();
                         break;
 
                     case R.id.lamanette:
                         Intent modeJeux = new Intent (ModeDeJeux.this, ModeDeJeux.class);
+                        Bundle d = new Bundle();
+                        d.putString("id", idreçu);
+                        modeJeux.putExtras(d);
                         startActivity(modeJeux);
+                        finish();
                         break;
 
                     case R.id.laliste:
                         Intent versliste = new Intent (ModeDeJeux.this, ViewListContents.class);
+                        Bundle b = new Bundle();
+                        b.putString("id",idreçu);
+                        versliste.putExtras(b);
                         startActivity(versliste);
+                        finish();
                         break;
                 }
                 return true;
@@ -66,8 +84,9 @@ public class ModeDeJeux extends AppCompatActivity {
         TraductionNormale.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent TraductionNormale = new Intent (ModeDeJeux.this, ChoixListe.class);
+                Intent TraductionNormale = new Intent (ModeDeJeux.this, ChoixListeAvantJeux.class);
                 Bundle b = new Bundle();
+                b.putString("id",idreçu);
                 b.putInt("key",1);
                TraductionNormale.putExtras(b);
                 startActivity(TraductionNormale);
@@ -77,8 +96,9 @@ public class ModeDeJeux extends AppCompatActivity {
         qcm.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent qcm = new Intent (ModeDeJeux.this, ChoixListe.class);
+                Intent qcm = new Intent (ModeDeJeux.this, ChoixListeAvantJeux.class);
                 Bundle b = new Bundle();
+                b.putString("id",idreçu);
                 b.putInt("key",2);
                 qcm.putExtras(b);
                 startActivity(qcm);
@@ -89,16 +109,26 @@ public class ModeDeJeux extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 Intent retourModePrinc = new Intent (ModeDeJeux.this, PagePrinc.class);
+                Bundle b = new Bundle();
+                b.putString("id",idreçu);
+                retourModePrinc.putExtras(b);
                 startActivity(retourModePrinc);
+                finish();
             }
         });
         parametres.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Intent versparam= new Intent (ModeDeJeux.this, Parametres.class);
+                Bundle b = new Bundle();
+                b.putString("id",idreçu);
+                versparam.putExtras(b);
                 startActivity(versparam);
+                finish();
             }
         });
+
+
     }
 
 }

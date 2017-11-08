@@ -6,31 +6,42 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.Normalizer;
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 import static android.R.id.edit;
+import static vocs.com.vocs.GitService.ENDPOINT;
+import static vocs.com.vocs.R.drawable.groupe;
+import static vocs.com.vocs.R.drawable.liste;
+import static vocs.com.vocs.R.id.TraductionNormale;
 import static vocs.com.vocs.R.id.aide;
 import static vocs.com.vocs.R.id.bienmal;
 import static vocs.com.vocs.R.id.bswitch;
 import static vocs.com.vocs.R.id.lemot;
+import static vocs.com.vocs.R.id.listviewclasseprof;
 import static vocs.com.vocs.R.id.soluc;
 import static vocs.com.vocs.R.id.valider;
 
 
 public class Traduction extends AppCompatActivity {
 
-    DataBaseHelper myDB;
-    private String idList;
-    ArrayList<MyWords> tableauanglais=new ArrayList<>();
-    ArrayList<MyWords> tableaufrancais=new ArrayList<>();
+
+
     int nombreMax, nb;
-    String motaffiche,motreponse,motsolution,motsolution2;
+    String motaffiche,motreponse,motsolution,motsolution2,idreçu,typeliste,idList;
+    private String tableaufrancais[],tableauanglais[];
     int bon,tt;
 
     TextView afficheur,bienmal,soluc,lemot;
@@ -43,7 +54,7 @@ public class Traduction extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_traduction);
 
-        myDB = new DataBaseHelper(this);
+
         afficheur = (TextView) findViewById(R.id.afficheur);
         bienmal = (TextView) findViewById(R.id.bienmal);
         retour = (Button) findViewById(R.id.retour);
@@ -58,33 +69,64 @@ public class Traduction extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
 
         if (b != null) {
-            idList = b.getString("key");
+            idList = b.getString("idliste");
+            idreçu = b.getString("id");
+            typeliste = b.getString("liste");
         }
 
         retour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent verschoixliste = new Intent(Traduction.this, ChoixListe.class);
+                Bundle y = new Bundle();
+                y.putString("id", idreçu);
+                verschoixliste.putExtras(y);
                 startActivity(verschoixliste);
+                finish();
             }
         });
 
-        Cursor data = myDB.getListContents3(idList);
+        GitService githubService = new RestAdapter.Builder()
+                .setEndpoint(ENDPOINT)
+                .build()
+                .create(GitService.class);
 
-        int i = 0;
-        while (data.moveToNext()) {
-            tableauanglais.add(i, new MyWords(data.getString(0)));
-            tableaufrancais.add(i, new MyWords(data.getString(1)));
-            i++;
-        }
-        bon=0;
-        tt=0;
-        nombreMax = tableaufrancais.size();
-        nb = (int) (Math.random() * nombreMax);
-        String motfrancais = String.valueOf(tableaufrancais.get(nb).getMot());
-        afficheur.setText(motfrancais);
-        anim_score();
-        fonction();
+        githubService.accederliste(idList,new retrofit.Callback<MotsListe>() {
+            @Override
+            public void success(MotsListe motliste, Response response) {
+                int lenght = motliste.getWordTrads().size();
+                tableaufrancais = new String[lenght];
+                tableauanglais = new String[lenght];
+                for(int i=0;i<lenght;i++){
+                    tableauanglais[i]=motliste.getWordTrads().get(i).getWord().getContent();
+                    tableaufrancais[i]=motliste.getWordTrads().get(i).getTrad().getContent();
+                }
+                if(tableaufrancais.length != 0) {
+                    bon = 0;
+                    tt = 0;
+                    nombreMax = tableaufrancais.length;
+                    nb = (int) (Math.random() * nombreMax);
+                    String motfrancais = String.valueOf(tableaufrancais[nb]);
+                    afficheur.setText(motfrancais);
+                    anim_score();
+                    fonction();
+                }
+                else{
+                    Intent retour = new Intent (Traduction.this, ChoixListeAvantJeux.class);
+                    Bundle y = new Bundle();
+                    y.putString("id", idreçu);
+                    y.putInt("key",1);
+                    retour.putExtras(y);
+                    startActivity(retour);
+                    finish();
+                }
+
+            }
+            @Override
+            public void failure(RetrofitError error) {
+                System.out.println(error);
+            }
+        });
     }
 
     public static String removeAccent(String source) {
@@ -106,6 +148,7 @@ public class Traduction extends AppCompatActivity {
                 Bundle t = new Bundle();
                 b.putInt("key", bon);
                 t.putInt("autre", tt);
+                b.putString("id",idreçu);
                 score.putExtras(b);
                 score.putExtras(t);
                 startActivity(score);
@@ -115,8 +158,13 @@ public class Traduction extends AppCompatActivity {
         retour.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent retour2 = new Intent (Traduction.this, PagePrinc.class);
+                Intent retour2 = new Intent (Traduction.this, ChoixListeAvantJeux.class);
+                Bundle y = new Bundle();
+                y.putString("id", idreçu);
+                y.putInt("key",1);
+                retour2.putExtras(y);
                 startActivity(retour2);
+                finish();
             }
         });
     }
@@ -132,9 +180,9 @@ public class Traduction extends AppCompatActivity {
     public void fonction(){
         if (bswitch.isChecked()){
 
-            motaffiche = String.valueOf(tableaufrancais.get(nb).getMot());
-            motsolution = String.valueOf(tableauanglais.get(nb).getMot());
-           motsolution2=motsolution;
+            motaffiche = String.valueOf(tableaufrancais[nb]);
+            motsolution = String.valueOf(tableauanglais[nb]);
+            motsolution2=motsolution;
             motsolution = motsolution.toLowerCase();
             motsolution = removeAccent(motsolution);
 
@@ -173,8 +221,8 @@ public class Traduction extends AppCompatActivity {
         }
         else {
 
-            motaffiche = String.valueOf(tableauanglais.get(nb).getMot());
-            motsolution = String.valueOf(tableaufrancais.get(nb).getMot());
+            motaffiche = String.valueOf(tableauanglais[nb]);
+            motsolution = String.valueOf(tableaufrancais[nb]);
             motsolution2=motsolution;
             motsolution = motsolution.toLowerCase();
             motsolution = removeAccent(motsolution);

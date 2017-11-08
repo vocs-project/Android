@@ -18,8 +18,14 @@ import org.w3c.dom.Text;
 import java.text.Normalizer;
 import java.util.ArrayList;
 
+import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+
+import static android.R.attr.data;
 import static android.R.id.edit;
 import static java.lang.Boolean.FALSE;
+import static vocs.com.vocs.GitService.ENDPOINT;
 import static vocs.com.vocs.R.id.afficheur;
 import static vocs.com.vocs.R.id.aide;
 import static vocs.com.vocs.R.id.bienmal;
@@ -35,14 +41,12 @@ import static vocs.com.vocs.R.id.valider;
 
 public class Qcm extends AppCompatActivity {
 
-    DataBaseHelper myDB;
-    private String idList;
-    ArrayList<MyWords> tableauanglais = new ArrayList<>();
-    ArrayList<MyWords> tableaufrancais = new ArrayList<>();
+
+    String idList;
     int nombreMax, nb;
     int bon, tt;
-    String  motafficherencemoment, motattenduencemoment,motchoisis;
-
+    String  motafficherencemoment, motattenduencemoment,motchoisis,idreçu,typeliste;
+    private String tableaufrancais[],tableauanglais[];
     Switch switchqcm;
     TextView motafficheqcm, textradio1qcm, textradio2qcm, textradio3qcm, textradio4qcm, bienmalqcm, affichereponseqcm;
     CheckBox checkBox1qcm, checkBox2qcm, checkBox3qcm, checkBox4qcm;
@@ -53,7 +57,7 @@ public class Qcm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qcm);
 
-        myDB = new DataBaseHelper(this);
+
         switchqcm = (Switch) findViewById(R.id.switchqcm);
         motafficheqcm = (TextView) findViewById(R.id.motafficheqcm);
         textradio4qcm = (TextView) findViewById(R.id.textradio1qcm);
@@ -72,29 +76,55 @@ public class Qcm extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
 
         if (b != null) {
-            idList = b.getString("key");
+            idList = b.getString("idliste");
+            idreçu = b.getString("id");
+            typeliste = b.getString("liste");
         }
 
-        Cursor data = myDB.getListContents3(idList);
+        GitService githubService = new RestAdapter.Builder()
+                .setEndpoint(ENDPOINT)
+                .build()
+                .create(GitService.class);
 
-        int i = 0;
-        while (data.moveToNext()) {
-            tableauanglais.add(i, new MyWords(data.getString(0)));
-            tableaufrancais.add(i, new MyWords(data.getString(1)));
-            i++;
-        }
-        bon = 0;
-        tt = 0;
-        zero();
-        switchqcm.setChecked(true);
-        nombreMax = tableaufrancais.size();
-        nb = (int) (Math.random() * nombreMax);
-        String motfrancaisqcm = String.valueOf(tableaufrancais.get(nb).getMot());
-        motafficheqcm.setText(motfrancaisqcm);
-        randomButtonFrancais(nb);
-        anim_score();
-        fonction();
+        githubService.accederliste(idList,new retrofit.Callback<MotsListe>() {
+            @Override
+            public void success(MotsListe motliste, Response response) {
+                int lenght = motliste.getWordTrads().size();
+                tableaufrancais = new String[lenght];
+                tableauanglais = new String[lenght];
+                for(int i=0;i<lenght;i++){
+                    tableauanglais[i]=motliste.getWordTrads().get(i).getWord().getContent();
+                    tableaufrancais[i]=motliste.getWordTrads().get(i).getTrad().getContent();
+                }
+                if(tableaufrancais.length != 0) {
+                    bon = 0;
+                    tt = 0;
+                    zero();
+                    switchqcm.setChecked(true);
+                    nombreMax = tableaufrancais.length;
+                    nb = (int) (Math.random() * nombreMax);
+                    String motfrancaisqcm = String.valueOf(tableaufrancais[nb]);
+                    motafficheqcm.setText(motfrancaisqcm);
+                    randomButtonFrancais(nb);
+                    anim_score();
+                    fonction();
+                }
+                else{
+                    Intent retour = new Intent (Qcm.this, ChoixListeAvantJeux.class);
+                    Bundle y = new Bundle();
+                    y.putString("id", idreçu);
+                    y.putInt("key",2);
+                    retour.putExtras(y);
+                    startActivity(retour);
+                    finish();
+                }
 
+            }
+            @Override
+            public void failure(RetrofitError error) {
+                System.out.println(error);
+            }
+        });
     }
 
 
@@ -106,6 +136,7 @@ public class Qcm extends AppCompatActivity {
                 Bundle b = new Bundle();
                 Bundle t = new Bundle();
                 b.putInt("key", bon);
+                b.putString("id",idreçu);
                 t.putInt("autre", tt);
                 score.putExtras(b);
                 score.putExtras(t);
@@ -117,8 +148,8 @@ public class Qcm extends AppCompatActivity {
 
     public void fonction() {
         if (switchqcm.isChecked()) {
-            motafficherencemoment = String.valueOf(tableaufrancais.get(nb).getMot());
-            motattenduencemoment = String.valueOf(tableauanglais.get(nb).getMot());
+            motafficherencemoment = String.valueOf(tableaufrancais[nb]);
+            motattenduencemoment = String.valueOf(tableauanglais[nb]);
             motafficheqcm.setText(motafficherencemoment);
             anim_score();
             validerqcm.setOnClickListener(new View.OnClickListener() {
@@ -132,8 +163,6 @@ public class Qcm extends AppCompatActivity {
                     affichereponseqcm.setText(motafficherencemoment + " : " + motattenduencemoment);
                     bon++;
                     nb = (int) (Math.random() * nombreMax);
-                    motafficheqcm.setText(motafficherencemoment);
-                    randomButtonFrancais(nb);
                     zero();
                     fonction();
                 }
@@ -142,18 +171,17 @@ public class Qcm extends AppCompatActivity {
                     bienmalqcm.setTextColor(Color.RED);
                     affichereponseqcm.setText(motafficherencemoment + " : " + motattenduencemoment);
                     nb = (int) (Math.random() * nombreMax);
-                    motafficheqcm.setText(motafficherencemoment);
-                    randomButtonFrancais(nb);
                     zero();
                     fonction();
                 }tt++;
                 }
 
             });
+            randomButtonFrancais(nb);
         }else {
 
-            motafficherencemoment = String.valueOf(tableauanglais.get(nb).getMot());
-            motattenduencemoment = String.valueOf(tableaufrancais.get(nb).getMot());
+            motafficherencemoment = String.valueOf(tableauanglais[nb]);
+            motattenduencemoment = String.valueOf(tableaufrancais[nb]);
 
             motafficheqcm.setText(motafficherencemoment);
             anim_score();
@@ -168,8 +196,6 @@ public class Qcm extends AppCompatActivity {
                         affichereponseqcm.setText(motafficherencemoment + " : " + motattenduencemoment);
                         bon++;
                         nb = (int) (Math.random() * nombreMax);
-                        motafficheqcm.setText(motafficherencemoment);
-                        randomButtonAnglais(nb);
                         zero();
                         fonction();
                     } else {
@@ -177,8 +203,6 @@ public class Qcm extends AppCompatActivity {
                         bienmalqcm.setTextColor(Color.RED);
                         affichereponseqcm.setText(motafficherencemoment + " : " + motattenduencemoment);
                         nb = (int) (Math.random() * nombreMax);
-                        motafficheqcm.setText(motafficherencemoment);
-                        randomButtonAnglais(nb);
                         zero();
                         fonction();
                     }
@@ -186,6 +210,7 @@ public class Qcm extends AppCompatActivity {
                 }
 
             });
+            randomButtonAnglais(nb);
         }
     }
 
@@ -225,52 +250,52 @@ public class Qcm extends AppCompatActivity {
         int motrand3=(int) (Math.random() * nombreMax);
 
         if(rand1==0) {
-            textradio1qcm.setText(String.valueOf(tableauanglais.get(i).getMot()));
+            textradio1qcm.setText(String.valueOf(tableauanglais[i]));
         }
         if(rand1==1) {
-            textradio2qcm.setText(String.valueOf(tableauanglais.get(i).getMot()));
+            textradio2qcm.setText(String.valueOf(tableauanglais[i]));
         }
         if(rand1==2) {
-            textradio3qcm.setText(String.valueOf(tableauanglais.get(i).getMot()));
+            textradio3qcm.setText(String.valueOf(tableauanglais[i]));
         }
         if(rand1==3) {
-            textradio4qcm.setText(String.valueOf(tableauanglais.get(i).getMot()));
+            textradio4qcm.setText(String.valueOf(tableauanglais[i]));
         }
         if(rand2==0) {
-            textradio1qcm.setText(String.valueOf(tableauanglais.get(motrand1).getMot()));
+            textradio1qcm.setText(String.valueOf(tableauanglais[motrand1]));
         }
         if(rand2==1) {
-            textradio2qcm.setText(String.valueOf(tableauanglais.get(motrand1).getMot()));
+            textradio2qcm.setText(String.valueOf(tableauanglais[motrand1]));
         }
         if(rand2==2) {
-            textradio3qcm.setText(String.valueOf(tableauanglais.get(motrand1).getMot()));
+            textradio3qcm.setText(String.valueOf(tableauanglais[motrand1]));
         }
         if(rand2==3) {
-            textradio4qcm.setText(String.valueOf(tableauanglais.get(motrand1).getMot()));
+            textradio4qcm.setText(String.valueOf(tableauanglais[motrand1]));
         }
         if(rand3==0) {
-            textradio1qcm.setText(String.valueOf(tableauanglais.get(motrand2).getMot()));
+            textradio1qcm.setText(String.valueOf(tableauanglais[motrand2]));
         }
         if(rand3==1) {
-            textradio2qcm.setText(String.valueOf(tableauanglais.get(motrand2).getMot()));
+            textradio2qcm.setText(String.valueOf(tableauanglais[motrand2]));
         }
         if(rand3==2) {
-            textradio3qcm.setText(String.valueOf(tableauanglais.get(motrand2).getMot()));
+            textradio3qcm.setText(String.valueOf(tableauanglais[motrand2]));
         }
         if(rand3==3) {
-            textradio4qcm.setText(String.valueOf(tableauanglais.get(motrand2).getMot()));
+            textradio4qcm.setText(String.valueOf(tableauanglais[motrand2]));
         }
         if(rand4==0) {
-            textradio1qcm.setText(String.valueOf(tableauanglais.get(motrand3).getMot()));
+            textradio1qcm.setText(String.valueOf(tableauanglais[motrand3]));
         }
         if(rand4==1) {
-            textradio2qcm.setText(String.valueOf(tableauanglais.get(motrand3).getMot()));
+            textradio2qcm.setText(String.valueOf(tableauanglais[motrand3]));
         }
         if(rand4==2) {
-            textradio3qcm.setText(String.valueOf(tableauanglais.get(motrand3).getMot()));
+            textradio3qcm.setText(String.valueOf(tableauanglais[motrand3]));
         }
         if(rand4==3) {
-            textradio4qcm.setText(String.valueOf(tableauanglais.get(motrand3).getMot()));
+            textradio4qcm.setText(String.valueOf(tableauanglais[motrand3]));
         }
     }
 
@@ -292,52 +317,52 @@ public class Qcm extends AppCompatActivity {
         int motrand3=(int) (Math.random() * nombreMax);
 
         if(rand1==0) {
-            textradio1qcm.setText(String.valueOf(tableaufrancais.get(i).getMot()));
+            textradio1qcm.setText(String.valueOf(tableaufrancais[i]));
         }
         if(rand1==1) {
-            textradio2qcm.setText(String.valueOf(tableaufrancais.get(i).getMot()));
+            textradio2qcm.setText(String.valueOf(tableaufrancais[i]));
         }
         if(rand1==2) {
-            textradio3qcm.setText(String.valueOf(tableaufrancais.get(i).getMot()));
+            textradio3qcm.setText(String.valueOf(tableaufrancais[i]));
         }
         if(rand1==3) {
-            textradio4qcm.setText(String.valueOf(tableaufrancais.get(i).getMot()));
+            textradio4qcm.setText(String.valueOf(tableaufrancais[i]));
         }
         if(rand2==0) {
-            textradio1qcm.setText(String.valueOf(tableaufrancais.get(motrand1).getMot()));
+            textradio1qcm.setText(String.valueOf(tableaufrancais[motrand1]));
         }
         if(rand2==1) {
-            textradio2qcm.setText(String.valueOf(tableaufrancais.get(motrand1).getMot()));
+            textradio2qcm.setText(String.valueOf(tableaufrancais[motrand1]));
         }
         if(rand2==2) {
-            textradio3qcm.setText(String.valueOf(tableaufrancais.get(motrand1).getMot()));
+            textradio3qcm.setText(String.valueOf(tableaufrancais[motrand1]));
         }
         if(rand2==3) {
-            textradio4qcm.setText(String.valueOf(tableaufrancais.get(motrand1).getMot()));
+            textradio4qcm.setText(String.valueOf(tableaufrancais[motrand1]));
         }
         if(rand3==0) {
-            textradio1qcm.setText(String.valueOf(tableaufrancais.get(motrand2).getMot()));
+            textradio1qcm.setText(String.valueOf(tableaufrancais[motrand2]));
         }
         if(rand3==1) {
-            textradio2qcm.setText(String.valueOf(tableaufrancais.get(motrand2).getMot()));
+            textradio2qcm.setText(String.valueOf(tableaufrancais[motrand2]));
         }
         if(rand3==2) {
-            textradio3qcm.setText(String.valueOf(tableaufrancais.get(motrand2).getMot()));
+            textradio3qcm.setText(String.valueOf(tableaufrancais[motrand2]));
         }
         if(rand3==3) {
-            textradio4qcm.setText(String.valueOf(tableaufrancais.get(motrand2).getMot()));
+            textradio4qcm.setText(String.valueOf(tableaufrancais[motrand2]));
         }
         if(rand4==0) {
-            textradio1qcm.setText(String.valueOf(tableaufrancais.get(motrand3).getMot()));
+            textradio1qcm.setText(String.valueOf(tableaufrancais[motrand3]));
         }
         if(rand4==1) {
-            textradio2qcm.setText(String.valueOf(tableaufrancais.get(motrand3).getMot()));
+            textradio2qcm.setText(String.valueOf(tableaufrancais[motrand3]));
         }
         if(rand4==2) {
-            textradio3qcm.setText(String.valueOf(tableaufrancais.get(motrand3).getMot()));
+            textradio3qcm.setText(String.valueOf(tableaufrancais[motrand3]));
         }
         if(rand4==3) {
-            textradio4qcm.setText(String.valueOf(tableaufrancais.get(motrand3).getMot()));
+            textradio4qcm.setText(String.valueOf(tableaufrancais[motrand3]));
         }
     }
 
