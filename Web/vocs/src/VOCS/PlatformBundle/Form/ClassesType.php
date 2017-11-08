@@ -24,6 +24,7 @@ class ClassesType extends AbstractType
             ->add('urlAvatar', TextType::class)
             ->add('school', EntityType::class,  array(
                 'class' => Schools::class,
+                'by_reference' => false
             ))
             ->add('lists', EntityType::class, array(
                 'class' => 'VOCSPlatformBundle:Lists',

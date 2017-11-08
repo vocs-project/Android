@@ -62,7 +62,7 @@ VOCS\PlatformBundle\Entity\Words:
 VOCS\PlatformBundle\Entity\Schools:
     attributes:
         id:
-            groups: ['school']
+            groups: ['school', 'classe']
         nom:
             groups: ['school']
         cp:
