@@ -64,7 +64,7 @@ VOCS\PlatformBundle\Entity\Schools:
         id:
             groups: ['school', 'classe']
         nom:
-            groups: ['school']
+            groups: ['school', 'classe']
         cp:
             groups: ['school']
 
