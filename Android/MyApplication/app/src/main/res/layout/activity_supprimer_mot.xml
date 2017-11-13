@@ -2,49 +2,94 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_supprimer_mot"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
     tools:context="vocs.com.vocs.SupprimerMot">
 
+
     <TextView
-        android:text="Entrez le mot que vous souhaitez supprimer :"
-        android:textColor="@android:color/background_dark"
-        android:textSize="22sp"
+        android:text="Voulez-vous supprimer les mots :"
         android:gravity="center"
+        android:textColor="@android:color/background_dark"
+        android:textSize="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="106dp"
         android:id="@+id/textView13" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/navigationbar"
+        android:id="@+id/imageView3"
+        android:adjustViewBounds="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/more"
+        android:id="@+id/retourmot2"
+        android:background="@null"
+        android:layout_alignBottom="@+id/imageView3"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true" />
+    <ImageButton
+        android:text="parametres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/parametre"
+        android:id="@+id/parametres"
+        android:background="@null"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@+id/imageView3" />
+
+    <android.support.design.widget.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/BottomBar"
+        app:itemBackground="@android:color/darker_gray"
+        app:itemIconTint="@drawable/selectordebar"
+        app:itemTextColor="@drawable/selectordebar"
+        app:menu="@menu/bottom_navigation_main"
+        android:layout_alignParentBottom="true"
+        >
+
+    </android.support.design.widget.BottomNavigationView>
 
     <Button
         android:text="supprimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editsuppr"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="58dp"
-        android:id="@+id/supprimerok" />
-
-    <Button
-        android:text="retour"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:id="@+id/supprimerok"
+        android:layout_marginBottom="32dp"
+        android:layout_above="@+id/BottomBar"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/retourmot2" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
-    <EditText
+    <TextView
+        android:text="TextView"
+        android:textColor="@android:color/background_dark"
+        android:textSize="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/editsuppr"
+        android:id="@+id/motaffichés"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+
 </RelativeLayout>

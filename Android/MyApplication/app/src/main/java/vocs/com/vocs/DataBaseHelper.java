@@ -57,10 +57,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP IF TABLE EXISTS WORDS_LISTS");
     }
 
-    public boolean addData(String item1){
+    public boolean addData(String nomListe){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
-        contentValues.put("name", item1);
+        contentValues.put("name", nomListe);
         long result = db.insert("lists", null, contentValues);
         if(result==-1){
             return false;
@@ -69,15 +69,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean addData2(String item2, String item3, String un){
+    public boolean addData2(String motAnglais, String motFrancais, String numero){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues=new ContentValues();
-        contentValues.put("english", item2);
-        contentValues.put("french", item3);
+        contentValues.put("english", motAnglais);
+        contentValues.put("french", motFrancais);
 
         long result=db.insert("WORDS", null, contentValues);
 
-        db.execSQL("insert into words_lists (id_list,id_word) values (" + un + ", " + result + ")");
+        db.execSQL("insert into words_lists (id_list,id_word) values (" + numero + ", " + result + ")");
 
         if(result==-1){
             return false;
@@ -98,8 +98,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         Cursor data=db.rawQuery("SELECT e2.english,e2.french FROM words_lists e1 join WORDS e2 using (id_word) WHERE id_list = "+id,null);
         return data;
     }
-    //Suppresion de mots d'une liste
-    //PArametre : item1 est le nom de la liste
+
     public void supp(String item1){
         SQLiteDatabase db=this.getWritableDatabase();
         db.execSQL("delete from words_lists where id_list in (select id_list from lists where name ='"+ item1 + "');");
