@@ -126,7 +126,7 @@ class Classes
      */
     public function setSchool(\VOCS\PlatformBundle\Entity\Schools $school = null)
     {
-        $school->addClass($this);
+
         $this->school = $school;
 
         return $this;
@@ -196,9 +196,7 @@ class Classes
      */
     public function addList(\VOCS\PlatformBundle\Entity\Lists $list)
     {
-
         $this->lists->add($list);
-
         return $this;
     }
 
