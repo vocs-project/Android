@@ -25,4 +25,44 @@ class DefaultController extends Controller
     {
         return $this->render('VOCSPlatformBundle:Default:connexion.html.twig');
     }
+
+    public function inscription2Action()
+    {
+        return $this->render('VOCSPlatformBundle:Default:inscription2.html.twig');
+    }
+
+    public function elevehomeAction()
+    {
+        return $this->render('VOCSPlatformBundle:Default:elevehome.html.twig');
+    }
+
+    public function elevehomejeuxAction()
+    {
+        return $this->render('VOCSPlatformBundle:Default:elevehomejeux.html.twig');
+    }
+
+    public function elevehomelistesAction()
+    {
+        return $this->render('VOCSPlatformBundle:Default:elevehomelistes.html.twig');
+    }
+
+    public function elevehomereglagesAction()
+    {
+        return $this->render('VOCSPlatformBundle:Default:elevehomereglages.html.twig');
+    }
+
+    public function profhomeAction()
+    {
+        return $this->render('VOCSPlatformBundle:Default:profhome.html.twig');
+    }
+
+    public function profhomelistesAction()
+    {
+        return $this->render('VOCSPlatformBundle:Default:profhomelistes.html.twig');
+    }
+
+    public function jeuclassiqueAction()
+    {
+        return $this->render('VOCSPlatformBundle:Default:jeuclassique.html.twig');
+    }
 }

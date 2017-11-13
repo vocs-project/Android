@@ -1,0 +1,160 @@
+
+
+.home-contenue-titre{
+  width:400px;
+  margin-top:80px;
+  margin-left:20px;
+}
+
+
+
+.container {
+  width: 90vw;
+  height:800px;
+  margin-top:10px;
+  margin-left:20px;
+  padding: 10px;
+  padding-left: 20px;
+  psdding-right: 0;
+}
+
+.box {
+  width: 40%;
+  height: 250px;
+  margin: 0.5%;
+  padding: 15px;
+  box-sizing: border-box;
+  display: inline-block;
+  background: #2e9bee;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 5px rgba(0,0,0,0.4);
+  cursor: pointer;
+}
+
+.box:hover {
+  background: #a3ebff;
+}
+
+
+
+.box h3 {
+  color: #fff;
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-weight: 300;
+  font-size: 24px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 15px;
+  border-bottom: 1px solid rgba(255,255,255,0);
+  transition: top 500ms;
+  position: absolute;
+  top: 110px;
+  width: 70%;
+  left: 15%;
+  z-index: 4;
+}
+.box div {
+  font-family: 'Open Sans', Arial, sans-serif;
+  color: #fff;
+  font-size: 13px;
+  line-height: 28px;
+  margin: 25px;
+  margin-top: 380px;
+}
+.box div.hidden {
+  opacity: 0;
+
+}
+.box a.expand {
+  width: 35px;
+  height: 35px;
+  background: #fff;
+  font-weight: 600;
+  color: #036C81;
+  display: block;
+  margin: 15px auto 5px;
+  text-align: center;
+  line-height: 35px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: bottom 500ms;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+
+}
+.box a.expand span.minus {
+  opacity: 0;
+}
+.box a.expand span.plus {
+  display:block;
+  opacity: 1;
+  font-size: 18px;
+}
+.box.selected a.expand span.minus {
+  display: none;
+}
+.box.selected a.expand {
+  display: block;
+  position: absolute;
+  bottom: 190px;
+  width: 35px;
+  height: 35px;
+  background: #eee;
+  color: #036C81;
+  opacity:0.5;
+  transition: bottom 500ms;
+
+}
+.box.selected a.expand span.minus {
+  display: block;
+  position: absolute;
+  font-size: 15px;
+  padding-left:7px;
+  padding-bottom: 8px;
+}
+.box.selected a.expand span.plus {
+  display: none;
+}
+.box.selected a.expand span.minus {
+  opacity: 1;
+}
+.box.selected a.expand span.plus {
+  opacity: 0;
+}
+.box.selected .icon-cont {
+
+  transform: scale(1.5,1.5);
+  opacity: 0.3;
+  position: absolute;
+  top: -20px;
+  left: -5px;
+  right: 180px;
+}
+.box.selected:hover .icon-cont {
+
+  animation: none;
+}
+.box.selected h3 {
+  padding: 32px 15px 15px 15px;
+  border-bottom: 1px solid rgba(255,255,255,0.3);
+  transition: top 500ms;
+  width: 70%;
+  top: 16px;
+  left: 15%;
+}
+.box.selected div.hidden {
+  opacity: 1;
+  margin-top: 95px;
+  transition: margin-top 500ms;
+
+}
+
+.jouer {
+height:100%;
+  width:100%;
+}
+

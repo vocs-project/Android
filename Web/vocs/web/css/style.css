@@ -4,9 +4,12 @@
 html,
 body
 {
-    font-family: 'Open Sans', 'Arial', sans-serif;
+    font-family: 600 'Open Sans', 'Arial', sans-serif;
+
 
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 /**
@@ -16,7 +19,7 @@ body
 */
 body
 {
-    margin: 0;
+
 
     background: black;
 }
@@ -40,6 +43,25 @@ a:hover
 img
 {
     max-width: 100%;
+}
+ul
+{
+    list-style-type: none;
+}
+
+fieldset{
+    border:none;
+}
+*:focus {
+    outline: none !important;
+}
+
+a, button, input[type="submit"] {
+    cursor: pointer;
+}
+
+::selection {
+    background: rgba(205, 144, 139, 0.2);
 }
 
 /*DEZOOM (MARCHE PAS POUR PRINCIPAL, PARALLAX ET LA BARRE DE NAV*/
@@ -189,7 +211,7 @@ img
     font-weight: 600;
     overflow: hidden;
     z-index:0;
-    height: 75px;
+    height: 60px;
 }
 
 #texte-mobile-animation
@@ -950,7 +972,7 @@ color:#4d4d4d;
       animation-duration: 1.5s;
 }
 .lent {
-      animation-duration: 2.2s;
+      animation-duration: 1.8s;
 }
 /* CSS Animations (extracted from http://glifo.uiparade.com/) */
 
@@ -1043,6 +1065,25 @@ color:#4d4d4d;
     }
 }
 
+@keyframes apparait-rebondir-bas {
+    0% {
+        opacity: 0;
+        transform: translateY(2000px);
+    }
+
+    60% {
+        transform: translateY(-20px);
+    }
+
+    80% {
+        transform: translateY(5px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 
 @keyframes apparait-sans-bouger-haut {
     0% {
@@ -1068,6 +1109,10 @@ color:#4d4d4d;
 
     animation-name: apparait-rebondir-gauche;
 }
+.a-ete-anime.apparait-rebondir-bas {
+
+    animation-name: apparait-rebondir-bas;
+}
 .a-ete-anime.apparait-sans-bouger {
 
     animation-name: apparait-sans-bouger;
@@ -1080,3 +1125,9 @@ color:#4d4d4d;
 
     animation-name: apparait-sans-bouger-haut;
 }
+
+
+
+
+
+

@@ -1,0 +1,148 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+
+<div class='home-interieur'>
+    <div class='home-menu'>
+      <div class='home-menu-titre'>
+        ELEVE
+      </div>
+      <ul class='home-items'>
+        <li>
+          <a href="{{ path("vocs_platform_eleve_home")}}" >Principal</a>
+        </li>
+        <li>
+          <a class='home-active'>Jeux</a>
+        </li>
+        <li>
+          <a href="{{ path("vocs_platform_eleve_home_listes")}}">Listes</a>
+        </li>
+        <li>
+          <a href="#">Ma Classe</a>
+        </li>
+        <li>
+          <a href="#">Statistiques</a>
+        </li>
+        <li>
+          <a href="{{ path("vocs_platform_eleve_home_reglages")}}">Réglages</a>
+        </li>
+        <li>
+          <a href="{{ path("vocs_platform_homepage")}}">Déconnexion</a>
+        </li>
+      </ul>
+    </div>
+    <div class='contenue active'>
+
+      <div class="home-barre">
+        <a class='home-bouton-menu' id="lignes-burger"></a>
+        <div class="home-barre-titre">
+          JEUX
+        </div>
+      </div>
+      <div class="home-contenue-titre">
+        <h1>Choisissez Votre Mode de Jeu</h1>
+      </div>
+      <div class="home-contenue-interieur">
+
+        <div class="container">
+          <a href="{{ path("vocs_platform_jeu_classique")}}">
+            <div class="box first animable apparait-rebondir-droite lent">
+            <span class=""></span>
+            <h3>CLASSIQUE</h3>
+
+            <div class="hidden">
+              <p>Traduire un série
+              de mot qui s'affiche
+              en l'écrivant dans
+                la boîte indiquée</p>
+            </div>
+
+            <a class="expand"><span class="plus">?</span><span class="minus">OK</span></a>
+
+            </div>
+          </a>
+
+          <div class="box second a-ete-anime apparait-rebondir-gauche lent">
+            <span class=""></span>
+
+            <h3>MATCHING</h3>
+
+            <div class="hidden">
+              <p>Traduire un série
+                de mot qui s'affiche
+                en l'écrivant dans
+                la boîte indiquée</p>
+            </div>
+
+            <a class="expand infos"><span class="plus">?</span><span class="minus">OK</span></a>
+          </div>
+
+          <div class="box third a-ete-anime apparait-rebondir-droite lent">
+            <span class=""></span>
+
+            <h3>QCM</h3>
+
+            <div class="hidden">
+              <p>Traduire un série
+                de mot qui s'affiche
+                en l'écrivant dans
+                la boîte indiquée</p>
+            </div>
+
+            <a class="expand"><span class="plus">?</span><span class="minus">OK</span></a>
+          </div>
+
+          <div class="box fourth a-ete-anime apparait-rebondir-gauche lent">
+            <span class=""></span>
+
+            <h3>CHRONO</h3>
+
+            <div class="hidden">
+              <p>Traduire un série
+                de mot qui s'affiche
+                en l'écrivant dans
+                la boîte indiquée</p>
+            </div>
+
+            <a class="expand"><span class="plus">?</span><span class="minus">OK</span></a>
+          </div>
+
+          <div class="box fourth a-ete-anime apparait-rebondir-droite lent">
+            <span class=""></span>
+
+            <h3>HARD LISTE</h3>
+
+            <div class="hidden">
+              <p>Traduire un série
+                de mot qui s'affiche
+                en l'écrivant dans
+                la boîte indiquée</p>
+            </div>
+
+            <a class="expand"><span class="plus">?</span><span class="minus">OK</span></a>
+          </div>
+
+          <div class="box fourth a-ete-anime apparait-rebondir-gauche lent">
+            <span class=""></span>
+
+            <h3>HARD LISTE</h3>
+
+            <div class="hidden">
+              <p>Traduire un série
+                de mot qui s'affiche
+                en l'écrivant dans
+                la boîte indiquée</p>
+            </div>
+
+            <a class="expand"><span class="plus">?</span><span class="minus">OK</span></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    </div>
+
+
+
+{% endblock %}

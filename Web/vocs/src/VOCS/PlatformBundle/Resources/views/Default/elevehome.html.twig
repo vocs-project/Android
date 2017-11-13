@@ -1,0 +1,128 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+
+<div class='home-interieur'>
+    <div class='home-menu'>
+      <div class='home-menu-titre'>
+        ELEVE
+      </div>
+      <ul class='home-items'>
+        <li>
+          <a class='home-active'>Principal</a>
+        </li>
+        <li>
+          <a href="{{ path("vocs_platform_eleve_home_jeux")}}">Jeux</a>
+        </li>
+        <li>
+          <a href="{{ path("vocs_platform_eleve_home_listes")}}">Listes</a>
+        </li>
+        <li>
+          <a href="#">Ma Classe</a>
+        </li>
+        <li>
+          <a href="#">Statistiques</a>
+        </li>
+        <li>
+          <a href="{{ path("vocs_platform_eleve_home_reglages")}}">Réglages</a>
+        </li>
+        <li>
+          <a href="{{ path("vocs_platform_homepage")}}">Déconnexion</a>
+        </li>
+      </ul>
+    </div>
+    <div class='contenue active'>
+
+      <div class="home-barre">
+        <a class='home-bouton-menu' id="lignes-burger"></a>
+        <div class="home-barre-titre">
+          PRINCIPAL
+        </div>
+      </div>
+
+      <div class="home-contenue-interieur">
+
+        <div class="home-infos-profile home-infos-eleve a-ete-anime apparait-rebondir-gauche normal">
+          <div class="photo-eleve"></div>
+          <div class="banniere-eleve"></div>
+          <ul>
+            <li><b>Harvey Roberts</b></li>
+            <li>IUT Informatique IFS 2ème Année</li>
+
+          </ul>
+          <button class="bouton-voir">Voir Profile</button>
+          <div class="banniere-bas">
+            <a href=""><i class=""></i></a>
+            <a href=""><i class=""></i></a>
+            <a href=""><i class=""></i></a>
+            <a href=""><i class=""></i></a>
+          </div>
+        </div>
+
+        <div class="home-infos-profile home-infos-classe a-ete-anime apparait-rebondir-gauche normal">
+          <div class="photo-classe"></div>
+          <div class="banniere-classe"></div>
+          <ul>
+            <li><b>Ma Classe</b></li>
+            <li>TD2</li>
+            <li>26 Elèves</li>
+
+          </ul>
+          <button class="bouton-voir">Voir Classe</button>
+          <div class="banniere-bas">
+            <a href=""><i class=""></i></a>
+            <a href=""><i class=""></i></a>
+            <a href=""><i class=""></i></a>
+            <a href=""><i class=""></i></a>
+          </div>
+        </div>
+
+        <div class="home-dernieres-activites">
+        <h1>Vos Dernières Activités</h1>
+          <article class="home-dernieres-activites-boite a-ete-anime apparait-rebondir-droite normal">
+            <a href="#" class="home-dernieres-activites-boite-img">
+              <img class="home-dernieres-activites-img" src="{{ asset("img/fondaccueil.png") }}" />
+            </a>
+            <div class="home-dernieres-activites-boite-infos">
+              <h2><a href="#">Ma Première Liste</a></h2>
+              <p>26 mots </p>
+              <p>Hier à 18h36 </p>
+              <a href="{{ path("vocs_platform_eleve_home_jeux")}}" class="bouton-bleu-xs home-dernieres-activites-bouton-revoir">Revoir</a>
+            </div>
+          </article>
+
+          <article class="home-dernieres-activites-boite a-ete-anime apparait-rebondir-droite normal">
+            <a href="#" class="home-dernieres-activites-boite-img">
+              <img class="home-dernieres-activites-img" src="{{ asset("img/fondaccueil.png") }}" />
+            </a>
+            <div class="home-dernieres-activites-boite-infos">
+              <h2><a href="#">Ma Deuxième Liste</a></h2>
+              <p>12 mots </p>
+              <p>Hier à 12h12 </p>
+              <a href="{{ path("vocs_platform_eleve_home_jeux")}}" class="bouton-bleu-xs home-dernieres-activites-bouton-revoir">Revoir</a>
+            </div>
+          </article>
+          <article class="home-dernieres-activites-boite a-ete-anime apparait-rebondir-droite normal">
+            <a href="#" class="home-dernieres-activites-boite-img">
+              <img class="home-dernieres-activites-img" src="{{ asset("img/fondaccueil.png") }}" />
+            </a>
+            <div class="home-dernieres-activites-boite-infos">
+              <h2><a href="#">Ma Troisième Liste</a></h2>
+              <p>36 mots </p>
+              <p>Vendredi à 10h53 </p>
+              <a href="{{ path("vocs_platform_eleve_home_jeux")}}" class="bouton-bleu-xs home-dernieres-activites-bouton-revoir">Revoir</a>
+            </div>
+          </article>
+
+
+        </div>
+      </div>
+
+      </div>
+
+
+      </div>
+
+
+
+{% endblock %}

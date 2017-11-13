@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="Vocs">
+    <serverData>
+      <paths name="Vocs">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="http://localhost/dut1718_vocabulaire/Web/vocs/web/app_dev.php/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="vocs">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

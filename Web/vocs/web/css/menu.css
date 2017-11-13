@@ -72,15 +72,15 @@ border-bottom: 1px solid grey;
     z-index: 3;
     top: 0;
     left: 0;
-    box-shadow: 0px 1px 15px grey;
+    box-shadow: 0px 1px 1px lightgrey;
 
     width: 100%;
-    height: auto;
+    height: 70px;
     padding: 10px;
     padding-right: 15px;
     padding-left: 40px;
     transition: transform 1s cubic-bezier(0.6, 0, 0.07, 1);
-    border-bottom: black;
+    border-bottom: solid 1px #e6e6e6;
     background: white;
 }
 #barre-nav.cache {

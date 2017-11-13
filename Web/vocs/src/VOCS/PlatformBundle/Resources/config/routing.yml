@@ -12,7 +12,47 @@ vocs_platform_connexion:
     defaults: 
         _controller: VOCSPlatformBundle:Default:connexion
 
+vocs_platform_inscription2:
+    path: /inscription2
+    defaults: 
+        _controller: VOCSPlatformBundle:Default:inscription2
+
 vocs_platform_a_propos:
     path: /a_propos
     defaults: 
         _controller: VOCSPlatformBundle:Default:apropos
+
+vocs_platform_eleve_home:
+    path: /elevehome
+    defaults: 
+        _controller: VOCSPlatformBundle:Default:elevehome
+
+vocs_platform_eleve_home_jeux:
+    path: /elevehomejeux
+    defaults:
+        _controller: VOCSPlatformBundle:Default:elevehomejeux
+
+vocs_platform_eleve_home_listes:
+    path: /elevehomelistes
+    defaults:
+        _controller: VOCSPlatformBundle:Default:elevehomelistes
+
+vocs_platform_eleve_home_reglages:
+    path: /elevehomereglages
+    defaults:
+        _controller: VOCSPlatformBundle:Default:elevehomereglages
+
+vocs_platform_prof_home:
+    path: /profhome
+    defaults:
+        _controller: VOCSPlatformBundle:Default:profhome
+
+vocs_platform_prof_home_listes:
+    path: /profhomelistes
+    defaults:
+        _controller: VOCSPlatformBundle:Default:profhomelistes
+
+vocs_platform_jeu_classique:
+    path: /jeuclassique
+    defaults:
+        _controller: VOCSPlatformBundle:Default:jeuclassique

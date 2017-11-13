@@ -1,0 +1,61 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+
+<div class='home-interieur'>
+    <div class='home-menu'>
+      <div class='home-menu-titre'>
+        PROF
+      </div>
+      <ul class='home-items'>
+        <li>
+          <a href="{{ path("vocs_platform_eleve_home")}}">Principal</a>
+        </li>
+        <li>
+          <a href="{{ path("vocs_platform_eleve_home_jeux")}}">Jeux</a>
+        </li>
+        <li>
+          <a href="class='home-active'">Mes Listes</a>
+        </li>
+        <li>
+          <a href="#">Listes Publiques</a>
+        </li>
+        <li>
+          <a href="#">Ma Classe</a>
+        </li>
+        <li>
+          <a href="#">Statistiques</a>
+        </li>
+        <li>
+          <a href="#">Réglages</a>
+        </li>
+        <li>
+          <a href="{{ path("vocs_platform_homepage")}}">Déconnexion</a>
+        </li>
+      </ul>
+    </div>
+    <div class='contenue active'>
+
+      <div class="home-topbar">
+        <a class='home-bouton-menu' id="lignes-burger"></a>
+        <div class="home-topbar-titre">
+          LISTES
+        </div>
+      </div>
+
+      <div class="home-contenue-interieur">
+
+
+
+
+
+      </div>
+
+      </div>
+
+
+      </div>
+
+
+
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends "::base.html.twig" %}
+
+{% block body %}
+
+<div class='home-interieur'>
+    <div class='home-menu'>
+      <div class='home-menu-titre'>
+        ELEVE
+      </div>
+      <ul class='home-items'>
+        <li>
+          <a href="{{ path("vocs_platform_eleve_home")}}">Principal</a>
+        </li>
+        <li>
+          <a href="{{ path("vocs_platform_eleve_home_jeux")}}">Jeux</a>
+        </li>
+        <li>
+          <a class="home-active">Listes</a>
+        </li>
+        <li>
+          <a href="#">Ma Classe</a>
+        </li>
+        <li>
+          <a href="#">Statistiques</a>
+        </li>
+        <li>
+          <a href="{{ path("vocs_platform_eleve_home_reglages")}}">Réglages</a>
+        </li>
+        <li>
+          <a href="{{ path("vocs_platform_homepage")}}">Déconnexion</a>
+        </li>
+      </ul>
+    </div>
+    <div class='contenue active'>
+
+      <div class="home-barre">
+        <a class='home-bouton-menu' id="lignes-burger"></a>
+        <div class="home-barre-titre">
+          LISTES
+        </div>
+      </div>
+
+      <div class="home-contenue-interieur">
+
+
+        <div class="list-wrapper a-ete-anime apparait-rebondir-bas normal">
+          <div class="list-container">
+            <div class="list-header-container">
+              <a class="ajouter-liste">+</a>
+              <a class="back-link">&lt;</a>
+              <h3>MES LISTES</h3>
+            </div>
+            <div class="list-body-container">
+              <ul id="list-0" class="list-0 active-list">
+                <li class="list-0-item">
+                  <a href="#list-1" class="list-link"><span class="list-link-label">Ma Première liste ></span></a>
+                  <ul id="list-1" class="list hidden">
+                    <li class="list-item">
+                      <a href="#list-1-1" class="list-link"><span class="list-link-label">Dog</span></a>
+                    </li>
+                    <li class="list-item">
+                      <a href="#list-1-2" class="list-link"><span class="list-link-label">Cow</span></a>
+
+                    </li>
+                    <li class="list-item">
+                      <a href="#list-1-3" class="list-link"><span class="list-link-label">Cat</span></a>
+
+                    </li>
+                    <li class="list-item">
+                      <a href="#list-1-4" class="list-link"><span class="list-link-label">Monkey</span></a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="list-0-item">
+                  <a href="#list-2" class="list-link"><span class="list-link-label">Ma Deuxieme Liste ></span></a>
+                  <ul id="list-2" class="list hidden">
+                    <li class="list-item">
+                      <a href="#list-2-1" class="list-link"><span class="list-link-label">Eat</span></a>
+                    </li>
+                    <li class="list-item">
+                      <a href="#list-2-2" class="list-link"><span class="list-link-label">Drink</span></a>
+                    </li>
+                    <li class="list-item">
+                      <a href="#list-2-3" class="list-link"><span class="list-link-label">Run</span></a>
+                    </li>
+                    <li class="list-item">
+                      <a href="#list-2-4" class="list-link"><span class="list-link-label">Dance</span></a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="list-0-item">
+                  <a href="#list-3" class="list-link"><span class="list-link-label">Ma Troisième Liste ></span></a>
+                  <ul id="list-3" class="list hidden">
+                    <li class="list-item">
+                      <a href="#list-3-1" class="list-link"><span class="list-link-label">Great</span></a>
+                    </li>
+                    <li class="list-item">
+                      <a href="#list-3-2" class="list-link"><span class="list-link-label">Small</span></a>
+                    </li>
+                    <li class="list-item">
+                      <a href="#list-3-3" class="list-link"><span class="list-link-label">Intelligent</span></a>
+                    </li>
+                    <li class="list-item">
+                      <a href="#list-3-4" class="list-link"><span class="list-link-label">Scary</span></a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+
+      </div>
+
+
+      </div>
+
+
+
+{% endblock %}
