@@ -24,7 +24,6 @@ import static vocs.com.vocs.GitService.ENDPOINT;
 import static vocs.com.vocs.R.id.listviewclasseprof;
 import static vocs.com.vocs.R.id.listviewmembres;
 import static vocs.com.vocs.R.id.nomclasse;
-import static vocs.com.vocs.R.id.prof;
 import static vocs.com.vocs.R.id.role;
 
 public class DemandsAcceptDelete extends AppCompatActivity {

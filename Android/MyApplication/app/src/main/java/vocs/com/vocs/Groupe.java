@@ -37,7 +37,7 @@ public class Groupe extends AppCompatActivity {
     ImageButton parametres, retourarriere;
     BottomNavigationView BottomBar;
     TextView nom,email,role,classe,nbliste;
-    Button intégrerclasse,quitter;
+    Button intégrerclasse,quitter,voirclasse,profil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,8 @@ public class Groupe extends AppCompatActivity {
         retourarriere = (ImageButton) findViewById(R.id.retourarrieredegroupe);
         intégrerclasse = (Button) findViewById(R.id.intégrerclasse);
         quitter = (Button) findViewById(R.id.quitter);
+        voirclasse = (Button) findViewById(R.id.voirclasse);
+        profil = (Button) findViewById(R.id.profil);
 
         Bundle y = getIntent().getExtras();
         if(y != null) {
@@ -131,6 +133,18 @@ public class Groupe extends AppCompatActivity {
                 }
                 if(user.getClasses().size()>0) {
                     idclasse = Integer.toString(user.getClasses().get(0).getId());
+                    voirclasse.setOnClickListener(new View.OnClickListener(){
+                        @Override
+                        public void onClick(View v){
+                            Intent vers= new Intent (Groupe.this, VoirSaClasse.class);
+                            Bundle b = new Bundle();
+                            b.putString("id",idreçu);
+                            b.putString("idclasse",idclasse);
+                            vers.putExtras(b);
+                            startActivity(vers);
+                            finish();
+                        }
+                    });
                 }
                 role.setText("Vous êtes un utilisateur");
                 if(roles[0].contentEquals("ROLE_STUDENT")){
@@ -202,6 +216,20 @@ public class Groupe extends AppCompatActivity {
 
             }
         });
+
+        profil.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent versprofil= new Intent (Groupe.this, ChangerProfil.class);
+                Bundle b = new Bundle();
+                b.putString("id",idreçu);
+                b.putString("type","groupe");
+                versprofil.putExtras(b);
+                startActivity(versprofil);
+                finish();
+            }
+        });
+
     }
 
 }

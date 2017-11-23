@@ -29,7 +29,7 @@ public class GroupeProf extends AppCompatActivity {
     ImageButton parametres, retourarriere;
     BottomNavigationView BottomBar;
     TextView nom,email,role,nbliste;
-    Button buttonclasses;
+    Button buttonclasses,profil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,7 @@ public class GroupeProf extends AppCompatActivity {
         parametres = (ImageButton) findViewById(R.id.parametress);
         retourarriere = (ImageButton) findViewById(R.id.retourarrieredegroupe);
         buttonclasses = (Button) findViewById(R.id.buttonclasses);
+        profil = (Button) findViewById(R.id.profil);
 
         Bundle y = getIntent().getExtras();
         if(y != null) {
@@ -150,6 +151,19 @@ public class GroupeProf extends AppCompatActivity {
                 b.putString("id",idreçu);
                 versparam.putExtras(b);
                 startActivity(versparam);
+                finish();
+            }
+        });
+
+        profil.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent versprofil= new Intent (GroupeProf.this, ChangerProfil.class);
+                Bundle b = new Bundle();
+                b.putString("id",idreçu);
+                b.putString("type","groupeprof");
+                versprofil.putExtras(b);
+                startActivity(versprofil);
                 finish();
             }
         });

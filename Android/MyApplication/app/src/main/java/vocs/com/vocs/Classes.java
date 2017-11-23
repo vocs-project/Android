@@ -26,13 +26,6 @@ public class Classes {
         this.name = name;
     }
 
-    public String getSchool() {
-        return school;
-    }
-
-    public void setSchool(String school) {
-        this.school = school;
-    }
 
     public List<SimpleUser> getUsers() {
         return users;
@@ -51,7 +44,16 @@ public class Classes {
     }
 
     private String name;
-    private String school;
+
+    public School getSchool() {
+        return school;
+    }
+
+    public void setSchool(School school) {
+        this.school = school;
+    }
+
+    private School school;
     private List<SimpleUser> users;
     private List<Liste> lists;
 

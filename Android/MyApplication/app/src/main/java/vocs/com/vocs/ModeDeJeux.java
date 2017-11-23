@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 
 import static android.R.attr.button;
+import static android.R.attr.y;
 import static vocs.com.vocs.R.id.TraductionNormale;
 import static vocs.com.vocs.R.id.parametres;
 
@@ -25,7 +26,7 @@ import static vocs.com.vocs.R.id.parametres;
 public class ModeDeJeux extends AppCompatActivity {
 
     Intent ModeDeJeux = getIntent();
-    Button TraductionNormale,qcm;
+    Button TraductionNormale,qcm,match;
     BottomNavigationView BottomBar;
     ImageButton parametres,retourModePrinc;
     String idreçu;
@@ -39,6 +40,7 @@ public class ModeDeJeux extends AppCompatActivity {
         parametres=(ImageButton) findViewById(R.id.parametres);
         BottomBar=(BottomNavigationView) findViewById(R.id.BottomBar);
         qcm=(Button) findViewById(R.id.qcm);
+        match = (Button) findViewById(R.id.match);
 
         Bundle d = getIntent().getExtras();
 
@@ -88,6 +90,7 @@ public class ModeDeJeux extends AppCompatActivity {
                 Bundle b = new Bundle();
                 b.putString("id",idreçu);
                 b.putInt("key",1);
+                b.putString("etat","false");
                TraductionNormale.putExtras(b);
                 startActivity(TraductionNormale);
                 finish();
@@ -100,8 +103,22 @@ public class ModeDeJeux extends AppCompatActivity {
                 Bundle b = new Bundle();
                 b.putString("id",idreçu);
                 b.putInt("key",2);
+                b.putString("etat","false");
                 qcm.putExtras(b);
                 startActivity(qcm);
+                finish();
+            }
+        });
+        match.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent match = new Intent (ModeDeJeux.this, ChoixListeAvantJeux.class);
+                Bundle b = new Bundle();
+                b.putString("id",idreçu);
+                b.putInt("key",3);
+                b.putString("etat","false");
+                match.putExtras(b);
+                startActivity(match);
                 finish();
             }
         });

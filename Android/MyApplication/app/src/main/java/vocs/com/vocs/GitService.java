@@ -26,7 +26,8 @@ import static android.os.Build.VERSION_CODES.M;
 
 public interface GitService {
 
-    public static final String ENDPOINT = "http://vocs.lebarillier.fr/rest";
+    public static final String ENDPOINT = "https://vocs.lebarillier.fr/rest";
+    //http://vocs.lebarillier.fr/rest
 
     @GET("/users/{iduser}/lists/{idlistes}")
     void accedermots(@Path ("iduser") String iduser,@Path ("idlistes") String idlistes, Callback<MotsListe> callback);

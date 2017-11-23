@@ -56,17 +56,6 @@
     </android.support.design.widget.BottomNavigationView>
 
     <TextView
-        android:text="Nom-prenom"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="58dp"
-        android:id="@+id/nomprenom"
-        android:textColor="@android:color/background_dark"
-        android:textSize="20dp"
-        android:layout_below="@+id/imageView3"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
         android:text="email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -109,6 +98,26 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="32dp" />
+
+    <Button
+        android:text="Modifier son Profil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView3"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/profil" />
+
+    <TextView
+        android:text="Nom-prenom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:id="@+id/nomprenom"
+        android:textColor="@android:color/background_dark"
+        android:textSize="20dp"
+        android:layout_below="@+id/profil"
+        android:layout_centerHorizontal="true" />
 
 
 </RelativeLayout>

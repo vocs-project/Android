@@ -108,7 +108,8 @@ public class AjouterListeClasse extends AppCompatActivity {
                             tableaudefinitif[i + 1] = tableauidlisteclasse[i];
                         }
                     } else {
-                        tableaudefinitif = new String[0];
+                        tableaudefinitif = new String[1];
+                        tableaudefinitif[0]=idliste;
                     }
                 }
                 patchlist = new PatchList();

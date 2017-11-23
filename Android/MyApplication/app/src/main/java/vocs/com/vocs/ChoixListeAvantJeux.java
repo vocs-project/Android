@@ -32,7 +32,7 @@ public class ChoixListeAvantJeux extends AppCompatActivity {
     ImageButton parametres, retourpageprinc;
     ListView listviewclasse, listviewperso;
     BottomNavigationView bottomBar;
-    String idreçu, tableaudedelistes[], tableaudedelistesclasses[],idliste,tableaudedeidlistes[],tableaudedeidlistesclasses[];
+    String idreçu, tableaudedelistes[], tableaudedelistesclasses[],idliste,tableaudedeidlistes[],tableaudedeidlistesclasses[],etat;
     String idclasse;
     int value;
 
@@ -56,6 +56,11 @@ public class ChoixListeAvantJeux extends AppCompatActivity {
         value=-1;
         if (b != null) {
             value = b.getInt("key");
+            etat = b.getString("etat");
+        }
+
+        if(etat.equals("true")){
+            Toast.makeText(ChoixListeAvantJeux.this,"Cette liste ne contient pas assez de mot",Toast.LENGTH_SHORT).show();
         }
 
         bottomBar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -203,6 +208,16 @@ public class ChoixListeAvantJeux extends AppCompatActivity {
                 }
                 if(value == 2) {
                     Intent versmots = new Intent(ChoixListeAvantJeux.this, Qcm.class);
+                    Bundle b = new Bundle();
+                    b.putString("id", idreçu);
+                    b.putString("idliste", idliste);
+                    b.putString("liste","perso");
+                    versmots.putExtras(b);
+                    startActivity(versmots);
+                    finish();
+                }
+                if(value == 3) {
+                    Intent versmots = new Intent(ChoixListeAvantJeux.this, Match.class);
                     Bundle b = new Bundle();
                     b.putString("id", idreçu);
                     b.putString("idliste", idliste);

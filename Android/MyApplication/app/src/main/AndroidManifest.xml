@@ -50,7 +50,11 @@
         <activity android:name=".DeleteUserDeClasse" />
         <activity android:name=".DeleteListeClasse" />
         <activity android:name=".RechAjouterEleveAClasse" />
-        <activity android:name=".Envoyerdemandeprof"></activity>
+        <activity android:name=".Envoyerdemandeprof" />
+        <activity android:name=".VoirSaClasse" />
+        <activity android:name=".VoirMotsListeEleve" />
+        <activity android:name=".ChangerProfil" />
+        <activity android:name=".Match"></activity>
     </application>
 
 </manifest>

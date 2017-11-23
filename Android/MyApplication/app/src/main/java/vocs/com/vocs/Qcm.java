@@ -114,6 +114,7 @@ public class Qcm extends AppCompatActivity {
                     Bundle y = new Bundle();
                     y.putString("id", idreçu);
                     y.putInt("key",2);
+                    y.putString("etat","true");
                     retour.putExtras(y);
                     startActivity(retour);
                     finish();

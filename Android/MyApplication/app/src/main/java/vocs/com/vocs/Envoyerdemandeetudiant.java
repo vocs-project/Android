@@ -87,16 +87,17 @@ public class Envoyerdemandeetudiant extends AppCompatActivity {
             public void success(Classes classes, Response response) {
                 nomclasse.setText(classes.getName().concat(" :"));
                 int lenght = classes.getUsers().size();
+                System.out.println(lenght);
                 role = new String[lenght];
                 tableauuser = new String[lenght];
-                for(int i=0; i<lenght;i++){
-                    role=classes.getUsers().get(i).getRoles();
-                }
                 for(int y=0;y<lenght;y++){
+                    role=classes.getUsers().get(y).getRoles();
                     if(role[0].contentEquals("ROLE_PROFESSOR")){
                         leprof = classes.getUsers().get(y).getSurname().concat(" ").concat(classes.getUsers().get(y).getFirstname());
                         idprof = Integer.toString(classes.getUsers().get(y).getId());
                     }
+                    System.out.println(leprof);
+                    System.out.println(idprof);
                     tableauuser[y]=classes.getUsers().get(y).getSurname().concat(" ").concat(classes.getUsers().get(y).getFirstname());
                 }
                 prof.setText("prof : ".concat(leprof));

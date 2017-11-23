@@ -60,12 +60,9 @@ public class ConnexionAppli extends AppCompatActivity {
                         .build()
                         .create(GitService.class);
                 LoginInfo log = new LoginInfo(editlogin.getText().toString(),editpassword.getText().toString());
-                System.out.println(log.getEmail());
-                System.out.println(log.getPassword());
                 githubService.testconnexion(log,new retrofit.Callback<User>() {
                     @Override
                     public void success(User user, Response response) {
-                        Toast.makeText(ConnexionAppli.this, "succes", Toast.LENGTH_SHORT).show();
                         Intent pageprinc = new Intent (ConnexionAppli.this, PagePrinc.class);
                         Bundle b = new Bundle();
                         b.putString("id",Integer.toString(user.getId()));

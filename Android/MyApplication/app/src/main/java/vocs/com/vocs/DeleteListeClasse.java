@@ -144,7 +144,7 @@ public class DeleteListeClasse extends AppCompatActivity {
                     }
                 }
                 System.out.println(tableauidlisteclasse[0]);
-                System.out.println(tableaudefinitif[0]);
+//                System.out.println(tableaudefinitif[0]);
                 patchlist = new PatchList();
                 patchlist.setLists(tableaudefinitif);
                 GitService githubService = new RestAdapter.Builder()
