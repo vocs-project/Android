@@ -26,7 +26,7 @@ import static android.os.Build.VERSION_CODES.M;
 
 public interface GitService {
 
-    public static final String ENDPOINT = "https://vocs.lebarillier.fr/rest";
+    public static final String ENDPOINT = "https://vocsAPI.lebarillier.fr/rest";
     //http://vocs.lebarillier.fr/rest
 
     @GET("/users/{iduser}/lists/{idlistes}")
@@ -100,5 +100,11 @@ public interface GitService {
 
     @DELETE("/classes/{idclasse}/users/{iduser}")
     void deleteuserdeclasse(@Path ("idclasse") String idclasse, @Path ("iduser") String iduser, Callback<Classe> callback);
+
+    @PATCH("/users/{iduser}")
+    void patchunuser(@Path ("iduser") String iduser,@Body UserPatch userpatch, Callback<User> callback);
+
+    @PATCH("/users/{iduser}")
+    void patchunpassword(@Path ("iduser") String iduser,@Body UserPatchPassword userpatchPassword, Callback<User> callback);
 }
 

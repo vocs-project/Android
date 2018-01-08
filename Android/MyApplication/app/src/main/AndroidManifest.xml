@@ -54,7 +54,9 @@
         <activity android:name=".VoirSaClasse" />
         <activity android:name=".VoirMotsListeEleve" />
         <activity android:name=".ChangerProfil" />
-        <activity android:name=".Match"></activity>
+        <activity android:name=".Match" />
+        <activity android:name=".ModifierInfosProfil" />
+        <activity android:name=".ModifierMdpProfil"></activity>
     </application>
 
 </manifest>

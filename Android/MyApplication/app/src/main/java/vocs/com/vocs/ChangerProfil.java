@@ -24,7 +24,7 @@ public class ChangerProfil extends AppCompatActivity {
     ImageButton parametres,retour;
     Button confirmer;
     EditText editpassword;
-    private String idreçu,email,type;
+    private String idreçu,email,type,etat;
 
 
     @Override
@@ -42,11 +42,14 @@ public class ChangerProfil extends AppCompatActivity {
         if(b != null) {
             idreçu = b.getString("id");
             type = b.getString("type");
+            etat = b.getString("etat");
         }
-        confirmer.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
 
+        if(etat!=null){
+            if(etat.contentEquals("modif")){
+                Toast.makeText(ChangerProfil.this,"Modifications enregistrées",Toast.LENGTH_SHORT).show();
+            }
+        }
 
         GitService githubService = new RestAdapter.Builder()
                 .setEndpoint(ENDPOINT)
@@ -56,7 +59,7 @@ public class ChangerProfil extends AppCompatActivity {
         githubService.accederaunuser(idreçu,new retrofit.Callback<User>() {
             @Override
             public void success(User user, Response response) {
-               email = user.getEmail();
+                email = user.getEmail();
             }
             @Override
             public void failure(RetrofitError error) {
@@ -64,11 +67,19 @@ public class ChangerProfil extends AppCompatActivity {
             }
         });
 
+        confirmer.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+
         LoginInfo log = new LoginInfo(email,editpassword.getText().toString());
+                GitService githubService = new RestAdapter.Builder()
+                        .setEndpoint(ENDPOINT)
+                        .build()
+                        .create(GitService.class);
         githubService.testconnexion(log,new retrofit.Callback<User>() {
             @Override
             public void success(User user, Response response) {
-                Intent pageprinc = new Intent (ChangerProfil.this, ChangerProfil.class);
+                Intent pageprinc = new Intent (ChangerProfil.this, ModifierInfosProfil.class);
                 Bundle b = new Bundle();
                 b.putString("id",idreçu);
                 b.putString("type",type);

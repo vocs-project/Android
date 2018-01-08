@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_modifier_infos_profil"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    tools:context="vocs.com.vocs.ModifierInfosProfil">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/navigationbar"
+        android:id="@+id/imageView3"
+        android:adjustViewBounds="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/more"
+        android:id="@+id/retourarriere"
+        android:background="@null"
+        android:layout_alignBottom="@+id/imageView3"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true" />
+    <ImageButton
+        android:text="parametres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/parametre"
+        android:id="@+id/parametres"
+        android:background="@null"
+        android:layout_alignParentTop="true"
+        android:layout_alignBottom="@+id/imageView3" />
+
+    <TextView
+        android:text="Email :"
+        android:textColor="@android:color/background_dark"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:id="@+id/textView38"
+        android:layout_below="@+id/imageView3"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:textSize="22dp"
+        android:paddingLeft="10dp"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:background="@drawable/border"
+        android:layout_below="@+id/textView38"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+        android:id="@+id/editemailmodif" />
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:textSize="22dp"
+        android:paddingLeft="10dp"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:background="@drawable/border"
+        android:layout_marginTop="17dp"
+        android:id="@+id/editnamemodif"
+        android:layout_below="@+id/textView40"
+        android:layout_alignLeft="@+id/editfirstnamemodif"
+        android:layout_alignStart="@+id/editfirstnamemodif" />
+
+    <TextView
+        android:text="Nom :"
+        android:layout_width="wrap_content"
+        android:textColor="@android:color/background_dark"
+        android:textSize="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:id="@+id/textView40"
+        android:layout_below="@+id/editfirstnamemodif"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="250dp"
+        android:layout_height="40dp"
+        android:textSize="22dp"
+        android:paddingLeft="10dp"
+        android:ems="10"
+        android:background="@drawable/border"
+        android:layout_marginTop="18dp"
+        android:id="@+id/editfirstnamemodif"
+        android:layout_below="@+id/textView39"
+        android:layout_alignLeft="@+id/editemailmodif"
+        android:layout_alignStart="@+id/editemailmodif" />
+
+    <TextView
+        android:text="Prénom :"
+        android:textColor="@android:color/background_dark"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="23dp"
+        android:id="@+id/textView39"
+        android:layout_below="@+id/editemailmodif"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:text="Valider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editnamemodif"
+        android:layout_marginTop="41dp"
+        android:id="@+id/validermodifprofil"
+        android:layout_alignRight="@+id/editnamemodif"
+        android:layout_alignEnd="@+id/editnamemodif"
+        android:layout_alignLeft="@+id/editnamemodif"
+        android:layout_alignStart="@+id/editnamemodif"
+        android:background="@drawable/boutonsconnectenregistrer"/>
+
+    <Button
+        android:text="modifier le mot de passe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="21dp"
+        android:id="@+id/modifmdp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/boutonsconnectenregistrer"/>
+
+</RelativeLayout>
