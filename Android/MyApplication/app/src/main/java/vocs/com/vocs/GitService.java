@@ -106,5 +106,11 @@ public interface GitService {
 
     @PATCH("/users/{iduser}")
     void patchunpassword(@Path ("iduser") String iduser,@Body UserPatchPassword userpatchPassword, Callback<User> callback);
+
+    @POST("/demands")
+    void envoyerdemandepartage(@Body DemandePartage demands, Callback<GetDemands> callback);
+
+    @PATCH("/lists/{idlists}")
+    void patchwordliste(@Path ("idlists") String idlists,@Body ListPatchWord listpatchword, Callback<Liste> callback);
 }
 

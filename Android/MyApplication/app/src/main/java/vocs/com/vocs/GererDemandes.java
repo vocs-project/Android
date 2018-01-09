@@ -19,15 +19,17 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static android.text.TextUtils.concat;
 import static vocs.com.vocs.GitService.ENDPOINT;
 import static vocs.com.vocs.R.id.listView;
 import static vocs.com.vocs.R.id.listviewdemands;
+import static vocs.com.vocs.R.id.nom;
 
 public class GererDemandes extends AppCompatActivity {
 
     ImageButton parametres,retour;
     BottomNavigationView BottomBar;
-    private String idreçu,iddemands,idclasse,etat,nbdemandes;
+    private String idreçu,iddemands,idclasse,idliste,etat,nbdemandes,etatdemande,nomsend,nomliste;
     String tableaudemands[],tableaudemandsid[],tableauclasseid[],idreceive,idsend,tabidreceive[],tabidsend[];
     ListView listviewdemands;
 
@@ -122,62 +124,97 @@ public class GererDemandes extends AppCompatActivity {
             }
         });
 
-        GitService githubService = new RestAdapter.Builder()
-                .setEndpoint(ENDPOINT)
-                .build()
-                .create(GitService.class);
+            GitService githubService = new RestAdapter.Builder()
+                    .setEndpoint(ENDPOINT)
+                    .build()
+                    .create(GitService.class);
 
-        githubService.getdemandsuser(idreçu,new retrofit.Callback<GetDemands>() {
-            @Override
-            public void success(GetDemands demands, Response response) {
-                int lenght = demands.getDemandReceive().size();
-                tableaudemands = new String[lenght];
-                tableaudemandsid = new String[lenght];
-                tableauclasseid = new String[lenght];
-                tabidreceive = new String[lenght];
-                tabidsend = new String[lenght];
-                for(int i=0;i<lenght;i++){
-                    tableaudemands[i]=("Envoyé par ").concat(demands.getDemandReceive().get(i).getUserSend().getFirstname())
-                            .concat(" ")
-                            .concat(demands.getDemandReceive().get(i).getUserSend().getSurname())
-                            .concat(" \npour rejoindre ")
-                            .concat(demands.getDemandReceive().get(i).getClasse().getName());
-                    tableaudemandsid[i]=Integer.toString(demands.getDemandReceive().get(i).getId());
-                    tableauclasseid[i]=Integer.toString(demands.getDemandReceive().get(i).getClasse().getId());
-                    tabidreceive[i]=Integer.toString(demands.getDemandReceive().get(i).getUserReceive().getId());
-                    tabidsend[i]=Integer.toString(demands.getDemandReceive().get(i).getUserSend().getId());
+            githubService.getdemandsuser(idreçu, new retrofit.Callback<GetDemands>() {
+                @Override
+                public void success(final GetDemands demands, Response response) {
+                    int lenght = demands.getDemandReceive().size();
+                    tableaudemands = new String[lenght];
+                    tableaudemandsid = new String[lenght];
+                    tableauclasseid = new String[lenght];
+                    tabidreceive = new String[lenght];
+                    tabidsend = new String[lenght];
+                    for (int i = 0; i < lenght; i++) {
+                        Classe test=demands.getDemandReceive().get(i).getClasse();
+                            if (test == null) {
+                                tableaudemands[i] = ("Envoyé par ").concat(demands.getDemandReceive().get(i).getUserSend().getFirstname())
+                                        .concat(" ")
+                                        .concat(demands.getDemandReceive().get(i).getUserSend().getSurname())
+                                        .concat(" \npour partager la liste ")
+                                        .concat(demands.getDemandReceive().get(i).getListe().getName());
+                                tableauclasseid[i] = Integer.toString(demands.getDemandReceive().get(i).getListe().getId());
+                                etatdemande = "partage";
+                            }
+                        else {
+                            tableaudemands[i] = ("Envoyé par ").concat(demands.getDemandReceive().get(i).getUserSend().getFirstname())
+                                    .concat(" ")
+                                    .concat(demands.getDemandReceive().get(i).getUserSend().getSurname())
+                                    .concat(" \npour rejoindre la classe ")
+                                    .concat(demands.getDemandReceive().get(i).getClasse().getName());
+                            tableauclasseid[i] = Integer.toString(demands.getDemandReceive().get(i).getClasse().getId());
+                        }
+                        tableaudemandsid[i] = Integer.toString(demands.getDemandReceive().get(i).getId());
+                        tabidreceive[i] = Integer.toString(demands.getDemandReceive().get(i).getUserReceive().getId());
+                        tabidsend[i] = Integer.toString(demands.getDemandReceive().get(i).getUserSend().getId());
+                    }
+
+                    final ArrayAdapter<String> adapterliste = new ArrayAdapter<String>(GererDemandes.this,
+                            android.R.layout.simple_list_item_1, tableaudemands);
+                    listviewdemands.setAdapter(adapterliste);
+
+                    listviewdemands.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            if(etatdemande.contentEquals("partage")){
+                                iddemands = tableaudemandsid[position];
+                                idliste = tableauclasseid[position];
+                                idsend = tabidsend[position];
+                                idreceive = tabidreceive[position];
+                                nomsend=demands.getDemandReceive().get(position).getUserSend().getFirstname().concat(" ").concat(demands.getDemandReceive().get(position).getUserSend().getSurname());
+                                nomliste=demands.getDemandReceive().get(position).getListe().getName();
+                                Intent vers = new Intent(GererDemandes.this, PartageAccepteDelete.class);
+                                Bundle b = new Bundle();
+                                b.putString("id", idreçu);
+                                b.putString("idliste", idliste);
+                                b.putString("iddemands", iddemands);
+                                b.putString("idsend", idsend);
+                                b.putString("idreceive", idreceive);
+                                b.putString("nbdemandes", nbdemandes);
+                                b.putString("nomsend",nomsend);
+                                b.putString("nomliste",nomliste);
+                                vers.putExtras(b);
+                                startActivity(vers);
+                                finish();
+                            }else {
+                                iddemands = tableaudemandsid[position];
+                                idclasse = tableauclasseid[position];
+                                idsend = tabidsend[position];
+                                idreceive = tabidreceive[position];
+                                Intent vers = new Intent(GererDemandes.this, DemandsAcceptDelete.class);
+                                Bundle b = new Bundle();
+                                b.putString("id", idreçu);
+                                b.putString("idclasse", idclasse);
+                                b.putString("iddemands", iddemands);
+                                b.putString("idsend", idsend);
+                                b.putString("idreceive", idreceive);
+                                b.putString("nbdemandes", nbdemandes);
+                                vers.putExtras(b);
+                                startActivity(vers);
+                                finish();
+                            }
+                        }
+                    });
                 }
 
-                final ArrayAdapter<String> adapterliste = new ArrayAdapter<String>(GererDemandes.this,
-                        android.R.layout.simple_list_item_1, tableaudemands);
-                listviewdemands.setAdapter(adapterliste);
-            }
+                @Override
+                public void failure(RetrofitError error) {
+                    System.out.println(error);
+                }
+            });
 
-            @Override
-            public void failure(RetrofitError error) {
-                System.out.println(error);
-            }
-        });
-
-        listviewdemands.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                iddemands = tableaudemandsid[position];
-                idclasse = tableauclasseid[position];
-                idsend = tabidsend[position];
-                idreceive = tabidreceive[position];
-                Intent vers = new Intent (GererDemandes.this, DemandsAcceptDelete.class);
-                Bundle b = new Bundle();
-                b.putString("id",idreçu);
-                b.putString("idclasse",idclasse);
-                b.putString("iddemands",iddemands);
-                b.putString("idsend",idsend);
-                b.putString("idreceive",idreceive);
-                b.putString("nbdemandes",nbdemandes);
-                vers.putExtras(b);
-                startActivity(vers);
-                finish();
-            }
-        });
     }
 }

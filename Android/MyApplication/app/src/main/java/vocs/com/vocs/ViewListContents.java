@@ -66,7 +66,7 @@ public class ViewListContents extends AppCompatActivity{
            @Override
            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                idliste = tableauidliste[position];
-               Intent versmots = new Intent (ViewListContents.this, Mots.class);
+               Intent versmots = new Intent (ViewListContents.this, SavroirRoleProf.class);
                Bundle b = new Bundle();
                b.putString("id",idreçu);
                b.putString("idliste",idliste);

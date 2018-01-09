@@ -43,4 +43,14 @@ public class DemandSendReceive {
     }
 
     private Classe classe;
+
+    public Liste getListe() {
+        return list;
+    }
+
+    public void setListe(Liste liste) {
+        this.list = liste;
+    }
+
+    private Liste list;
 }

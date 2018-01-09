@@ -36,7 +36,6 @@ public class DemandsAcceptDelete extends AppCompatActivity {
     String tableauuser[],leprof,role[],etat;
     private String idprof;
     PatchCLasse patchclasse;
-    private Boolean lean,bool;
     int chang;
 
     @Override
@@ -78,7 +77,7 @@ public class DemandsAcceptDelete extends AppCompatActivity {
         retour.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent versparam= new Intent (DemandsAcceptDelete.this, GererDemandes.class);
+                Intent versparam= new Intent (DemandsAcceptDelete.this, PagePrinc.class);
                 Bundle b = new Bundle();
                 b.putString("id",idreçu);
                 versparam.putExtras(b);

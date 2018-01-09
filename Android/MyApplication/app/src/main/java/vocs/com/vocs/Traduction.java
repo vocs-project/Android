@@ -1,8 +1,10 @@
 package vocs.com.vocs;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -40,13 +42,13 @@ public class Traduction extends AppCompatActivity {
 
 
     int nombreMax, nb;
-    String motaffiche,motreponse,motsolution,motsolution2,idreçu,typeliste,idList;
+    String motaffiche,motreponse,motsolution,motsolution2,idreçu,typeliste,idList,motsolution3;
     private String tableaufrancais[],tableauanglais[];
     int bon,tt;
 
     TextView afficheur,bienmal,soluc,lemot;
     EditText edit;
-    Button valider,aide,score,retour;
+    Button valider,aide,score,retour,signaler;
     Switch bswitch;
 
     @Override
@@ -65,6 +67,7 @@ public class Traduction extends AppCompatActivity {
         aide=(Button) findViewById(R.id.aide);
         score=(Button) findViewById(R.id.score);
         bswitch=(Switch) findViewById(R.id.bswitch);
+        signaler=(Button) findViewById(R.id.signaler);
 
         Bundle b = getIntent().getExtras();
 
@@ -159,7 +162,7 @@ public class Traduction extends AppCompatActivity {
         retour.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent retour2 = new Intent (Traduction.this, ChoixListeAvantJeux.class);
+                Intent retour2 = new Intent (Traduction.this, PagePrinc.class);
                 Bundle y = new Bundle();
                 y.putString("id", idreçu);
                 y.putInt("key",1);
@@ -178,6 +181,7 @@ public class Traduction extends AppCompatActivity {
         });
 
     }
+
     public void fonction(){
         if (bswitch.isChecked()){
 
@@ -201,6 +205,7 @@ public class Traduction extends AppCompatActivity {
                         edit.setText("");
                         soluc.setText("");
                         lemot.setText(motsolution2 + " : " + motaffiche);
+                        motsolution3="bien";
                         bon++;
                         nb=(int) (Math.random()*nombreMax);
                         afficheur.setText(motaffiche);
@@ -212,6 +217,7 @@ public class Traduction extends AppCompatActivity {
                         edit.setText("");
                         soluc.setText("");
                         lemot.setText(motsolution2 + " : " + motaffiche);
+                        motsolution3=motsolution2;
                         nb=(int) (Math.random()*nombreMax);
                         afficheur.setText(motaffiche);
                         fonction();
@@ -219,6 +225,27 @@ public class Traduction extends AppCompatActivity {
 
                 }
             }) ;
+            signaler.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                if(motsolution3 !=null && motaffiche!=null && motreponse!=null) {
+                    if (!motsolution3.contentEquals("bien")&& !motreponse.contentEquals(" ") && !motreponse.contentEquals("")) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(Traduction.this);
+                        builder.setTitle("Valider le signalement ?");
+                        builder.setMessage(motsolution3 + " - " + motreponse);
+                        builder.setPositiveButton("oui", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                        builder.setNegativeButton("non", null);
+                        builder.create();
+                        builder.show();
+                    }
+                }
+                }
+            });
         }
         else {
 

@@ -56,7 +56,12 @@
         <activity android:name=".ChangerProfil" />
         <activity android:name=".Match" />
         <activity android:name=".ModifierInfosProfil" />
-        <activity android:name=".ModifierMdpProfil"></activity>
+        <activity android:name=".ModifierMdpProfil" />
+        <activity android:name=".MotsProf" />
+        <activity android:name=".SavroirRoleProf" />
+        <activity android:name=".ResultPartageListeProf" />
+        <activity android:name=".AccepterPartage" />
+        <activity android:name=".PartageAccepteDelete" />
     </application>
 
 </manifest>
