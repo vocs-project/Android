@@ -112,5 +112,11 @@ public interface GitService {
 
     @PATCH("/lists/{idlists}")
     void patchwordliste(@Path ("idlists") String idlists,@Body ListPatchWord listpatchword, Callback<Liste> callback);
+
+    @POST("/demands")
+    void envoyerdemandesynonyme(@Body DemandeSynonyme demands, Callback<GetDemands> callback);
+
+    @PATCH("/words/{idword}")
+    void patchword(@Path ("idword") String idword,@Body WordPatch wordpatch, Callback<Word> callback);
 }
 

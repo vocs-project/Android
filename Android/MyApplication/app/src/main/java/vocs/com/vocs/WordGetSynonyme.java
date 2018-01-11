@@ -1,16 +1,12 @@
 package vocs.com.vocs;
 
-import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
-
 /**
- * Created by ASUS on 26/10/2017.
+ * Created by ASUS on 10/01/2018.
  */
 
-public class Word {
-
+    public class WordGetSynonyme {
     private WordDansTrads trads[];
+    private int id;
     private Langage language;
     private String content;
 
@@ -36,5 +32,13 @@ public class Word {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

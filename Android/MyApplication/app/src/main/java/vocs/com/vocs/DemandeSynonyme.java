@@ -1,13 +1,15 @@
 package vocs.com.vocs;
 
+import java.util.List;
+
 /**
- * Created by ASUS on 07/11/2017.
+ * Created by ASUS on 10/01/2018.
  */
 
-public class Demands {
+public class DemandeSynonyme {
     private int userSend;
     private int userReceive;
-    private int classe;
+    private WordTraductionSynonymes wordTrad;
 
     public int getUserSend() {
         return userSend;
@@ -25,13 +27,14 @@ public class Demands {
         this.userReceive = userReceive;
     }
 
-    public int getClasse() {
-        return classe;
+    public WordTraductionSynonymes getWordTrad() {
+        return wordTrad;
     }
 
-    public void setClasse(int classe) {
-        this.classe = classe;
+    public void setWordTrad(WordTraductionSynonymes wordTrad) {
+        this.wordTrad = wordTrad;
     }
 
     public void getListe(){return;}
+    public void getClasse(){return;}
 }

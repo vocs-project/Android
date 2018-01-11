@@ -29,9 +29,11 @@ public class GererDemandes extends AppCompatActivity {
 
     ImageButton parametres,retour;
     BottomNavigationView BottomBar;
-    private String idreçu,iddemands,idclasse,idliste,etat,nbdemandes,etatdemande,nomsend,nomliste;
+    private String idreçu,iddemands,idclasse,idliste,etat,nbdemandes,etatdemande,nomsend,nomliste,idmot,idmotapatch,nommot,nommotapatch;
     String tableaudemands[],tableaudemandsid[],tableauclasseid[],idreceive,idsend,tabidreceive[],tabidsend[];
     ListView listviewdemands;
+    private WordDansTrads trads[];
+    private int lestrads[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,7 +142,8 @@ public class GererDemandes extends AppCompatActivity {
                     tabidsend = new String[lenght];
                     for (int i = 0; i < lenght; i++) {
                         Classe test=demands.getDemandReceive().get(i).getClasse();
-                            if (test == null) {
+                        Liste testliste = demands.getDemandReceive().get(i).getListe();
+                            if (test == null&& testliste != null) {
                                 tableaudemands[i] = ("Envoyé par ").concat(demands.getDemandReceive().get(i).getUserSend().getFirstname())
                                         .concat(" ")
                                         .concat(demands.getDemandReceive().get(i).getUserSend().getSurname())
@@ -149,6 +152,17 @@ public class GererDemandes extends AppCompatActivity {
                                 tableauclasseid[i] = Integer.toString(demands.getDemandReceive().get(i).getListe().getId());
                                 etatdemande = "partage";
                             }
+                            else if(test == null && testliste == null){
+                                tableaudemands[i] = ("Envoyé par ").concat(demands.getDemandReceive().get(i).getUserSend().getFirstname())
+                                        .concat(" ")
+                                        .concat(demands.getDemandReceive().get(i).getUserSend().getSurname())
+                                        .concat(" \npour accepter comme traduction de ")
+                                        .concat(demands.getDemandReceive().get(i).getWordTrad().getTrad().getContent())
+                                        .concat(" -> ")
+                                        .concat(demands.getDemandReceive().get(i).getWordTrad().getWord().getContent());
+                                tableauclasseid[i] = Integer.toString(demands.getDemandReceive().get(i).getWordTrad().getId());
+                                etatdemande = "synonyme";
+                            }
                         else {
                             tableaudemands[i] = ("Envoyé par ").concat(demands.getDemandReceive().get(i).getUserSend().getFirstname())
                                     .concat(" ")
@@ -156,6 +170,7 @@ public class GererDemandes extends AppCompatActivity {
                                     .concat(" \npour rejoindre la classe ")
                                     .concat(demands.getDemandReceive().get(i).getClasse().getName());
                             tableauclasseid[i] = Integer.toString(demands.getDemandReceive().get(i).getClasse().getId());
+                                etatdemande ="classe";
                         }
                         tableaudemandsid[i] = Integer.toString(demands.getDemandReceive().get(i).getId());
                         tabidreceive[i] = Integer.toString(demands.getDemandReceive().get(i).getUserReceive().getId());
@@ -189,7 +204,47 @@ public class GererDemandes extends AppCompatActivity {
                                 vers.putExtras(b);
                                 startActivity(vers);
                                 finish();
-                            }else {
+                            }
+                            else if(etatdemande.contentEquals("synonyme")){
+                                iddemands = tableaudemandsid[position];
+                                idmotapatch = String.valueOf(demands.getDemandReceive().get(position).getWordTrad().getTrad().getId());
+                                idmot = String.valueOf(demands.getDemandReceive().get(position).getWordTrad().getWord().getId());
+                                System.out.println(idmotapatch);
+                                System.out.println(idmot);
+                                idsend = tabidsend[position];
+                                idreceive = tabidreceive[position];
+                                nommotapatch = demands.getDemandReceive().get(position).getWordTrad().getTrad().getContent();
+                                nommot = demands.getDemandReceive().get(position).getWordTrad().getWord().getContent();
+                                trads = demands.getDemandReceive().get(position).getWordTrad().getTrad().getTrads();
+                                if(trads == null){
+                                    lestrads = new int[1];
+                                    lestrads[0]=Integer.parseInt(idmot);
+                                }
+                                else{
+                                    lestrads = new int[trads.length+1];
+                                    for(int j=0;j<trads.length;j++){
+                                        lestrads[j]=trads[j].getId();
+                                    }
+                                    lestrads[trads.length]=Integer.parseInt(idmot);
+                                }
+
+                                Intent vers = new Intent(GererDemandes.this, SynonymeAcceptDelete.class);
+                                Bundle b = new Bundle();
+                                b.putString("id", idreçu);
+                                b.putString("idmot", idmot);
+                                b.putString("idmotapatch",idmotapatch);
+                                b.putString("iddemands", iddemands);
+                                b.putString("idsend", idsend);
+                                b.putString("nommotapatch",nommotapatch);
+                                b.putString("nommot",nommot);
+                                b.putString("idreceive", idreceive);
+                                b.putString("nbdemandes", nbdemandes);
+                                b.putIntArray("trads",lestrads);
+                                vers.putExtras(b);
+                                startActivity(vers);
+                                finish();
+                            }
+                            else {
                                 iddemands = tableaudemandsid[position];
                                 idclasse = tableauclasseid[position];
                                 idsend = tabidsend[position];

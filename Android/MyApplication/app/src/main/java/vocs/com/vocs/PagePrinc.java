@@ -25,6 +25,7 @@ import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+import static android.R.attr.id;
 import static vocs.com.vocs.GitService.ENDPOINT;
 import static vocs.com.vocs.R.id.editlogin;
 import static vocs.com.vocs.R.id.lamanette;
@@ -99,6 +100,7 @@ public class PagePrinc extends Activity {
                     case R.id.lamanette:
                         Intent modeJeux = new Intent (PagePrinc.this, ModeDeJeux.class);
                         Bundle d = new Bundle();
+                        System.out.println(idreçu);
                         d.putString("id", idreçu);
                         modeJeux.putExtras(d);
                         startActivity(modeJeux);
@@ -163,6 +165,7 @@ public class PagePrinc extends Activity {
                 Intent versparam= new Intent (PagePrinc.this, GererDemandes.class);
                 Bundle b = new Bundle();
                 b.putString("id",idreçu);
+                System.out.println(nbdemandes);
                 b.putString("nbdemandes",nbdemandes);
                 versparam.putExtras(b);
                 startActivity(versparam);

@@ -52,5 +52,15 @@ public class DemandSendReceive {
         this.list = liste;
     }
 
+    public WordTraductionGetSynonymes getWordTrad() {
+        return wordTrad;
+    }
+
+    public void setWordTrad(WordTraductionGetSynonymes wordTrad) {
+        this.wordTrad = wordTrad;
+    }
+
     private Liste list;
+
+    private WordTraductionGetSynonymes wordTrad;
 }

@@ -31,7 +31,7 @@ public class ResultPartageListeProf extends AppCompatActivity {
     ImageButton parametres,retour,loupe;
     EditText recherche;
     ListView listes;
-    private String idreçu,idliste,tableauusername[],tableauuserid[],textrecherche,tableautrié[],tableautriéid[],iduser,tableautout[],role[][];
+    private String idreçu,idliste,tableauusername[],tableauuserid[],textrecherche,tableautrié[],tableautriéid[],iduser,tableautout[],role[][],tableauusertoutid[],roleun[];
     int longueur;
     String etat;
 
@@ -95,15 +95,39 @@ public class ResultPartageListeProf extends AppCompatActivity {
             @Override
             public void success(List<User> user, Response response) {
                 final int lenght = user.size();
-                tableauusername = new String[lenght];
-                tableauuserid = new String[lenght];
+                tableautout = new String[lenght];
+                tableauusertoutid = new String[lenght];
                 role=new String[lenght][2];
                 for(int i =0; i<lenght ; i++) {
-                    tableauusername[i] = user.get(i).getFirstandSur();
-                    tableauuserid[i] = Integer.toString(user.get(i).getId());
-                   // role[i]=user.get(i).getRoles();
-                    // System.out.println(role[i][0]);
+                    tableautout[i] = user.get(i).getFirstandSur();
+                    tableauusertoutid[i] = Integer.toString(user.get(i).getId());
+                    role[i]=user.get(i).getRoles();
                 }
+                int length2 = role.length;
+                roleun = new String[length2];
+                for(int x=0; x<length2; x++) {
+                    for(int j=0; j<role[x].length; j++) {
+                        roleun[x]=role[x][j];
+                    }
+                }
+                int taille=0;
+                for(int o = 0; o<roleun.length;o++){
+                    System.out.println(o);
+                    if(roleun[o].contentEquals("ROLE_PROFESSOR")){
+                        taille = taille+1;
+                    }
+                }
+                tableauusername = new String[taille];
+                tableauuserid = new String[taille];
+                int pos = 0;
+                for(int u=0; u<lenght;u++){
+                    if(roleun[u].contentEquals("ROLE_PROFESSOR")){
+                        tableauusername[pos]=tableautout[u];
+                        tableauuserid[pos]=tableauusertoutid[u];
+                        pos=pos+1;
+                    }
+                }
+
 
                 final ArrayAdapter<String> adapterliste = new ArrayAdapter<String>(ResultPartageListeProf.this,
                         android.R.layout.simple_list_item_1, tableauusername);
@@ -178,28 +202,4 @@ public class ResultPartageListeProf extends AppCompatActivity {
 
 
     }
-
-  /*  public String[] calcul(String role[][]){
-        int o=0;
-        int v=0;
-        int x=15;
-        String test;
-        String[]tableau;
-        for(int k =0; k<role.length;k++) {
-            System.out.println(k);
-            test=role[k][0];
-            System.out.println(test);
-
-        }
-        tableau = new String[o];
-        for(int m=0;m<role.length;m++) {
-            if(role[m][0].contentEquals("ROLE_PROFESSOR")){
-                System.out.println(role[m][0]);
-                //tableau[v]=role[m][0];
-                v++;
-            }
-        }
-
-        return tableau;
-    }*/
 }
