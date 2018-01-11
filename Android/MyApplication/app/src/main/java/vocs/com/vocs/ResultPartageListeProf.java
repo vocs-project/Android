@@ -31,7 +31,7 @@ public class ResultPartageListeProf extends AppCompatActivity {
     ImageButton parametres,retour,loupe;
     EditText recherche;
     ListView listes;
-    private String idreçu,idliste,tableauusername[],tableauuserid[],textrecherche,tableautrié[],tableautriéid[],iduser,tableautout[],role[][],tableauusertoutid[],roleun[];
+    private String idreçu,idliste,tableauusername[],tableauuserid[],textrecherche,tableautrié[],tableautriéid[],iduser,tableautout[],role[][],tableauusertoutid[],roleun[],tableautmpiduser[],tableautmpnomuser[];
     int longueur;
     String etat;
 
@@ -117,14 +117,24 @@ public class ResultPartageListeProf extends AppCompatActivity {
                         taille = taille+1;
                     }
                 }
-                tableauusername = new String[taille];
-                tableauuserid = new String[taille];
+                tableauusername = new String[taille-1];
+                tableauuserid = new String[taille-1];
+                tableautmpiduser = new String[taille];
+                tableautmpnomuser = new String[taille];
                 int pos = 0;
                 for(int u=0; u<lenght;u++){
                     if(roleun[u].contentEquals("ROLE_PROFESSOR")){
-                        tableauusername[pos]=tableautout[u];
-                        tableauuserid[pos]=tableauusertoutid[u];
+                        tableautmpnomuser[pos]=tableautout[u];
+                        tableautmpiduser[pos]=tableauusertoutid[u];
                         pos=pos+1;
+                    }
+                }
+                int tmp=0;
+                for(int c=0;c<taille;c++){
+                    if(!tableautmpiduser[c].contentEquals(idreçu)){
+                        tableauusername[tmp]=tableautmpnomuser[c];
+                        tableauuserid[tmp]=tableautmpiduser[c];
+                        tmp++;
                     }
                 }
 

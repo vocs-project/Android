@@ -273,7 +273,7 @@ public class Match extends AppCompatActivity {
                     }
                     if(!tableausoluc[3].equals(recup4[1])){
                         mot4.setBackgroundColor(Color.RED);
-                        mot4.setText(recup1[0]+" - "+tableausoluc[3]);
+                        mot4.setText(recup4[0]+" - "+tableausoluc[3]);
                     }
                     else{
                         mot4.setBackgroundColor(Color.GREEN);
