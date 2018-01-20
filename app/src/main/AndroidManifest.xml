@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="vocs.com.vocs">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".vocs_logo">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ViewListContents" />
+        <activity android:name=".score" />
+        <activity android:name=".PagePrinc" />
+        <activity android:name=".LesListes" />
+        <activity android:name=".suppression" />
+        <activity android:name=".Mots" />
+        <activity android:name=".AjoutMots" />
+        <activity android:name=".SupprimerMot" />
+        <activity android:name=".Parametres" />
+        <activity android:name=".ChoixListe" />
+        <activity android:name=".Traduction" />
+        <activity android:name=".ModeDeJeux" />
+        <activity android:name=".Qcm" />
+        <activity android:name=".ConnexionAppli" />
+        <activity android:name=".CreerCompte" />
+        <activity android:name=".ChoixListeAvantJeux" />
+        <activity android:name=".Groupe" />
+        <activity android:name=".SavoirRole" />
+        <activity android:name=".GroupeProf" />
+        <activity android:name=".GererClasses" />
+        <activity android:name=".Integrerclasse" />
+        <activity android:name=".Envoyerdemandeetudiant" />
+        <activity android:name=".CreerClasse" />
+        <activity android:name=".Classeduprof" />
+        <activity android:name=".GererDemandes" />
+        <activity android:name=".DemandsAcceptDelete" />
+        <activity android:name=".SupprimerClasse" />
+        <activity android:name=".AjouterListeClasse" />
+        <activity android:name=".ListesDuneClasse" />
+        <activity android:name=".ChangerNomClasse" />
+        <activity android:name=".DeleteUserDeClasse" />
+        <activity android:name=".DeleteListeClasse" />
+        <activity android:name=".RechAjouterEleveAClasse" />
+        <activity android:name=".Envoyerdemandeprof" />
+        <activity android:name=".VoirSaClasse" />
+        <activity android:name=".VoirMotsListeEleve" />
+        <activity android:name=".ChangerProfil" />
+        <activity android:name=".Match" />
+        <activity android:name=".ModifierInfosProfil" />
+        <activity android:name=".ModifierMdpProfil" />
+        <activity android:name=".MotsProf" />
+        <activity android:name=".SavroirRoleProf" />
+        <activity android:name=".ResultPartageListeProf" />
+        <activity android:name=".AccepterPartage" />
+        <activity android:name=".PartageAccepteDelete" />
+        <activity android:name=".SynonymeAcceptDelete"></activity>
+    </application>
+
+</manifest>

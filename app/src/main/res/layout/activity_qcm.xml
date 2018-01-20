@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_qcm"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    tools:context="vocs.com.vocs.Qcm">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/navigationbar"
+        android:id="@+id/imageView3"
+        android:adjustViewBounds="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="Anglais"
+        android:textColor="@android:color/background_dark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="17dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginTop="14dp"
+        android:id="@+id/textView20"
+        android:layout_below="@+id/imageView3"
+        android:layout_toLeftOf="@+id/textView19"
+        android:layout_toStartOf="@+id/textView19" />
+
+    <TextView
+        android:text="Francais"
+        android:textColor="@android:color/background_dark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="18dp"
+        android:layout_marginStart="18dp"
+        android:id="@+id/textView21"
+        android:layout_alignBaseline="@+id/switchqcm"
+        android:layout_alignBottom="@+id/switchqcm"
+        android:layout_toRightOf="@+id/textView19"
+        android:layout_toEndOf="@+id/textView19" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/switchqcm"
+        android:layout_alignBaseline="@+id/textView20"
+        android:layout_alignBottom="@+id/textView20"
+        android:layout_centerHorizontal="true"
+        android:thumbTint="@android:color/holo_blue_dark"/>
+
+    <TextView
+        android:text="Choisissez la bonne traduction parmis celles proposées :"
+        android:textColor="@android:color/background_dark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/switchqcm"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/textView22" />
+
+    <TextView
+        android:text=""
+        android:gravity="center"
+        android:textColor="@android:color/background_dark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/motafficheqcm"
+        android:layout_marginTop="14dp"
+        android:layout_below="@+id/textView22"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text=""
+        android:textColor="@android:color/background_dark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textradio3qcm"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/textradio2qcm"
+        android:layout_alignStart="@+id/textradio2qcm" />
+
+    <Button
+        android:text="Valider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="21dp"
+        android:id="@+id/validerqcm"
+        android:layout_below="@+id/checkBox1qcm"
+        android:layout_alignLeft="@+id/textView20"
+        android:layout_alignStart="@+id/textView20"
+        android:layout_alignRight="@+id/textView21"
+        android:layout_alignEnd="@+id/textView21" />
+
+    <Button
+        android:text="score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scoreqcm"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text=""
+        android:gravity="center"
+        android:textColor="@android:color/background_dark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:id="@+id/bienmalqcm"
+        android:layout_below="@+id/validerqcm"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text=""
+        android:gravity="center"
+        android:textColor="@android:color/background_dark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:id="@+id/affichereponseqcm"
+        android:layout_below="@+id/bienmalqcm"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text=""
+        android:textColor="@android:color/background_dark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textradio4qcm"
+        android:layout_alignBaseline="@+id/checkBox1qcm"
+        android:layout_alignBottom="@+id/checkBox1qcm"
+        android:layout_alignLeft="@+id/textradio2qcm"
+        android:layout_alignStart="@+id/textradio2qcm" />
+
+    <CheckBox
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox3qcm"
+        android:layout_above="@+id/textradio3qcm"
+        android:layout_alignLeft="@+id/checkBox4qcm"
+        android:layout_alignStart="@+id/checkBox4qcm" />
+
+    <CheckBox
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox2qcm"
+        android:layout_below="@+id/textradio2qcm"
+        android:layout_alignLeft="@+id/checkBox3qcm"
+        android:layout_alignStart="@+id/checkBox3qcm" />
+
+    <CheckBox
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox1qcm"
+        android:layout_below="@+id/textradio3qcm"
+        android:layout_alignLeft="@+id/checkBox2qcm"
+        android:layout_alignStart="@+id/checkBox2qcm" />
+
+    <CheckBox
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox4qcm"
+        android:layout_above="@+id/textradio2qcm"
+        android:layout_alignRight="@+id/textView20"
+        android:layout_alignEnd="@+id/textView20" />
+
+    <TextView
+        android:text=""
+        android:textColor="@android:color/background_dark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textradio1qcm"
+        android:layout_alignBaseline="@+id/checkBox4qcm"
+        android:layout_alignBottom="@+id/checkBox4qcm"
+        android:layout_toRightOf="@+id/motafficheqcm"
+        android:layout_toEndOf="@+id/motafficheqcm" />
+
+    <TextView
+        android:text=""
+        android:textColor="@android:color/background_dark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textradio2qcm"
+        android:layout_alignBaseline="@+id/checkBox3qcm"
+        android:layout_alignBottom="@+id/checkBox3qcm"
+        android:layout_toRightOf="@+id/motafficheqcm"
+        android:layout_toEndOf="@+id/motafficheqcm" />
+
+    <TextView
+        android:text="QCM"
+        android:textColor="@android:color/white"
+        android:textSize="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView19"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>
