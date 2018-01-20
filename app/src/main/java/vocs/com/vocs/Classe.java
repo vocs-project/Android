@@ -5,7 +5,7 @@ package vocs.com.vocs;
  */
 
 public class Classe {
-
+    //commentaire
     private int id;
     private String name;
 
