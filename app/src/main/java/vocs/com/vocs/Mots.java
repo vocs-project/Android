@@ -1,8 +1,10 @@
 package vocs.com.vocs;
 
+import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Application;
 import android.os.Bundle;
@@ -13,15 +15,18 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
+
 
 import static android.R.attr.data;
 import static android.R.attr.id;
@@ -29,21 +34,20 @@ import static android.R.attr.name;
 import static android.R.attr.value;
 import static vocs.com.vocs.GitService.ENDPOINT;
 import static vocs.com.vocs.R.id.leedit;
+import static vocs.com.vocs.R.id.listView;
 import static vocs.com.vocs.R.id.retour;
 import static vocs.com.vocs.R.id.supprliste;
 
-public class Mots extends AppCompatActivity {
+public class Mots extends AppCompatActivity{
 
     Button retours,ajout,supp;
      String idreçu,idliste,tableautrad[],tableauword[],tableau[],word,tableauid[],idword,wordanglais;
+    private ListView maListViewPerso;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mots);
-
-        final ListView listView=(ListView) findViewById(R.id.listView);
-
 
         Bundle b = getIntent().getExtras();
 
@@ -51,6 +55,20 @@ public class Mots extends AppCompatActivity {
             idreçu = b.getString("id");
             idliste = b.getString("idliste");
         }
+
+        maListViewPerso = (ListView) findViewById(R.id.listView);
+
+        maListViewPerso.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                HashMap<String, String> map = (HashMap<String, String>) maListViewPerso.getItemAtPosition(position);
+                AlertDialog.Builder adb = new AlertDialog.Builder(Mots.this);
+                adb.setTitle("Sélection Item");
+                adb.setMessage("Votre choix : "+map.get("titre"));
+                adb.setPositiveButton("Ok", null);
+                adb.show();
+            }
+        });
 
         retours=(Button) findViewById(R.id.retours);
         ajout=(Button) findViewById(R.id.ajout);
@@ -130,34 +148,26 @@ public class Mots extends AppCompatActivity {
                     tableauid[i]=Integer.toString(motslistes.getWordTrads().get(i).getId());
                     tableau[i]=(tableauword[i]+" - "+tableautrad[i]);
                 }
-                final ArrayAdapter<String> adaptermots = new ArrayAdapter<String>(Mots.this,
-                        android.R.layout.simple_list_item_1, tableau);
-                listView.setAdapter(adaptermots);
+                ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
+                HashMap<String, String> map;
+
+                for(int y=0;y<tableau.length;y++){
+                    map = new HashMap<String, String>();
+                    map.put("titre", tableau[y]);
+                    map.put("img", String.valueOf(R.drawable.red_point));
+                    listItem.add(map);
+                }
+
+                SimpleAdapter mSchedule = new SimpleAdapter (getApplicationContext(), listItem, R.layout.affichage_item,
+                        new String[] {"img", "titre"}, new int[] {R.id.img, R.id.titre});
+
+                maListViewPerso.setAdapter(mSchedule);
             }
 
             @Override
             public void failure(RetrofitError error) {
 
                 Toast.makeText(Mots.this, "erreur", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                word = tableau[position];
-                idword = tableauid[position];
-                wordanglais = tableauword[position];
-                Intent verssupp = new Intent (Mots.this, SupprimerMot.class);
-                Bundle b = new Bundle();
-                b.putString("id",idreçu);
-                b.putString("idliste",idliste);
-                b.putString("idword",idword);
-                b.putString("word",word);
-                b.putString("wordanglais",wordanglais);
-                verssupp.putExtras(b);
-                startActivity(verssupp);
-                finish();
             }
         });
 

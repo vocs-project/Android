@@ -83,7 +83,8 @@
         android:layout_below="@+id/textView27"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/listviewclasse"/>
+        android:id="@+id/listviewclasse"
+        android:layout_above="@+id/hardlist" />
 
     <ImageButton
         android:text="parametres"
@@ -95,5 +96,13 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Hardlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/BottomBar"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/hardlist" />
 
 </RelativeLayout>

@@ -30,7 +30,7 @@ public class Match extends AppCompatActivity {
     ImageButton precedant,suivant;
     Switch switchbutton;
     private String idList,idreçu,typeliste;
-    private String tableaufrancais[], tableauanglais[],tableausoluc[],letas[],letasrandom[];
+    private String tableaufrancais[], tableauanglais[],tableausoluc[],letas[],letasrandom[],goodRepetition[],badRepetition[];
     int nombreMax,mémoiretasrand1,mémoiretasrand2,mémoiretasrand3,mémoiretasrand4,positiontas,bon,tt;
     boolean etat1,etat2,etat3,etat4;
     String recup1[],recup2[],recup3[],recup4[];
@@ -61,53 +61,133 @@ public class Match extends AppCompatActivity {
         }
         bon=0;
         tt=0;
-        GitService githubService = new RestAdapter.Builder()
-                .setEndpoint(ENDPOINT)
-                .build()
-                .create(GitService.class);
 
-        githubService.accederliste(idList,new retrofit.Callback<MotsListe>() {
-            @Override
-            public void success(MotsListe motliste, Response response) {
-                int lenght = motliste.getWordTrads().size();
-                tableaufrancais = new String[lenght];
-                tableauanglais = new String[lenght];
-                tableausoluc = new String[lenght];
-                for(int i=0;i<lenght;i++){
-                    tableauanglais[i]=motliste.getWordTrads().get(i).getWord().getContent();
-                    tableaufrancais[i]=motliste.getWordTrads().get(i).getTrad().getContent();
+        if(typeliste.contentEquals("hard")){
+            GitService githubService = new RestAdapter.Builder()
+                    .setEndpoint(ENDPOINT)
+                    .build()
+                    .create(GitService.class);
+
+            githubService.hardlist(idreçu, new retrofit.Callback<MotsListe>() {
+                @Override
+                public void success(MotsListe motliste, Response response) {
+                    int lenght = motliste.getWordTrads().size();
+                    tableaufrancais = new String[lenght];
+                    tableauanglais = new String[lenght];
+                    tableausoluc = new String[lenght];
+                    goodRepetition = new String[lenght];
+                    badRepetition = new String[lenght];
+                    for (int i = 0; i < lenght; i++) {
+                        tableauanglais[i] = motliste.getWordTrads().get(i).getWord().getContent();
+                        tableaufrancais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
+                        goodRepetition[i]=String.valueOf(motliste.getWordTrads().get(i).getStat().getGoodRepetition());
+                        badRepetition[i]=String.valueOf(motliste.getWordTrads().get(i).getStat().getBadRepetition());
+                    }
+                    if (tableauanglais.length < 4) {
+                        Intent retour = new Intent(Match.this, ChoixListeAvantJeux.class);
+                        Bundle y = new Bundle();
+                        y.putString("id", idreçu);
+                        y.putInt("key", 3);
+                        y.putString("etat", "true");
+                        retour.putExtras(y);
+                        startActivity(retour);
+                        finish();
+                    } else {
+                        anim_score();
+                        mot1.setBackgroundColor(Color.GRAY);
+                        mot2.setBackgroundColor(Color.GRAY);
+                        mot3.setBackgroundColor(Color.GRAY);
+                        mot4.setBackgroundColor(Color.GRAY);
+                        Qrandom(1);
+                        letas();
+                        positiontas = 0;
+                        tas.setText(letasrandom[0]);
+                        recup1 = new String[3];
+                        recup2 = new String[3];
+                        recup3 = new String[3];
+                        recup4 = new String[3];
+                        function();
+                    }
                 }
-                if(tableauanglais.length<4){
-                    Intent retour = new Intent (Match.this, ChoixListeAvantJeux.class);
-                    Bundle y = new Bundle();
-                    y.putString("id", idreçu);
-                    y.putInt("key",3);
-                    y.putString("etat","true");
-                    retour.putExtras(y);
-                    startActivity(retour);
-                    finish();
-                }else{
-                    anim_score();
-                    mot1.setBackgroundColor(Color.GRAY);
-                    mot2.setBackgroundColor(Color.GRAY);
-                    mot3.setBackgroundColor(Color.GRAY);
-                    mot4.setBackgroundColor(Color.GRAY);
-                    Qrandom(1);
-                    letas();
-                    positiontas = 0;
-                    tas.setText(letasrandom[0]);
-                    recup1 = new String[3];
-                    recup2 = new String[3];
-                    recup3 = new String[3];
-                    recup4 = new String[3];
-                    function();
+
+                @Override
+                public void failure(RetrofitError error) {
+                    System.out.println(error);
                 }
-            }
-            @Override
-            public void failure(RetrofitError error) {
-                System.out.println(error);
-            }
-        });
+            });
+
+        }
+        else {
+            GitService githubService = new RestAdapter.Builder()
+                    .setEndpoint(ENDPOINT)
+                    .build()
+                    .create(GitService.class);
+
+            githubService.accederliste(idList, new retrofit.Callback<MotsListe>() {
+                @Override
+                public void success(MotsListe motliste, Response response) {
+                    final int lenght = motliste.getWordTrads().size();
+                    tableaufrancais = new String[lenght];
+                    tableauanglais = new String[lenght];
+                    tableausoluc = new String[lenght];
+                    for (int i = 0; i < lenght; i++) {
+                        tableauanglais[i] = motliste.getWordTrads().get(i).getWord().getContent();
+                        tableaufrancais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
+                    }
+                    if (tableauanglais.length < 4) {
+                        Intent retour = new Intent(Match.this, ChoixListeAvantJeux.class);
+                        Bundle y = new Bundle();
+                        y.putString("id", idreçu);
+                        y.putInt("key", 3);
+                        y.putString("etat", "true");
+                        retour.putExtras(y);
+                        startActivity(retour);
+                        finish();
+                    } else {
+                        GitService githubService = new RestAdapter.Builder()
+                                .setEndpoint(ENDPOINT)
+                                .build()
+                                .create(GitService.class);
+
+                        githubService.recupstat(idreçu,idList, new retrofit.Callback<ListeTout>() {
+                            @Override
+                            public void success(ListeTout listestat, Response response) {
+                                goodRepetition = new String[lenght];
+                                badRepetition = new String[lenght];
+                                for(int u=0;u<lenght;u++){
+                                    goodRepetition[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getGoodRepetition());
+                                    badRepetition[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getBadRepetition());
+                                }
+                                anim_score();
+                                mot1.setBackgroundColor(Color.GRAY);
+                                mot2.setBackgroundColor(Color.GRAY);
+                                mot3.setBackgroundColor(Color.GRAY);
+                                mot4.setBackgroundColor(Color.GRAY);
+                                Qrandom(1);
+                                letas();
+                                positiontas = 0;
+                                tas.setText(letasrandom[0]);
+                                recup1 = new String[3];
+                                recup2 = new String[3];
+                                recup3 = new String[3];
+                                recup4 = new String[3];
+                                function();
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                                System.out.println(error);
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    System.out.println(error);
+                }
+            });
+        }
 
         precedant.setOnClickListener(new View.OnClickListener(){
             @Override

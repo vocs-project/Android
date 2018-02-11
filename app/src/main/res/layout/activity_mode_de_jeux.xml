@@ -90,4 +90,16 @@
         android:id="@+id/match"
         android:layout_alignRight="@+id/qcm"
         android:layout_alignEnd="@+id/qcm" />
+
+    <Button
+        android:text="Time Attack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/match"
+        android:layout_marginTop="39dp"
+        android:id="@+id/timeattack"
+        android:layout_alignLeft="@+id/match"
+        android:layout_alignStart="@+id/match"
+        android:layout_alignRight="@+id/match"
+        android:layout_alignEnd="@+id/match" />
 </RelativeLayout>

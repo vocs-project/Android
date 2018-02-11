@@ -118,5 +118,12 @@ public interface GitService {
 
     @PATCH("/words/{idword}")
     void patchword(@Path ("idword") String idword,@Body WordPatch wordpatch, Callback<Word> callback);
+
+    @GET("/users/{id}/hardlist")
+    void hardlist(@Path ("id") String id,Callback<MotsListe> callback);
+
+    @GET("/users/{iduser}/lists/{idliste}")
+    void recupstat(@Path ("iduser") String iduser,@Path ("idliste") String idliste, Callback<ListeTout> callback);
+
 }
 

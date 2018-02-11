@@ -32,7 +32,6 @@ public class PartageAccepteDelete extends AppCompatActivity {
     private String idreçu,iddemands,idliste,idreceive,idsend,nbdemandes,nomliste,nomsend,etat;
     private int idlistenew;
     private String namelistenew;
-    private String creationDatelistenew;
     private int wordTradslistnew[];
     private int test[];
     private int test2[];
@@ -127,8 +126,6 @@ public class PartageAccepteDelete extends AppCompatActivity {
                         .setEndpoint(ENDPOINT)
                         .build()
                         .create(GitService.class);
-
-
                 githubService.accederliste(idliste,new retrofit.Callback<MotsListe>() {
                     @Override
                     public void success(MotsListe liste, Response response) {

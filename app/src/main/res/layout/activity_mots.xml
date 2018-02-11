@@ -19,15 +19,6 @@
         android:layout_alignParentStart="true"
         android:id="@+id/retours" />
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView9"
-        android:id="@+id/listView"
-        android:layout_above="@+id/ajout" />
-
     <Button
         android:text="Supprimer la liste"
         android:layout_width="wrap_content"
@@ -68,5 +59,13 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView9" />
 
 </RelativeLayout>

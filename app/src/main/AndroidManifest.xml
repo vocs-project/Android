@@ -62,7 +62,8 @@
         <activity android:name=".ResultPartageListeProf" />
         <activity android:name=".AccepterPartage" />
         <activity android:name=".PartageAccepteDelete" />
-        <activity android:name=".SynonymeAcceptDelete"></activity>
+        <activity android:name=".SynonymeAcceptDelete" />
+        <activity android:name=".TimeAttack"></activity>
     </application>
 
 </manifest>

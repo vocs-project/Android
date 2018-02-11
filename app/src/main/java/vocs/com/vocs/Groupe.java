@@ -1,13 +1,16 @@
 package vocs.com.vocs;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -25,6 +28,7 @@ import retrofit.client.Response;
 import static android.R.attr.y;
 import static vocs.com.vocs.GitService.ENDPOINT;
 import static vocs.com.vocs.R.id.BottomBar;
+import static vocs.com.vocs.R.id.listview;
 import static vocs.com.vocs.R.id.parametres;
 import static vocs.com.vocs.R.id.retourarriere;
 
@@ -33,11 +37,16 @@ public class Groupe extends AppCompatActivity {
     String idreçu;
     private String idclasse;
     String[] roles;
-    String classes[];
+    String classes[],tableauliste[],tableauidliste[];
     ImageButton parametres, retourarriere;
     BottomNavigationView BottomBar;
     TextView nom,email,role,classe,nbliste;
     Button intégrerclasse,quitter,voirclasse,profil;
+    private int wordTradslistnew[];
+    private int test[];
+    private int test2[];
+    private int idlistenew,tailleliste;
+    private String namelistenew;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +139,34 @@ public class Groupe extends AppCompatActivity {
                 for(int i=0; i<lenght;i++){
                     classes[i]  = user.getClasses().get(i).getName();
                     classe.setText("Vous faites partis de "+classes[0]);
+                    idclasse  =String.valueOf(user.getClasses().get(i).getId());
+                    System.out.println(idclasse);
                 }
+                GitService githubService = new RestAdapter.Builder()
+                        .setEndpoint(ENDPOINT)
+                        .build()
+                        .create(GitService.class);
+                System.out.println(idclasse);
+                githubService.obtenirclasses(idclasse,new retrofit.Callback<Classes>() {
+                    @Override
+                    public void success(Classes classe, Response response) {
+                        int taille = classe.getLists().size();
+                        if (taille != 0) {
+                            tableauliste = new String[taille];
+                            tableauidliste = new String[taille];
+                            for (int i = 0; i < taille; i++) {
+                                tableauliste[i] = classe.getLists().get(i).getName();
+                                tableauidliste[i] = Integer.toString(classe.getLists().get(i).getId());
+                            }
+                            tailleliste = classe.getLists().size();
+                        }
+                    }
+                        @Override
+                        public void failure(RetrofitError error) {
+                            System.out.println(error);
+                        }
+                    });
+
                 if(user.getClasses().size()>0) {
                     idclasse = Integer.toString(user.getClasses().get(0).getId());
                     voirclasse.setOnClickListener(new View.OnClickListener(){
@@ -188,27 +224,124 @@ public class Groupe extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 if(idclasse!=null) {
-                    GitService githubService = new RestAdapter.Builder()
-                            .setEndpoint(ENDPOINT)
-                            .build()
-                            .create(GitService.class);
-                    githubService.deleteuserdeclasse(idclasse, idreçu, new retrofit.Callback<Classe>() {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(Groupe.this);
+                    builder.setTitle("Voulez vous garder les listes de cette classe ?");
+                    builder.setPositiveButton("oui",new DialogInterface.OnClickListener() {
                         @Override
-                        public void success(Classe classe, Response response) {
-                            Toast.makeText(Groupe.this, "Vous n'avez plus de classe", Toast.LENGTH_SHORT).show();
-                            Intent versretour = new Intent(Groupe.this, Groupe.class);
-                            Bundle b = new Bundle();
-                            b.putString("id", idreçu);
-                            versretour.putExtras(b);
-                            startActivity(versretour);
-                            finish();
-                        }
+                        public void onClick(DialogInterface dialog, int which) {
+                            for(int i=0;i<tableauidliste.length;i++){
+                                String idliste = tableauidliste[i];
+                                GitService githubService = new RestAdapter.Builder()
+                                        .setEndpoint(ENDPOINT)
+                                        .build()
+                                        .create(GitService.class);
+                                githubService.accederliste(idliste,new retrofit.Callback<MotsListe>() {
+                                    @Override
+                                    public void success(MotsListe liste, Response response) {
+                                        int length = liste.getWordTrads().size();
+                                        System.out.println(length);
+                                        wordTradslistnew = new int[length];
+                                        test = new int[length];
+                                        if(length!=0) {
+                                            for (int i = 0; i < liste.getWordTrads().size(); i++) {
+                                                wordTradslistnew[i] = liste.getWordTrads().get(i).getId();
+                                            }
+                                        }
+                                        test2=tabwords(wordTradslistnew);
+                                        namelistenew=liste.getName();
 
-                        @Override
-                        public void failure(RetrofitError error) {
-                            System.out.println(error);
+                                        Listepost listepost = new Listepost();
+                                        listepost.setName(namelistenew);
+
+                                        GitService githubService = new RestAdapter.Builder()
+                                                .setEndpoint(ENDPOINT)
+                                                .build()
+                                                .create(GitService.class);
+                                        githubService.ajouterliste(idreçu,listepost,new retrofit.Callback<Liste>() {
+                                            @Override
+                                            public void success(Liste liste, Response response) {
+                                                idlistenew=liste.getId();
+
+                                                ListPatchWord listpatchword = new ListPatchWord();
+                                                listpatchword.setWordTrads(wordTradslistnew);
+                                                GitService githubService = new RestAdapter.Builder()
+                                                        .setEndpoint(ENDPOINT)
+                                                        .build()
+                                                        .create(GitService.class);
+                                                githubService.patchwordliste(String.valueOf(idlistenew),listpatchword,new retrofit.Callback<Liste>() {
+                                                    @Override
+                                                    public void success(Liste liste, Response response) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void failure(RetrofitError error) {
+                                                        System.out.println(error);
+                                                    }
+                                                });
+                                            }
+
+                                            @Override
+                                            public void failure(RetrofitError error) {
+                                                System.out.println(error);
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void failure(RetrofitError error) {
+                                        System.out.println(error);
+                                    }
+                                });
+
+                                githubService.deleteuserdeclasse(idclasse, idreçu, new retrofit.Callback<Classe>() {
+                                    @Override
+                                    public void success(Classe classe, Response response) {
+                                        Toast.makeText(Groupe.this, "Vous n'avez plus de classe", Toast.LENGTH_SHORT).show();
+                                        Intent versretour = new Intent(Groupe.this, Groupe.class);
+                                        Bundle b = new Bundle();
+                                        b.putString("id", idreçu);
+                                        versretour.putExtras(b);
+                                        startActivity(versretour);
+                                        finish();
+                                    }
+
+                                    @Override
+                                    public void failure(RetrofitError error) {
+                                        System.out.println(error);
+                                    }
+                                });
+                            }
                         }
                     });
+                    builder.setNegativeButton("non", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            GitService githubService = new RestAdapter.Builder()
+                                    .setEndpoint(ENDPOINT)
+                                    .build()
+                                    .create(GitService.class);
+                            githubService.deleteuserdeclasse(idclasse, idreçu, new retrofit.Callback<Classe>() {
+                                @Override
+                                public void success(Classe classe, Response response) {
+                                    Toast.makeText(Groupe.this, "Vous n'avez plus de classe", Toast.LENGTH_SHORT).show();
+                                    Intent versretour = new Intent(Groupe.this, Groupe.class);
+                                    Bundle b = new Bundle();
+                                    b.putString("id", idreçu);
+                                    versretour.putExtras(b);
+                                    startActivity(versretour);
+                                    finish();
+                                }
+
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    System.out.println(error);
+                                }
+                            });
+                        }
+                    });
+                    builder.create();
+                    builder.show();
                 }
                 else{
                     Toast.makeText(Groupe.this, "Vous n'avez pas de classe", Toast.LENGTH_SHORT).show();
@@ -231,5 +364,14 @@ public class Groupe extends AppCompatActivity {
         });
 
     }
+    public int[] tabwords (int tableau[]){
+        int length = tableau.length;
+        test = new int[length];
+        for(int i=0;i<length;i++){
+            test[i]=tableau[i];
+        }
+        return test;
+    }
+
 
 }

@@ -24,6 +24,7 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import static android.R.attr.id;
+import static android.R.attr.type;
 import static android.R.attr.x;
 import static android.R.id.edit;
 import static vocs.com.vocs.GitService.ENDPOINT;
@@ -46,7 +47,7 @@ public class Traduction extends AppCompatActivity {
 
     int nombreMax, nb;
     String motaffiche,motreponse,motsolution,motsolution2,idreçu,typeliste,idList,motsolution3;
-    private String tableaufrancais[],tableauanglais[],role[],roleuserdelaclasse[][],idduprof,variabledetest,tableaudesynonymes[];
+    private String tableaufrancais[],tableauanglais[],role[],roleuserdelaclasse[][],idduprof,variabledetest,tableaudesynonymes[],goodRepetition[],badRepetition[];
     private int iduserdelaclasse[];
     int bon,tt;
     private WordDansTrads worddanstradsanglais[][],worddanstradsfrancais[][];
@@ -94,52 +95,132 @@ public class Traduction extends AppCompatActivity {
             }
         });
 
-        GitService githubService = new RestAdapter.Builder()
-                .setEndpoint(ENDPOINT)
-                .build()
-                .create(GitService.class);
+        if(typeliste.contentEquals("hard")){
+            GitService githubService = new RestAdapter.Builder()
+                    .setEndpoint(ENDPOINT)
+                    .build()
+                    .create(GitService.class);
 
-        githubService.accederliste(idList,new retrofit.Callback<MotsListe>() {
-            @Override
-            public void success(MotsListe motliste, Response response) {
-                int lenght = motliste.getWordTrads().size();
-                tableaufrancais = new String[lenght];
-                tableauanglais = new String[lenght];
-                worddanstradsanglais = new WordDansTrads[lenght][];
-                worddanstradsfrancais = new WordDansTrads[lenght][];
-                for(int i=0;i<lenght;i++){
-                    tableauanglais[i]=motliste.getWordTrads().get(i).getWord().getContent();
-                    tableaufrancais[i]=motliste.getWordTrads().get(i).getTrad().getContent();
-                    worddanstradsfrancais[i]=motliste.getWordTrads().get(i).getTrad().getTrads();
-                    worddanstradsanglais[i]=motliste.getWordTrads().get(i).getWord().getTrads();
-                }
-                if(tableaufrancais.length != 0) {
-                    bon = 0;
-                    tt = 0;
-                    nombreMax = tableaufrancais.length;
-                    nb = (int) (Math.random() * nombreMax);
-                    String motfrancais = String.valueOf(tableaufrancais[nb]);
-                    afficheur.setText(motfrancais);
-                    anim_score();
-                    fonction();
-                }
-                else{
-                    Intent retour = new Intent (Traduction.this, ChoixListeAvantJeux.class);
-                    Bundle y = new Bundle();
-                    y.putString("id", idreçu);
-                    y.putInt("key",1);
-                    y.putString("etat","true");
-                    retour.putExtras(y);
-                    startActivity(retour);
-                    finish();
+            githubService.hardlist(idreçu, new retrofit.Callback<MotsListe>() {
+                @Override
+                public void success(MotsListe motliste, Response response) {
+                    final int lenght = motliste.getWordTrads().size();
+                    tableaufrancais = new String[lenght];
+                    tableauanglais = new String[lenght];
+                    worddanstradsanglais = new WordDansTrads[lenght][];
+                    worddanstradsfrancais = new WordDansTrads[lenght][];
+                    goodRepetition = new String[lenght];
+                    badRepetition = new String[lenght];
+                    for (int i = 0; i < lenght; i++) {
+                        tableauanglais[i] = motliste.getWordTrads().get(i).getWord().getContent();
+                        tableaufrancais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
+                        worddanstradsfrancais[i] = motliste.getWordTrads().get(i).getTrad().getTrads();
+                        worddanstradsanglais[i] = motliste.getWordTrads().get(i).getWord().getTrads();
+                        goodRepetition[i]=String.valueOf(motliste.getWordTrads().get(i).getStat().getGoodRepetition());
+                        badRepetition[i]=String.valueOf(motliste.getWordTrads().get(i).getStat().getBadRepetition());
+                    }
+                    if (tableaufrancais.length != 0) {
+
+                                bon = 0;
+                                tt = 0;
+                                nombreMax = tableaufrancais.length;
+                                nb = (int) (Math.random() * nombreMax);
+                                String motfrancais = String.valueOf(tableaufrancais[nb]);
+                                afficheur.setText(motfrancais);
+                                anim_score();
+                                fonction();
+
+
+                    }else {
+                        Intent retour = new Intent(Traduction.this, ChoixListeAvantJeux.class);
+                        Bundle y = new Bundle();
+                        y.putString("id", idreçu);
+                        y.putInt("key", 1);
+                        y.putString("etat", "true");
+                        retour.putExtras(y);
+                        startActivity(retour);
+                        finish();
+                    }
+
                 }
 
-            }
-            @Override
-            public void failure(RetrofitError error) {
-                System.out.println(error);
-            }
-        });
+                @Override
+                public void failure(RetrofitError error) {
+                    System.out.println(error);
+                }
+            });
+        }
+        else {
+
+            GitService githubService = new RestAdapter.Builder()
+                    .setEndpoint(ENDPOINT)
+                    .build()
+                    .create(GitService.class);
+
+            githubService.accederliste(idList, new retrofit.Callback<MotsListe>() {
+                @Override
+                public void success(MotsListe motliste, Response response) {
+                    final int lenght = motliste.getWordTrads().size();
+                    tableaufrancais = new String[lenght];
+                    tableauanglais = new String[lenght];
+                    worddanstradsanglais = new WordDansTrads[lenght][];
+                    worddanstradsfrancais = new WordDansTrads[lenght][];
+                    for (int i = 0; i < lenght; i++) {
+                        tableauanglais[i] = motliste.getWordTrads().get(i).getWord().getContent();
+                        tableaufrancais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
+                        worddanstradsfrancais[i] = motliste.getWordTrads().get(i).getTrad().getTrads();
+                        worddanstradsanglais[i] = motliste.getWordTrads().get(i).getWord().getTrads();
+                    }
+                    if (tableaufrancais.length != 0) {
+                        GitService githubService = new RestAdapter.Builder()
+                                .setEndpoint(ENDPOINT)
+                                .build()
+                                .create(GitService.class);
+
+                        githubService.recupstat(idreçu,idList, new retrofit.Callback<ListeTout>() {
+                            @Override
+                            public void success(ListeTout listestat, Response response) {
+                                goodRepetition = new String[lenght];
+                                badRepetition = new String[lenght];
+                                for(int u=0;u<lenght;u++){
+                                    goodRepetition[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getGoodRepetition());
+                                    badRepetition[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getBadRepetition());
+                                }
+                                bon = 0;
+                                tt = 0;
+                                nombreMax = tableaufrancais.length;
+                                nb = (int) (Math.random() * nombreMax);
+                                String motfrancais = String.valueOf(tableaufrancais[nb]);
+                                afficheur.setText(motfrancais);
+                                anim_score();
+                                fonction();
+
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                                System.out.println(error);
+                            }
+                        });
+                    } else {
+                        Intent retour = new Intent(Traduction.this, ChoixListeAvantJeux.class);
+                        Bundle y = new Bundle();
+                        y.putString("id", idreçu);
+                        y.putInt("key", 1);
+                        y.putString("etat", "true");
+                        retour.putExtras(y);
+                        startActivity(retour);
+                        finish();
+                    }
+
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                    System.out.println(error);
+                }
+            });
+        }
     }
 
     public static String removeAccent(String source) {

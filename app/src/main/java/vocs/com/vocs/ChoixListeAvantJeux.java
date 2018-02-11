@@ -10,10 +10,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit.RestAdapter;
@@ -24,17 +26,20 @@ import static android.R.attr.id;
 import static android.R.attr.value;
 import static vocs.com.vocs.GitService.ENDPOINT;
 import static vocs.com.vocs.R.id.BottomBar;
+import static vocs.com.vocs.R.id.list;
 import static vocs.com.vocs.R.id.listView;
+import static vocs.com.vocs.R.id.listes;
 import static vocs.com.vocs.R.id.retour;
 
 public class ChoixListeAvantJeux extends AppCompatActivity {
 
     ImageButton parametres, retourpageprinc;
-    ListView listviewclasse, listviewperso;
     BottomNavigationView bottomBar;
     String idreçu, tableaudedelistes[], tableaudedelistesclasses[],idliste,tableaudedeidlistes[],tableaudedeidlistesclasses[],etat;
     String idclasse;
+    Button hardlist;
     int value;
+    final ArrayList listHard = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,7 @@ public class ChoixListeAvantJeux extends AppCompatActivity {
         final ListView listviewperso  = (ListView) findViewById(R.id.listviewperso);
         final ListView listviewclasse = (ListView) findViewById(R.id.listviewclasse);
         bottomBar = (BottomNavigationView) findViewById(BottomBar);
+        hardlist = (Button) findViewById(R.id.hardlist);
 
         Bundle b = getIntent().getExtras();
 
@@ -151,6 +157,70 @@ public class ChoixListeAvantJeux extends AppCompatActivity {
             }
         });
 
+        githubService.hardlist("23",new retrofit.Callback<MotsListe>() {
+            @Override
+            public void success(MotsListe motsListe, Response response) {
+                int length = motsListe.getWordTrads().size();
+                for(int i=0;i<length;i++){
+                    listHard.add(0,motsListe.getWordTrads().get(i).getId());
+                }
+
+                if(listHard.size()>0){
+                    hardlist.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(value == 1) {
+                                Intent versmots = new Intent(ChoixListeAvantJeux.this, Traduction.class);
+                                Bundle b = new Bundle();
+                                b.putString("id", idreçu);
+                                b.putString("idliste", idliste);
+                                b.putString("liste","hard");
+                                versmots.putExtras(b);
+                                startActivity(versmots);
+                                finish();
+                            }
+                            if(value == 2) {
+                                Intent versmots = new Intent(ChoixListeAvantJeux.this, Qcm.class);
+                                Bundle b = new Bundle();
+                                b.putString("id", idreçu);
+                                b.putString("idliste", idliste);
+                                b.putString("liste","hard");
+                                versmots.putExtras(b);
+                                startActivity(versmots);
+                                finish();
+                            }
+                            if(value == 3) {
+                                Intent versmots = new Intent(ChoixListeAvantJeux.this, Match.class);
+                                Bundle b = new Bundle();
+                                b.putString("id", idreçu);
+                                b.putString("idliste", idliste);
+                                b.putString("liste","hard");
+                                versmots.putExtras(b);
+                                startActivity(versmots);
+                                finish();
+                            }
+                            if(value == 4) {
+                                Intent versmots = new Intent(ChoixListeAvantJeux.this, TimeAttack.class);
+                                Bundle b = new Bundle();
+                                b.putString("id", idreçu);
+                                b.putString("idliste", idliste);
+                                b.putString("liste","hard");
+                                versmots.putExtras(b);
+                                startActivity(versmots);
+                                finish();
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+                Toast.makeText(ChoixListeAvantJeux.this, "erreur d'affichage de la hardlist", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         githubService.classesdunuser(idreçu,new retrofit.Callback<List<Classes>>() {
             @Override
@@ -226,6 +296,16 @@ public class ChoixListeAvantJeux extends AppCompatActivity {
                     startActivity(versmots);
                     finish();
                 }
+                if(value == 4) {
+                    Intent versmots = new Intent(ChoixListeAvantJeux.this, TimeAttack.class);
+                    Bundle b = new Bundle();
+                    b.putString("id", idreçu);
+                    b.putString("idliste", idliste);
+                    b.putString("liste","perso");
+                    versmots.putExtras(b);
+                    startActivity(versmots);
+                    finish();
+                }
             }
         });
 
@@ -255,6 +335,16 @@ public class ChoixListeAvantJeux extends AppCompatActivity {
                 }
                 if(value == 3) {
                     Intent versmots = new Intent(ChoixListeAvantJeux.this, Match.class);
+                    Bundle b = new Bundle();
+                    b.putString("id", idreçu);
+                    b.putString("idliste", idliste);
+                    b.putString("liste","classe");
+                    versmots.putExtras(b);
+                    startActivity(versmots);
+                    finish();
+                }
+                if(value == 4) {
+                    Intent versmots = new Intent(ChoixListeAvantJeux.this, TimeAttack.class);
                     Bundle b = new Bundle();
                     b.putString("id", idreçu);
                     b.putString("idliste", idliste);

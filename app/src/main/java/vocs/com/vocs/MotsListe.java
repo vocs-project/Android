@@ -16,7 +16,7 @@ public class MotsListe {
     private int id;
     private String name;
     private String creationDate;
-    private List<WordTraduction> wordTrads;
+    private List<WordTraductionStat> wordTrads;
 
     public int getId() {
         return id;
@@ -36,12 +36,13 @@ public class MotsListe {
         this.creationDate = creationDate;
     }
 
-    public List<WordTraduction> getWordTrads() {
-        return wordTrads;
+
+    public void setWordTrads(List<WordTraductionStat> wordTrads) {
+        this.wordTrads = wordTrads;
     }
 
-    public void setWordTrads(List<WordTraduction> wordTrads) {
-        this.wordTrads = wordTrads;
+    public List<WordTraductionStat> getWordTrads() {
+        return wordTrads;
     }
 
     public String getName() {

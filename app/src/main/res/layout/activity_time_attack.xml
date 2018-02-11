@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_time_attack"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    tools:context="vocs.com.vocs.TimeAttack">
+
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/progressBar2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        />
+
+    <Button
+        android:text="Valider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/validerattack"
+        android:layout_alignBaseline="@+id/editattack"
+        android:layout_alignBottom="@+id/editattack"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="17dp"
+        android:layout_marginEnd="17dp" />
+
+    <TextView
+        android:text=""
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="85dp"
+        android:id="@+id/bienmalattack"
+        android:layout_below="@+id/validerattack"
+        android:layout_centerHorizontal="true"
+       />
+
+    <TextView
+        android:text="Entrez la traduction de :"
+        android:textColor="@android:color/background_dark"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/progressBar2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="63dp"
+        android:id="@+id/textView45" />
+
+    <Button
+        android:text="Score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scoreattack"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/textView45"
+        android:layout_toEndOf="@+id/textView45" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:inputType="textPersonName"
+        android:text=""
+        android:background="@drawable/border"
+        android:ems="10"
+        android:id="@+id/editattack"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/validerattack"
+        android:layout_toStartOf="@+id/validerattack"
+        android:layout_marginRight="29dp"
+        android:layout_marginEnd="29dp" />
+
+    <TextView
+        android:text="TextView"
+        android:textColor="@android:color/background_dark"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textattack"
+        android:gravity="center"
+        android:layout_above="@+id/validerattack"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="59dp" />
+
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/coeur_plein"
+        android:layout_below="@+id/progressBar2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/coeurplein1"
+        android:background="@null"/>
+
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:srcCompat="@drawable/coeur_plein"
+        android:id="@+id/coeurplein2"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        android:layout_alignBottom="@+id/coeurplein1"
+        android:layout_toLeftOf="@+id/textView45"
+        android:layout_toRightOf="@+id/coeurplein1"
+        android:layout_toEndOf="@+id/coeurplein1" />
+
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@null"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/coeur_plein"
+        android:id="@+id/coeurplein3"
+        android:layout_below="@+id/progressBar2"
+        android:layout_toRightOf="@+id/coeurplein2"
+        android:layout_toEndOf="@+id/coeurplein2" />
+</RelativeLayout>

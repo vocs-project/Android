@@ -21,12 +21,13 @@ import static android.R.attr.button;
 import static android.R.attr.y;
 import static vocs.com.vocs.R.id.TraductionNormale;
 import static vocs.com.vocs.R.id.parametres;
+import static vocs.com.vocs.R.id.time;
 
 
 public class ModeDeJeux extends AppCompatActivity {
 
     Intent ModeDeJeux = getIntent();
-    Button TraductionNormale,qcm,match;
+    Button TraductionNormale,qcm,match,timeattack;
     BottomNavigationView BottomBar;
     ImageButton parametres,retourModePrinc;
     String idreçu;
@@ -41,6 +42,7 @@ public class ModeDeJeux extends AppCompatActivity {
         BottomBar=(BottomNavigationView) findViewById(R.id.BottomBar);
         qcm=(Button) findViewById(R.id.qcm);
         match = (Button) findViewById(R.id.match);
+        timeattack=(Button) findViewById(R.id.timeattack);
 
         Bundle d = getIntent().getExtras();
 
@@ -119,6 +121,19 @@ public class ModeDeJeux extends AppCompatActivity {
                 b.putString("etat","false");
                 match.putExtras(b);
                 startActivity(match);
+                finish();
+            }
+        });
+        timeattack.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent attack = new Intent (ModeDeJeux.this, ChoixListeAvantJeux.class);
+                Bundle b = new Bundle();
+                b.putString("id",idreçu);
+                b.putInt("key",4);
+                b.putString("etat","false");
+                attack.putExtras(b);
+                startActivity(attack);
                 finish();
             }
         });
