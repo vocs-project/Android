@@ -47,7 +47,7 @@ public class Traduction extends AppCompatActivity {
 
     int nombreMax, nb;
     String motaffiche,motreponse,motsolution,motsolution2,idreçu,typeliste,idList,motsolution3;
-    private String tableaufrancais[],tableauanglais[],role[],roleuserdelaclasse[][],idduprof,variabledetest,tableaudesynonymes[],goodRepetition[],badRepetition[];
+    private String tableauidstat[],tableaufrancais[],tableauanglais[],role[],roleuserdelaclasse[][],idduprof,variabledetest,tableaudesynonymes[],goodRepetition[],badRepetition[];
     private int iduserdelaclasse[];
     int bon,tt;
     private WordDansTrads worddanstradsanglais[][],worddanstradsfrancais[][];
@@ -111,6 +111,7 @@ public class Traduction extends AppCompatActivity {
                     worddanstradsfrancais = new WordDansTrads[lenght][];
                     goodRepetition = new String[lenght];
                     badRepetition = new String[lenght];
+                    tableauidstat = new String[lenght];
                     for (int i = 0; i < lenght; i++) {
                         tableauanglais[i] = motliste.getWordTrads().get(i).getWord().getContent();
                         tableaufrancais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
@@ -118,6 +119,7 @@ public class Traduction extends AppCompatActivity {
                         worddanstradsanglais[i] = motliste.getWordTrads().get(i).getWord().getTrads();
                         goodRepetition[i]=String.valueOf(motliste.getWordTrads().get(i).getStat().getGoodRepetition());
                         badRepetition[i]=String.valueOf(motliste.getWordTrads().get(i).getStat().getBadRepetition());
+                        tableauidstat[i] = String.valueOf(motliste.getWordTrads().get(i).getStat().getId());
                     }
                     if (tableaufrancais.length != 0) {
 
@@ -182,9 +184,11 @@ public class Traduction extends AppCompatActivity {
                             public void success(ListeTout listestat, Response response) {
                                 goodRepetition = new String[lenght];
                                 badRepetition = new String[lenght];
+                                tableauidstat = new String[lenght];
                                 for(int u=0;u<lenght;u++){
                                     goodRepetition[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getGoodRepetition());
                                     badRepetition[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getBadRepetition());
+                                    tableauidstat[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getId());
                                 }
                                 bon = 0;
                                 tt = 0;
@@ -777,6 +781,26 @@ public class Traduction extends AppCompatActivity {
             });
         }
     }
+
+
+    public void succed(int pos,Integer good[], Integer bad[],Integer level[]){
+        if (level[pos]<5){
+            level[pos]=level[pos]+1;
+        }
+        good[pos]=good[pos]+1;
+        if(good[pos]>=2){
+            bad[pos]=0;
+        }
+    }
+
+    public void failed(int pos,Integer good[], Integer bad[],Integer level[]){
+        if (level[pos]>0){
+            level[pos]=level[pos]-1;
+        }
+        good[pos]=0;
+        bad[pos]=bad[pos]+1;
+    }
+
 
 }
 

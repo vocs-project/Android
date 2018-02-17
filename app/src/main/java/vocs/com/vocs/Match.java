@@ -30,7 +30,7 @@ public class Match extends AppCompatActivity {
     ImageButton precedant,suivant;
     Switch switchbutton;
     private String idList,idreçu,typeliste;
-    private String tableaufrancais[], tableauanglais[],tableausoluc[],letas[],letasrandom[],goodRepetition[],badRepetition[];
+    private String tableauidstat[],tableaufrancais[], tableauanglais[],tableausoluc[],letas[],letasrandom[],goodRepetition[],badRepetition[];
     int nombreMax,mémoiretasrand1,mémoiretasrand2,mémoiretasrand3,mémoiretasrand4,positiontas,bon,tt;
     boolean etat1,etat2,etat3,etat4;
     String recup1[],recup2[],recup3[],recup4[];
@@ -77,11 +77,13 @@ public class Match extends AppCompatActivity {
                     tableausoluc = new String[lenght];
                     goodRepetition = new String[lenght];
                     badRepetition = new String[lenght];
+                    tableauidstat = new String[lenght];
                     for (int i = 0; i < lenght; i++) {
                         tableauanglais[i] = motliste.getWordTrads().get(i).getWord().getContent();
                         tableaufrancais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
                         goodRepetition[i]=String.valueOf(motliste.getWordTrads().get(i).getStat().getGoodRepetition());
                         badRepetition[i]=String.valueOf(motliste.getWordTrads().get(i).getStat().getBadRepetition());
+                        tableauidstat[i]=String.valueOf(motliste.getWordTrads().get(i).getStat().getId());
                     }
                     if (tableauanglais.length < 4) {
                         Intent retour = new Intent(Match.this, ChoixListeAvantJeux.class);
@@ -154,9 +156,11 @@ public class Match extends AppCompatActivity {
                             public void success(ListeTout listestat, Response response) {
                                 goodRepetition = new String[lenght];
                                 badRepetition = new String[lenght];
+                                tableauidstat = new String[lenght];
                                 for(int u=0;u<lenght;u++){
                                     goodRepetition[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getGoodRepetition());
                                     badRepetition[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getBadRepetition());
+                                    tableauidstat[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getId());
                                 }
                                 anim_score();
                                 mot1.setBackgroundColor(Color.GRAY);

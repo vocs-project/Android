@@ -31,6 +31,7 @@ import static vocs.com.vocs.R.id.afficheur;
 import static vocs.com.vocs.R.id.bienmal;
 import static vocs.com.vocs.R.id.bswitch;
 import static vocs.com.vocs.R.id.lemot;
+import static vocs.com.vocs.R.id.liste;
 import static vocs.com.vocs.R.id.progressBar;
 import static vocs.com.vocs.R.id.progressBar2;
 import static vocs.com.vocs.R.id.soluc;
@@ -44,7 +45,7 @@ public class TimeAttack extends AppCompatActivity {
     ProgressBar progressbar;
     CountDownTimer mCountDownTimer;
     int nombreMax,nb,bon,tt;
-    String idList,idreçu,typeliste,tableaufrancais[],tableauanglais[],motreponse,motsolution,motaffiche,motsolution2,variabledetest,
+    private String idList,idreçu,typeliste,tableauidstat[],tableaufrancais[],tableauanglais[],motreponse,motsolution,motaffiche,motsolution2,variabledetest,
             tableaudesynonymes[],badRepetition[],goodRepetition[];
     private WordDansTrads worddanstradsanglais[][],worddanstradsfrancais[][];
     int vie=3;
@@ -93,6 +94,7 @@ public class TimeAttack extends AppCompatActivity {
                     worddanstradsfrancais = new WordDansTrads[lenght][];
                     goodRepetition = new String[lenght];
                     badRepetition = new String[lenght];
+                    tableauidstat = new String[lenght];
                     for (int i = 0; i < lenght; i++) {
                         tableauanglais[i] = motliste.getWordTrads().get(i).getWord().getContent();
                         tableaufrancais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
@@ -100,6 +102,7 @@ public class TimeAttack extends AppCompatActivity {
                         worddanstradsanglais[i] = motliste.getWordTrads().get(i).getWord().getTrads();
                         goodRepetition[i] = String.valueOf(motliste.getWordTrads().get(i).getStat().getGoodRepetition());
                         badRepetition[i] = String.valueOf(motliste.getWordTrads().get(i).getStat().getBadRepetition());
+                        tableauidstat[i] = String.valueOf(motliste.getWordTrads().get(i).getStat().getId());
                     }
                     if (tableaufrancais.length != 0) {
                         bon = 0;
@@ -161,9 +164,11 @@ public class TimeAttack extends AppCompatActivity {
                             public void success(ListeTout listestat, Response response) {
                                 goodRepetition = new String[lenght];
                                 badRepetition = new String[lenght];
+                                tableauidstat = new String[lenght];
                                 for(int u=0;u<lenght;u++){
                                     goodRepetition[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getGoodRepetition());
                                     badRepetition[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getBadRepetition());
+                                    tableauidstat[u] =String.valueOf(listestat.getWordTrads().get(u).getStat().getId());
                                 }
                                 bon = 0;
                                 tt = 0;
