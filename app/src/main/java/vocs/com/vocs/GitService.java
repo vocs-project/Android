@@ -125,5 +125,8 @@ public interface GitService {
     @GET("/users/{iduser}/lists/{idliste}")
     void recupstat(@Path ("iduser") String iduser,@Path ("idliste") String idliste, Callback<ListeTout> callback);
 
+    @PATCH("/wordTradUsers/{id}")
+    void patchstat(@Path ("id") String id,@Body PatchStat patchstat, Callback<Stat> callback);
+
 }
 

@@ -8,7 +8,8 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="vocs.com.vocs.Mots">
+    tools:context="vocs.com.vocs.Mots"
+    >
 
     <Button
         android:text="retour"

@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.os.Handler;
 
 import org.w3c.dom.Text;
 
@@ -35,6 +36,7 @@ import static vocs.com.vocs.R.id.liste;
 import static vocs.com.vocs.R.id.progressBar;
 import static vocs.com.vocs.R.id.progressBar2;
 import static vocs.com.vocs.R.id.soluc;
+import static vocs.com.vocs.R.id.textView;
 
 public class TimeAttack extends AppCompatActivity {
 
@@ -44,10 +46,11 @@ public class TimeAttack extends AppCompatActivity {
     TextView textattack,bienmalattack;
     ProgressBar progressbar;
     CountDownTimer mCountDownTimer;
-    int nombreMax,nb,bon,tt;
-    private String idList,idreçu,typeliste,tableauidstat[],tableaufrancais[],tableauanglais[],motreponse,motsolution,motaffiche,motsolution2,variabledetest,
+    int nombreMax,nb,bon,tt,longueur;
+    private String level[],idList,idreçu,typeliste,tableauidstat[],tableaufrancais[],tableauanglais[],motreponse,motsolution,motaffiche,motsolution2,variabledetest,
             tableaudesynonymes[],badRepetition[],goodRepetition[];
     private WordDansTrads worddanstradsanglais[][],worddanstradsfrancais[][];
+    private Handler handler = new Handler();
     int vie=3;
     public int m;
 
@@ -95,6 +98,7 @@ public class TimeAttack extends AppCompatActivity {
                     goodRepetition = new String[lenght];
                     badRepetition = new String[lenght];
                     tableauidstat = new String[lenght];
+                    level = new String[lenght];
                     for (int i = 0; i < lenght; i++) {
                         tableauanglais[i] = motliste.getWordTrads().get(i).getWord().getContent();
                         tableaufrancais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
@@ -103,6 +107,7 @@ public class TimeAttack extends AppCompatActivity {
                         goodRepetition[i] = String.valueOf(motliste.getWordTrads().get(i).getStat().getGoodRepetition());
                         badRepetition[i] = String.valueOf(motliste.getWordTrads().get(i).getStat().getBadRepetition());
                         tableauidstat[i] = String.valueOf(motliste.getWordTrads().get(i).getStat().getId());
+                        level[i]=String.valueOf(motliste.getWordTrads().get(i).getStat().getLevel());
                     }
                     if (tableaufrancais.length != 0) {
                         bon = 0;
@@ -165,10 +170,12 @@ public class TimeAttack extends AppCompatActivity {
                                 goodRepetition = new String[lenght];
                                 badRepetition = new String[lenght];
                                 tableauidstat = new String[lenght];
+                                level = new String[lenght];
                                 for(int u=0;u<lenght;u++){
                                     goodRepetition[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getGoodRepetition());
                                     badRepetition[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getBadRepetition());
                                     tableauidstat[u] =String.valueOf(listestat.getWordTrads().get(u).getStat().getId());
+                                    level[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getLevel());
                                 }
                                 bon = 0;
                                 tt = 0;
@@ -242,22 +249,30 @@ public class TimeAttack extends AppCompatActivity {
             motsolution2 = motsolution;
             motsolution = motsolution.toLowerCase();
             motsolution = removeAccent(motsolution);
+        m=100;
+        longueur = motsolution.length();
+        new Thread(new Runnable() {
+            boolean test;
+            public void run() {
+                while (m >0) {
+                     test = true;
+                    m -= 1;
 
-        m=0;
-        progressbar.setProgress(m);
-        mCountDownTimer=new CountDownTimer(tableauanglais[nb].length()*1000,1000) {
-
-            @Override
-            public void onTick(long millisUntilFinished) {
-                Log.v("Log_tag", "Tick of Progress"+ m+ millisUntilFinished);
-                m++;
-               progressbar.setProgress(m*100/(tableauanglais[nb].length()*1000/1000));
-
-            }
-
-            @Override
-            public void onFinish() {
-                if(progressbar.getProgress()==progressbar.getMax()) {
+                    handler.post(new Runnable() {
+                        public void run() {
+                            progressbar.setProgress(m);
+                        }
+                    });
+                    try {
+                        Thread.sleep(longueur*20);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if(m==0){
+                    test=false;
+                }
+                if(!test){
                     Intent score = new Intent(TimeAttack.this, score.class);
                     Bundle b = new Bundle();
                     Bundle t = new Bundle();
@@ -267,12 +282,11 @@ public class TimeAttack extends AppCompatActivity {
                     score.putExtras(b);
                     score.putExtras(t);
                     startActivity(score);
+                    progressbar.setProgress(0);
                     finish();
                 }
             }
-        };
-        mCountDownTimer.start();
-
+        }).start();
 
         textattack.setText(motaffiche);
         anim_score();
@@ -309,6 +323,26 @@ public class TimeAttack extends AppCompatActivity {
                         bienmalattack.setText("Bien, mais la meilleure solution était :");
                     }
                     else{
+                        succed(nb,goodRepetition,badRepetition,level);
+                        PatchStat stats = new PatchStat();
+                        stats.setBadRepetition(Integer.valueOf(badRepetition[nb]));
+                        stats.setGoodRepetition(Integer.valueOf(goodRepetition[nb]));
+                        stats.setLevel(Integer.valueOf(level[nb]));
+
+                        GitService githubService = new RestAdapter.Builder()
+                                .setEndpoint(ENDPOINT)
+                                .build()
+                                .create(GitService.class);
+
+                        githubService.patchstat(tableauidstat[nb],stats, new retrofit.Callback<Stat>() {
+                            @Override
+                            public void success(Stat stat, Response response) {
+                            }
+                            @Override
+                            public void failure(RetrofitError error) {
+                                System.out.println(error);
+                            }
+                        });
                         bienmalattack.setText("Bien");
                     }
                     bienmalattack.setTextColor(Color.GREEN);
@@ -344,6 +378,26 @@ public class TimeAttack extends AppCompatActivity {
                             coeurplein1.setImageResource(R.drawable.coeur_vide);
                         }
                         bienmalattack.setText("Pas exactement");
+                        failed(nb,goodRepetition,badRepetition,level);
+                        PatchStat stats = new PatchStat();
+                        stats.setBadRepetition(Integer.valueOf(badRepetition[nb]));
+                        stats.setGoodRepetition(Integer.valueOf(goodRepetition[nb]));
+                        stats.setLevel(Integer.valueOf(level[nb]));
+
+                        GitService githubService = new RestAdapter.Builder()
+                                .setEndpoint(ENDPOINT)
+                                .build()
+                                .create(GitService.class);
+
+                        githubService.patchstat(tableauidstat[nb],stats, new retrofit.Callback<Stat>() {
+                            @Override
+                            public void success(Stat stat, Response response) {
+                            }
+                            @Override
+                            public void failure(RetrofitError error) {
+                                System.out.println(error);
+                            }
+                        });
                         bienmalattack.setTextColor(Color.RED);
                         vie = vie - 1;
                         editattack.setText("");
@@ -358,5 +412,23 @@ public class TimeAttack extends AppCompatActivity {
             }
         }) ;
 
+    }
+
+    public void succed(int pos,String good[], String bad[],String level[]){
+        if (Integer.valueOf(level[pos])<5){
+            level[pos]=String.valueOf(Integer.valueOf(level[pos])+1);
+        }
+        good[pos]=String.valueOf(Integer.valueOf(good[pos])+1);
+        if(Integer.valueOf(good[pos])>=2){
+            bad[pos]=String.valueOf(0);
+        }
+    }
+
+    public void failed(int pos,String good[], String bad[],String level[]){
+        if (Integer.valueOf(level[pos])>0){
+            level[pos]=String.valueOf(Integer.valueOf(level[pos])-1);
+        }
+        good[pos]=String.valueOf(0);
+        bad[pos]=String.valueOf(Integer.valueOf(bad[pos])+1);
     }
 }

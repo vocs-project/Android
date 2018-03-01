@@ -1,6 +1,7 @@
 package vocs.com.vocs;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,10 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.app.Application;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -32,6 +37,7 @@ import static android.R.attr.data;
 import static android.R.attr.id;
 import static android.R.attr.name;
 import static android.R.attr.value;
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 import static vocs.com.vocs.GitService.ENDPOINT;
 import static vocs.com.vocs.R.id.leedit;
 import static vocs.com.vocs.R.id.listView;
@@ -69,6 +75,7 @@ public class Mots extends AppCompatActivity{
                 adb.show();
             }
         });
+
 
         retours=(Button) findViewById(R.id.retours);
         ajout=(Button) findViewById(R.id.ajout);
@@ -159,7 +166,7 @@ public class Mots extends AppCompatActivity{
                 }
 
                 SimpleAdapter mSchedule = new SimpleAdapter (getApplicationContext(), listItem, R.layout.affichage_item,
-                        new String[] {"img", "titre"}, new int[] {R.id.img, R.id.titre});
+                        new String[] {"img", "titre", "hp"}, new int[] {R.id.img, R.id.titre, R.id.hp});
 
                 maListViewPerso.setAdapter(mSchedule);
             }

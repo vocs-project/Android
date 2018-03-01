@@ -47,7 +47,7 @@ public class Traduction extends AppCompatActivity {
 
     int nombreMax, nb;
     String motaffiche,motreponse,motsolution,motsolution2,idreçu,typeliste,idList,motsolution3;
-    private String tableauidstat[],tableaufrancais[],tableauanglais[],role[],roleuserdelaclasse[][],idduprof,variabledetest,tableaudesynonymes[],goodRepetition[],badRepetition[];
+    private String level[],tableauidstat[],tableaufrancais[],tableauanglais[],role[],roleuserdelaclasse[][],idduprof,variabledetest,tableaudesynonymes[],goodRepetition[],badRepetition[];
     private int iduserdelaclasse[];
     int bon,tt;
     private WordDansTrads worddanstradsanglais[][],worddanstradsfrancais[][];
@@ -112,6 +112,7 @@ public class Traduction extends AppCompatActivity {
                     goodRepetition = new String[lenght];
                     badRepetition = new String[lenght];
                     tableauidstat = new String[lenght];
+                    level=new String[lenght];
                     for (int i = 0; i < lenght; i++) {
                         tableauanglais[i] = motliste.getWordTrads().get(i).getWord().getContent();
                         tableaufrancais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
@@ -120,6 +121,7 @@ public class Traduction extends AppCompatActivity {
                         goodRepetition[i]=String.valueOf(motliste.getWordTrads().get(i).getStat().getGoodRepetition());
                         badRepetition[i]=String.valueOf(motliste.getWordTrads().get(i).getStat().getBadRepetition());
                         tableauidstat[i] = String.valueOf(motliste.getWordTrads().get(i).getStat().getId());
+                        level[i] = String.valueOf(motliste.getWordTrads().get(i).getStat().getLevel());
                     }
                     if (tableaufrancais.length != 0) {
 
@@ -185,10 +187,12 @@ public class Traduction extends AppCompatActivity {
                                 goodRepetition = new String[lenght];
                                 badRepetition = new String[lenght];
                                 tableauidstat = new String[lenght];
+                                level = new String[lenght];
                                 for(int u=0;u<lenght;u++){
                                     goodRepetition[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getGoodRepetition());
                                     badRepetition[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getBadRepetition());
                                     tableauidstat[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getId());
+                                    level[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getLevel());
                                 }
                                 bon = 0;
                                 tt = 0;
@@ -285,6 +289,7 @@ public class Traduction extends AppCompatActivity {
             motsolution = motsolution.toLowerCase();
             motsolution = removeAccent(motsolution);
 
+
             afficheur.setText(motaffiche);
             anim_score();
             maide();
@@ -320,6 +325,26 @@ public class Traduction extends AppCompatActivity {
                             bienmal.setText("Bien, mais la meilleure solution était :");
                         }
                         else{
+                            succed(nb,goodRepetition,badRepetition,level);
+                            PatchStat stats = new PatchStat();
+                            stats.setBadRepetition(Integer.valueOf(badRepetition[nb]));
+                            stats.setGoodRepetition(Integer.valueOf(goodRepetition[nb]));
+                            stats.setLevel(Integer.valueOf(level[nb]));
+
+                            GitService githubService = new RestAdapter.Builder()
+                                    .setEndpoint(ENDPOINT)
+                                    .build()
+                                    .create(GitService.class);
+
+                            githubService.patchstat(tableauidstat[nb],stats, new retrofit.Callback<Stat>() {
+                                @Override
+                                public void success(Stat stat, Response response) {
+                                }
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    System.out.println(error);
+                                }
+                            });
                             bienmal.setText("Bien");
                         }
                         bienmal.setTextColor(Color.GREEN);
@@ -333,7 +358,26 @@ public class Traduction extends AppCompatActivity {
                         fonction();
                     }
                     else {
+                        failed(nb,goodRepetition,badRepetition,level);
+                        PatchStat stats = new PatchStat();
+                        stats.setBadRepetition(Integer.valueOf(badRepetition[nb]));
+                        stats.setGoodRepetition(Integer.valueOf(goodRepetition[nb]));
+                        stats.setLevel(Integer.valueOf(level[nb]));
 
+                        GitService githubService = new RestAdapter.Builder()
+                                .setEndpoint(ENDPOINT)
+                                .build()
+                                .create(GitService.class);
+
+                        githubService.patchstat(tableauidstat[nb],stats, new retrofit.Callback<Stat>() {
+                            @Override
+                            public void success(Stat stat, Response response) {
+                            }
+                            @Override
+                            public void failure(RetrofitError error) {
+                                System.out.println(error);
+                            }
+                        });
                         bienmal.setText("Pas exactement");
                         bienmal.setTextColor(Color.RED);
                         edit.setText("");
@@ -572,6 +616,26 @@ public class Traduction extends AppCompatActivity {
                             bienmal.setText("Good, but the best solution is :");
                         }
                         else{
+                            succed(nb,goodRepetition,badRepetition,level);
+                            PatchStat stats = new PatchStat();
+                            stats.setBadRepetition(Integer.valueOf(badRepetition[nb]));
+                            stats.setGoodRepetition(Integer.valueOf(goodRepetition[nb]));
+                            stats.setLevel(Integer.valueOf(level[nb]));
+
+                            GitService githubService = new RestAdapter.Builder()
+                                    .setEndpoint(ENDPOINT)
+                                    .build()
+                                    .create(GitService.class);
+
+                            githubService.patchstat(tableauidstat[nb],stats, new retrofit.Callback<Stat>() {
+                                @Override
+                                public void success(Stat stat, Response response) {
+                                }
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    System.out.println(error);
+                                }
+                            });
                             bienmal.setText("Good");
                         }
                         bienmal.setTextColor(Color.GREEN);
@@ -585,6 +649,26 @@ public class Traduction extends AppCompatActivity {
                         fonction();
                     }
                     else{
+                        failed(nb,goodRepetition,badRepetition,level);
+                        PatchStat stats = new PatchStat();
+                        stats.setBadRepetition(Integer.valueOf(badRepetition[nb]));
+                        stats.setGoodRepetition(Integer.valueOf(goodRepetition[nb]));
+                        stats.setLevel(Integer.valueOf(level[nb]));
+
+                        GitService githubService = new RestAdapter.Builder()
+                                .setEndpoint(ENDPOINT)
+                                .build()
+                                .create(GitService.class);
+
+                        githubService.patchstat(tableauidstat[nb],stats, new retrofit.Callback<Stat>() {
+                            @Override
+                            public void success(Stat stat, Response response) {
+                            }
+                            @Override
+                            public void failure(RetrofitError error) {
+                                System.out.println(error);
+                            }
+                        });
                         bienmal.setText("Not really");
                         bienmal.setTextColor(Color.RED);
                         edit.setText("");
@@ -595,7 +679,7 @@ public class Traduction extends AppCompatActivity {
                         afficheur.setText(motaffiche);
                         fonction();
                     }tt++;
-                    //A mettre apres la prochaine ) pour que ca marche /!\ attention au synonymes
+                    //A mettre apres la prochaine ) pour que ca marche /!\ attention aux synonymes
                     signaler.setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View v){
@@ -783,22 +867,22 @@ public class Traduction extends AppCompatActivity {
     }
 
 
-    public void succed(int pos,Integer good[], Integer bad[],Integer level[]){
-        if (level[pos]<5){
-            level[pos]=level[pos]+1;
+    public void succed(int pos,String good[], String bad[],String level[]){
+        if (Integer.valueOf(level[pos])<5){
+            level[pos]=String.valueOf(Integer.valueOf(level[pos])+1);
         }
-        good[pos]=good[pos]+1;
-        if(good[pos]>=2){
-            bad[pos]=0;
+        good[pos]=String.valueOf(Integer.valueOf(good[pos])+1);
+        if(Integer.valueOf(good[pos])>=2){
+            bad[pos]=String.valueOf(0);
         }
     }
 
-    public void failed(int pos,Integer good[], Integer bad[],Integer level[]){
-        if (level[pos]>0){
-            level[pos]=level[pos]-1;
+    public void failed(int pos,String good[], String bad[],String level[]){
+        if (Integer.valueOf(level[pos])>0){
+            level[pos]=String.valueOf(Integer.valueOf(level[pos])-1);
         }
-        good[pos]=0;
-        bad[pos]=bad[pos]+1;
+        good[pos]=String.valueOf(0);
+        bad[pos]=String.valueOf(Integer.valueOf(bad[pos])+1);
     }
 
 

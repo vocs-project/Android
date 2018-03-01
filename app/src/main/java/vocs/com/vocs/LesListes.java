@@ -24,7 +24,6 @@ import static vocs.com.vocs.R.id.role;
 
 public class LesListes extends AppCompatActivity {
 
-    DataBaseHelper myDB;
     Button btnAdd;
     EditText editText;
     ImageButton param,retour;

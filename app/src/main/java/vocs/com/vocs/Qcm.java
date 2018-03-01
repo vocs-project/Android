@@ -35,6 +35,7 @@ import static vocs.com.vocs.R.id.checkBox3qcm;
 import static vocs.com.vocs.R.id.checkBox4qcm;
 import static vocs.com.vocs.R.id.bswitch;
 import static vocs.com.vocs.R.id.lemot;
+import static vocs.com.vocs.R.id.liste;
 import static vocs.com.vocs.R.id.retour;
 import static vocs.com.vocs.R.id.soluc;
 import static vocs.com.vocs.R.id.valider;
@@ -46,7 +47,7 @@ public class Qcm extends AppCompatActivity {
     int nombreMax, nb;
     int bon, tt;
     String  motafficherencemoment, motattenduencemoment,motchoisis,idreçu,typeliste;
-    private String tableauidstat[],tableaufrancais[],tableauanglais[],goodRepetition[],badRepetition[];
+    private String level[],tableauidstat[],tableaufrancais[],tableauanglais[];
     Switch switchqcm;
     TextView motafficheqcm, textradio1qcm, textradio2qcm, textradio3qcm, textradio4qcm, bienmalqcm, affichereponseqcm;
     CheckBox checkBox1qcm, checkBox2qcm, checkBox3qcm, checkBox4qcm;
@@ -93,15 +94,13 @@ public class Qcm extends AppCompatActivity {
                     final int lenght = motliste.getWordTrads().size();
                     tableaufrancais = new String[lenght];
                     tableauanglais = new String[lenght];
-                    goodRepetition = new String[lenght];
-                    badRepetition = new String[lenght];
                     tableauidstat = new String[lenght];
+                    level = new String[lenght];
                     for (int i = 0; i < lenght; i++) {
                         tableauanglais[i] = motliste.getWordTrads().get(i).getWord().getContent();
                         tableaufrancais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
-                        goodRepetition[i]=String.valueOf(motliste.getWordTrads().get(i).getStat().getGoodRepetition());
-                        badRepetition[i]=String.valueOf(motliste.getWordTrads().get(i).getStat().getBadRepetition());
                         tableauidstat[i]=String.valueOf(motliste.getWordTrads().get(i).getStat().getId());
+                        level[i] = String.valueOf(motliste.getWordTrads().get(i).getStat().getLevel());
                     }
                     if (tableaufrancais.length != 0) {
 
@@ -163,13 +162,11 @@ public class Qcm extends AppCompatActivity {
                         githubService.recupstat(idreçu,idList, new retrofit.Callback<ListeTout>() {
                             @Override
                             public void success(ListeTout listestat, Response response) {
-                                goodRepetition = new String[lenght];
-                                badRepetition = new String[lenght];
                                 tableauidstat = new String[lenght];
+                                level = new String[lenght];
                                 for(int u=0;u<lenght;u++){
-                                    goodRepetition[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getGoodRepetition());
-                                    badRepetition[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getBadRepetition());
                                     tableauidstat[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getId());
+                                    level[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getLevel());
                                 }
                                 bon = 0;
                                 tt = 0;
@@ -456,4 +453,5 @@ public class Qcm extends AppCompatActivity {
         checkBox4qcm.setChecked(false);
 
     }
+
 }
