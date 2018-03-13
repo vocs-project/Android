@@ -35,10 +35,12 @@ import retrofit.client.Response;
 
 import static android.R.attr.data;
 import static android.R.attr.id;
+import static android.R.attr.level;
 import static android.R.attr.name;
 import static android.R.attr.value;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
 import static vocs.com.vocs.GitService.ENDPOINT;
+import static vocs.com.vocs.R.id.afficheur;
 import static vocs.com.vocs.R.id.leedit;
 import static vocs.com.vocs.R.id.listView;
 import static vocs.com.vocs.R.id.retour;
@@ -49,6 +51,7 @@ public class Mots extends AppCompatActivity{
     Button retours,ajout,supp;
      String idreçu,idliste,tableautrad[],tableauword[],tableau[],word,tableauid[],idword,wordanglais;
     private ListView maListViewPerso;
+    String level[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +147,7 @@ public class Mots extends AppCompatActivity{
             @Override
             public void success(MotsListe motslistes, Response response) {
 
-                int lenght = motslistes.getWordTrads().size();
+               final int lenght = motslistes.getWordTrads().size();
                 tableauword = new String[lenght];
                 tableautrad = new String[lenght];
                 tableauid = new String[lenght];
@@ -155,20 +158,46 @@ public class Mots extends AppCompatActivity{
                     tableauid[i]=Integer.toString(motslistes.getWordTrads().get(i).getId());
                     tableau[i]=(tableauword[i]+" - "+tableautrad[i]);
                 }
-                ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
-                HashMap<String, String> map;
 
-                for(int y=0;y<tableau.length;y++){
-                    map = new HashMap<String, String>();
-                    map.put("titre", tableau[y]);
-                    map.put("img", String.valueOf(R.drawable.red_point));
-                    listItem.add(map);
-                }
+                GitService githubService = new RestAdapter.Builder()
+                        .setEndpoint(ENDPOINT)
+                        .build()
+                        .create(GitService.class);
 
-                SimpleAdapter mSchedule = new SimpleAdapter (getApplicationContext(), listItem, R.layout.affichage_item,
-                        new String[] {"img", "titre", "hp"}, new int[] {R.id.img, R.id.titre, R.id.hp});
+                githubService.recupstat(idreçu,idliste, new retrofit.Callback<ListeTout>() {
+                    @Override
+                    public void success(ListeTout listestat, Response response) {
+                        level = new String[lenght];
+                        for(int u=0;u<lenght;u++){
+                            level[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getLevel());
+                        }
+                        ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
+                        HashMap<String, String> map;
+                        for(int y=0;y<tableau.length;y++){
+                            map = new HashMap<String, String>();
+                            map.put("titre", tableau[y]);
+                            if(Integer.valueOf(level[y])>=5){
+                                map.put("img", String.valueOf(R.drawable.green_point));
+                            }
+                            else if(Integer.valueOf(level[y])>=2){
+                                map.put("img", String.valueOf(R.drawable.yellow_point));
+                            }
+                            else{
+                                map.put("img", String.valueOf(R.drawable.red_point));
+                            }
+                            listItem.add(map);
+                        }
+                        SimpleAdapter mSchedule = new SimpleAdapter (getApplicationContext(), listItem, R.layout.affichage_item,
+                                new String[] {"img", "titre", "hp"}, new int[] {R.id.img, R.id.titre, R.id.hp});
 
-                maListViewPerso.setAdapter(mSchedule);
+                        maListViewPerso.setAdapter(mSchedule);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        System.out.println(error);
+                    }
+                });
             }
 
             @Override

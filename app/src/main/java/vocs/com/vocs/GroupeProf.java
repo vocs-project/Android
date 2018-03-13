@@ -115,7 +115,12 @@ public class GroupeProf extends AppCompatActivity {
                 email.setText(user.getEmail());
                 roles = user.getRoles();
                 int taille = user.getListes().size();
-                nbliste.setText("Vous possédez "+taille+" listes");
+                if(taille==1){
+                    nbliste.setText("Vous possédez "+taille+" liste");
+                }
+                else{
+                    nbliste.setText("Vous possédez "+taille+" listes");
+                }
                 role.setText("Vous êtes un utilisateur");
                 if(roles[0].contentEquals("ROLE_STUDENT")){
                     role.setText("Vous êtes un étudiant");

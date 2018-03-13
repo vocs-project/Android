@@ -135,7 +135,11 @@ public class Groupe extends AppCompatActivity {
                 classes = new String[user.getClasses().size()];
                 int lenght = user.getClasses().size();
                 int taille = user.getListes().size();
-                nbliste.setText("Vous possédez "+taille+" listes");
+                if(taille==1){
+                    nbliste.setText("Vous possédez "+taille+" liste");
+                }else{
+                    nbliste.setText("Vous possédez "+taille+" listes");
+                }
                 for(int i=0; i<lenght;i++){
                     classes[i]  = user.getClasses().get(i).getName();
                     classe.setText("Vous faites partis de "+classes[0]);

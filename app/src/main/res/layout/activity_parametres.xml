@@ -32,18 +32,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true" />
 
-    <ImageButton
-        android:text="parametres"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/parametre"
-        android:id="@+id/parametres"
-        android:background="@null"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/imageView3"
-        android:layout_alignParentTop="true" />
-
     <TextView
         android:text="vocs.company@gmail.com"
         android:autoLink="email"
@@ -65,7 +53,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="107dp"
         android:id="@+id/textView15"
-        android:layout_below="@+id/retourdeparam"
         android:layout_centerHorizontal="true" />
 
     <TextView
@@ -92,4 +79,5 @@
         android:layout_below="@+id/textView14"
         android:layout_alignLeft="@+id/textView15"
         android:layout_alignStart="@+id/textView15" />
+
 </RelativeLayout>

@@ -11,7 +11,7 @@
     tools:context="vocs.com.vocs.ChangerProfil">
 
     <TextView
-        android:text="Veulliez entrer de nouveau votre mot de passe pour accéder à la modification de votre profil :"
+        android:text="Veuillez entrer de nouveau votre mot de passe pour accéder à la modification de votre profil :"
         android:layout_width="wrap_content"
         android:gravity="center"
         android:textColor="@android:color/background_dark"

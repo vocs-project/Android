@@ -295,16 +295,16 @@ public class Qcm extends AppCompatActivity {
     }
 
     public String buttonRadioValid(){
-        if (checkBox1qcm.isChecked()){
+        if (checkBox1qcm.isChecked()&&!checkBox2qcm.isChecked()&&!checkBox3qcm.isChecked()&&!checkBox4qcm.isChecked()){
             return textradio1qcm.getText().toString();
         }
-        if (checkBox2qcm.isChecked()){
+        if (!checkBox1qcm.isChecked()&&checkBox2qcm.isChecked()&&!checkBox3qcm.isChecked()&&!checkBox4qcm.isChecked()){
             return textradio2qcm.getText().toString();
         }
-        if (checkBox3qcm.isChecked()){
+        if (!checkBox1qcm.isChecked()&&!checkBox2qcm.isChecked()&&checkBox3qcm.isChecked()&&!checkBox4qcm.isChecked()){
             return textradio3qcm.getText().toString();
         }
-        if (checkBox4qcm.isChecked()){
+        if (!checkBox1qcm.isChecked()&&!checkBox2qcm.isChecked()&&!checkBox3qcm.isChecked()&&checkBox4qcm.isChecked()){
             return textradio4qcm.getText().toString();
         }
         else{
