@@ -35,7 +35,12 @@ public class SavroirRoleProf extends AppCompatActivity {
         githubService.accederaunuser(idreçu,new retrofit.Callback<User>() {
             @Override
             public void success(User user, Response response) {
-                roles = user.getRoles();
+                if(user.getRoles().length>0) {
+                    roles = user.getRoles();
+                }
+                else{
+                    roles = new String[]{" "};
+                }
                 if(roles[0].contentEquals("ROLE_PROFESSOR")){
                     Intent savoirgroupe = new Intent (SavroirRoleProf.this,MotsProf.class);
                     Bundle y = new Bundle();

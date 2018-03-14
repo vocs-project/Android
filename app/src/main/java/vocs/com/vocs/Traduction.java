@@ -114,10 +114,19 @@ public class Traduction extends AppCompatActivity {
                     tableauidstat = new String[lenght];
                     level=new String[lenght];
                     for (int i = 0; i < lenght; i++) {
-                        tableauanglais[i] = motliste.getWordTrads().get(i).getWord().getContent();
-                        tableaufrancais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
-                        worddanstradsfrancais[i] = motliste.getWordTrads().get(i).getTrad().getTrads();
-                        worddanstradsanglais[i] = motliste.getWordTrads().get(i).getWord().getTrads();
+                        if(motliste.getWordTrads().get(i).getWord().getLanguage().getCode().toString().contentEquals("EN")){
+                            tableauanglais[i] = motliste.getWordTrads().get(i).getWord().getContent();
+                            tableaufrancais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
+                            worddanstradsfrancais[i] = motliste.getWordTrads().get(i).getTrad().getTrads();
+                            worddanstradsanglais[i] = motliste.getWordTrads().get(i).getWord().getTrads();
+                        }
+                        else{
+                            tableaufrancais[i] = motliste.getWordTrads().get(i).getWord().getContent();
+                            tableauanglais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
+                            worddanstradsanglais[i] = motliste.getWordTrads().get(i).getTrad().getTrads();
+                            worddanstradsfrancais[i] = motliste.getWordTrads().get(i).getWord().getTrads();
+                        }
+
                         goodRepetition[i]=String.valueOf(motliste.getWordTrads().get(i).getStat().getGoodRepetition());
                         badRepetition[i]=String.valueOf(motliste.getWordTrads().get(i).getStat().getBadRepetition());
                         tableauidstat[i] = String.valueOf(motliste.getWordTrads().get(i).getStat().getId());
@@ -170,10 +179,18 @@ public class Traduction extends AppCompatActivity {
                     worddanstradsanglais = new WordDansTrads[lenght][];
                     worddanstradsfrancais = new WordDansTrads[lenght][];
                     for (int i = 0; i < lenght; i++) {
-                        tableauanglais[i] = motliste.getWordTrads().get(i).getWord().getContent();
-                        tableaufrancais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
-                        worddanstradsfrancais[i] = motliste.getWordTrads().get(i).getTrad().getTrads();
-                        worddanstradsanglais[i] = motliste.getWordTrads().get(i).getWord().getTrads();
+                        if(motliste.getWordTrads().get(i).getWord().getLanguage().getCode().toString().contentEquals("EN")){
+                            tableauanglais[i] = motliste.getWordTrads().get(i).getWord().getContent();
+                            tableaufrancais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
+                            worddanstradsfrancais[i] = motliste.getWordTrads().get(i).getTrad().getTrads();
+                            worddanstradsanglais[i] = motliste.getWordTrads().get(i).getWord().getTrads();
+                        }
+                        else{
+                            tableaufrancais[i] = motliste.getWordTrads().get(i).getWord().getContent();
+                            tableauanglais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
+                            worddanstradsanglais[i] = motliste.getWordTrads().get(i).getTrad().getTrads();
+                            worddanstradsfrancais[i] = motliste.getWordTrads().get(i).getWord().getTrads();
+                        }
                     }
                     if (tableaufrancais.length != 0) {
                         GitService githubService = new RestAdapter.Builder()

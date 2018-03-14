@@ -84,11 +84,11 @@ public class AjoutMots extends AppCompatActivity {
                 Postword word = new Postword();
                 Postword trad = new Postword();
 
-                word.setContent(motanglais);
-                trad.setContent(motfrançais);
+                word.setContent(motfrançais);
+                trad.setContent(motanglais);
 
-                word.setLanguage("EN");
-                trad.setLanguage("FR");
+                word.setLanguage("FR");
+                trad.setLanguage("EN");
 
                 Wordpost wordpost = new Wordpost();
                 wordpost.setTrad(trad);

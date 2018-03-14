@@ -77,20 +77,12 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/profnom"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:id="@+id/listvieweleves"
-        android:layout_above="@+id/accepterlademande" />
+        android:layout_above="@+id/accepterlademande"
+        android:layout_below="@+id/nomclasse" />
 
-    <TextView
-        android:text="profnom"
-        android:gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:id="@+id/profnom"
-        android:layout_below="@+id/nomclasse"
-        android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>

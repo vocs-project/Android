@@ -24,6 +24,7 @@ import static vocs.com.vocs.GitService.ENDPOINT;
 import static vocs.com.vocs.R.id.listviewclasseprof;
 import static vocs.com.vocs.R.id.listviewmembres;
 import static vocs.com.vocs.R.id.nomclasse;
+
 import static vocs.com.vocs.R.id.role;
 
 public class DemandsAcceptDelete extends AppCompatActivity {
@@ -32,7 +33,7 @@ public class DemandsAcceptDelete extends AppCompatActivity {
     private String idreçu,iddemands,idclasse,idreceive,idsend,nbdemandes;
     ListView listvieweleves;
     Button accepterlademande,refuserlademande;
-    TextView profnom,classenom;
+    TextView classenom;
     String tableauuser[],leprof,role[],etat;
     private String idprof;
     PatchCLasse patchclasse;
@@ -46,7 +47,6 @@ public class DemandsAcceptDelete extends AppCompatActivity {
         parametres=(ImageButton) findViewById(R.id.parametres);
         retour=(ImageButton) findViewById(R.id.retourarriere);
         classenom = (TextView) findViewById(nomclasse);
-        profnom = (TextView) findViewById(R.id.profnom);
         listvieweleves = (ListView) findViewById(R.id.listvieweleves);
         accepterlademande = (Button) findViewById(R.id.accepterlademande);
         refuserlademande = (Button) findViewById(R.id.refuserlademande);
@@ -99,17 +99,14 @@ public class DemandsAcceptDelete extends AppCompatActivity {
                 role = new String[lenght];
                 tableauuser = new String[lenght];
 
-                for(int i=0; i<lenght;i++){
-                    role=classes.getUsers().get(i).getRoles();
-                }
                 for(int y=0;y<lenght;y++){
+                    role=classes.getUsers().get(y).getRoles();
                     if(role[0].contentEquals("ROLE_PROFESSOR")){
                         leprof = classes.getUsers().get(y).getSurname().concat(" ").concat(classes.getUsers().get(y).getFirstname());
                         idprof = Integer.toString(classes.getUsers().get(y).getId());
                     }
                     tableauuser[y]=classes.getUsers().get(y).getSurname().concat(" ").concat(classes.getUsers().get(y).getFirstname());
                 }
-                profnom.setText("prof : ".concat(leprof));
                 final ArrayAdapter<String> adapterliste = new ArrayAdapter<String>(DemandsAcceptDelete.this,
                         android.R.layout.simple_list_item_1, tableauuser);
                 listvieweleves.setAdapter(adapterliste);
@@ -135,7 +132,23 @@ public class DemandsAcceptDelete extends AppCompatActivity {
                     githubService.ajouterclasseauser(idsend,patchclasse,new retrofit.Callback<User>() {
                         @Override
                         public void success(User user, Response response) {
+                            GitService githubService = new RestAdapter.Builder()
+                                    .setEndpoint(ENDPOINT)
+                                    .build()
+                                    .create(GitService.class);
+                            PatchRole patchrole = new PatchRole();
+                            patchrole.setRoles(new String[]{"ROLE_STUDENT"});
+                            githubService.patchrole(idsend,patchrole,new retrofit.Callback<User>() {
+                                @Override
+                                public void success(User user, Response response) {
 
+                                }
+
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    System.out.println(error);
+                                }
+                            });
                         }
 
                         @Override
@@ -177,7 +190,23 @@ public class DemandsAcceptDelete extends AppCompatActivity {
                     githubService.ajouterclasseauser(idreceive,patchclasse,new retrofit.Callback<User>() {
                         @Override
                         public void success(User user, Response response) {
+                            GitService githubService = new RestAdapter.Builder()
+                                    .setEndpoint(ENDPOINT)
+                                    .build()
+                                    .create(GitService.class);
+                            PatchRole patchrole = new PatchRole();
+                            patchrole.setRoles(new String[]{"ROLE_STUDENT"});
+                            githubService.patchrole(idreceive,patchrole,new retrofit.Callback<User>() {
+                                @Override
+                                public void success(User user, Response response) {
 
+                                }
+
+                                @Override
+                                public void failure(RetrofitError error) {
+                                    System.out.println(error);
+                                }
+                            });
                         }
 
                         @Override

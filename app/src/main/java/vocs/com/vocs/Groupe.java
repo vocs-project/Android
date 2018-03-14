@@ -131,7 +131,14 @@ public class Groupe extends AppCompatActivity {
             public void success(User user, Response response) {
                 nom.setText(user.getFirstandSur());
                 email.setText(user.getEmail());
-                roles = user.getRoles();
+                if(user.getRoles().length>0){
+                    roles = user.getRoles();
+                }
+                else{
+                    roles = new String[1];
+                    roles[0]=" ";
+                }
+
                 classes = new String[user.getClasses().size()];
                 int lenght = user.getClasses().size();
                 int taille = user.getListes().size();
@@ -193,6 +200,7 @@ public class Groupe extends AppCompatActivity {
                 if(roles[0].contentEquals("ROLE_PROFESSOR")){
                     role.setText("Vous êtes un professeur");
                 }
+
             }
             @Override
             public void failure(RetrofitError error) {

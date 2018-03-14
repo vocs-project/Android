@@ -37,7 +37,13 @@ public class SavoirRole extends AppCompatActivity {
         githubService.accederaunuser(idreçu,new retrofit.Callback<User>() {
             @Override
             public void success(User user, Response response) {
-                roles = user.getRoles();
+                if(user.getRoles().length>0) {
+                    roles = user.getRoles();
+                }
+                else{
+                    roles = new String[1];
+                    roles[0]=" ";
+                }
                 if(roles[0].contentEquals("ROLE_PROFESSOR")){
                     Intent savoirgroupe = new Intent (SavoirRole.this,GroupeProf.class);
                     Bundle y = new Bundle();

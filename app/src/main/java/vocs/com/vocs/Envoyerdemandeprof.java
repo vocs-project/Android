@@ -81,8 +81,14 @@ public class Envoyerdemandeprof extends AppCompatActivity {
             @Override
             public void success(User user, Response response) {
                 nomeleve.setText(user.getFirstandSur());
-                role=new String[user.getRoles().length];
-                role=user.getRoles();
+                if(user.getRoles().length>0) {
+                    role = new String[user.getRoles().length];
+                    role = user.getRoles();
+                }
+                else{
+                    role = new String[1];
+                    role[0]=" ";
+                }
             }
             @Override
             public void failure(RetrofitError error) {

@@ -128,5 +128,8 @@ public interface GitService {
     @PATCH("/wordTradUsers/{id}")
     void patchstat(@Path ("id") String id,@Body PatchStat patchstat, Callback<Stat> callback);
 
+    @PATCH("/users/{iduser}")
+    void patchrole(@Path ("id") String id,@Body PatchRole patchrole, Callback<User> callback);
+
 }
 

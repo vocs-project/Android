@@ -26,7 +26,6 @@ import static vocs.com.vocs.R.id.time;
 
 public class ModeDeJeux extends AppCompatActivity {
 
-    Intent ModeDeJeux = getIntent();
     Button TraductionNormale,qcm,match,timeattack;
     BottomNavigationView BottomBar;
     ImageButton parametres,retourModePrinc;

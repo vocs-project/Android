@@ -23,7 +23,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static vocs.com.vocs.GitService.ENDPOINT;
-import static vocs.com.vocs.R.id.bouttonliste;
+
 import static vocs.com.vocs.R.id.creercompte;
 import static vocs.com.vocs.R.id.editemail;
 import static vocs.com.vocs.R.id.editlogin;

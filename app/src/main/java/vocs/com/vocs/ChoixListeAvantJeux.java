@@ -157,7 +157,7 @@ public class ChoixListeAvantJeux extends AppCompatActivity {
             }
         });
 
-        githubService.hardlist("23",new retrofit.Callback<MotsListe>() {
+        githubService.hardlist(idreçu,new retrofit.Callback<MotsListe>() {
             @Override
             public void success(MotsListe motsListe, Response response) {
                 int length = motsListe.getWordTrads().size();

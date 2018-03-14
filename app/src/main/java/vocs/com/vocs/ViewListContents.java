@@ -32,7 +32,6 @@ import static android.R.attr.id;
 import static android.os.Build.VERSION_CODES.M;
 import static vocs.com.vocs.GitService.ENDPOINT;
 import static vocs.com.vocs.R.id.BottomBar;
-import static vocs.com.vocs.R.id.listviewtest;
 import static vocs.com.vocs.R.id.retour;
 
 /**

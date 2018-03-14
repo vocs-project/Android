@@ -81,8 +81,14 @@ public class Match extends AppCompatActivity {
                     tableauidstat = new String[lenght];
                     level = new String[lenght];
                     for (int i = 0; i < lenght; i++) {
-                        tableauanglais[i] = motliste.getWordTrads().get(i).getWord().getContent();
-                        tableaufrancais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
+                        if(motliste.getWordTrads().get(i).getWord().getLanguage().getCode().toString().contentEquals("EN")){
+                            tableauanglais[i] = motliste.getWordTrads().get(i).getWord().getContent();
+                            tableaufrancais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
+                        }
+                        else{
+                            tableaufrancais[i] = motliste.getWordTrads().get(i).getWord().getContent();
+                            tableauanglais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
+                        }
                         goodRepetition[i]=String.valueOf(motliste.getWordTrads().get(i).getStat().getGoodRepetition());
                         badRepetition[i]=String.valueOf(motliste.getWordTrads().get(i).getStat().getBadRepetition());
                         tableauidstat[i]=String.valueOf(motliste.getWordTrads().get(i).getStat().getId());
@@ -136,8 +142,14 @@ public class Match extends AppCompatActivity {
                     tableauanglais = new String[lenght];
                     tableausoluc = new String[lenght];
                     for (int i = 0; i < lenght; i++) {
-                        tableauanglais[i] = motliste.getWordTrads().get(i).getWord().getContent();
-                        tableaufrancais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
+                        if(motliste.getWordTrads().get(i).getWord().getLanguage().getCode().toString().contentEquals("EN")){
+                            tableauanglais[i] = motliste.getWordTrads().get(i).getWord().getContent();
+                            tableaufrancais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
+                        }
+                        else{
+                            tableaufrancais[i] = motliste.getWordTrads().get(i).getWord().getContent();
+                            tableauanglais[i] = motliste.getWordTrads().get(i).getTrad().getContent();
+                        }
                     }
                     if (tableauanglais.length < 4) {
                         Intent retour = new Intent(Match.this, ChoixListeAvantJeux.class);

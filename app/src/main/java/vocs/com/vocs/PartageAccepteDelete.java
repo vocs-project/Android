@@ -20,7 +20,7 @@ import static vocs.com.vocs.GitService.ENDPOINT;
 import static vocs.com.vocs.R.id.accept;
 import static vocs.com.vocs.R.id.listvieweleves;
 import static vocs.com.vocs.R.id.nom;
-import static vocs.com.vocs.R.id.profnom;
+
 import static vocs.com.vocs.R.id.refuserlademande;
 import static vocs.com.vocs.R.id.role;
 

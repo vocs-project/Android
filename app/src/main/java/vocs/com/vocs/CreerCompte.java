@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import static android.R.attr.password;
 import static android.R.id.edit;
 import static vocs.com.vocs.GitService.ENDPOINT;
-import static vocs.com.vocs.R.id.bouttonliste;
+
 
 public class CreerCompte extends AppCompatActivity {
 
@@ -69,7 +69,16 @@ public class CreerCompte extends AppCompatActivity {
                         .create(GitService.class);
                 savoirsicheck();
                 Userpost nouveluser = new Userpost();
-                nouveluser.setAll(editprenom.getText().toString(),editnom.getText().toString(),editpassword.getText().toString(),editemail.getText().toString(), new String[]{role},new Integer[]{});
+                if(role.contentEquals(" ")){
+                    nouveluser.setSurname(editnom.getText().toString());
+                    nouveluser.setFirstname(editprenom.getText().toString());
+                    nouveluser.setPassword(editpassword.getText().toString());
+                    nouveluser.setEmail(editemail.getText().toString());
+                }
+                else{
+                    nouveluser.setAll(editprenom.getText().toString(),editnom.getText().toString(),editpassword.getText().toString(),editemail.getText().toString(), new String[]{role},new Integer[]{});
+                }
+
 
                 githubService.userpost(nouveluser,new retrofit.Callback<Userpost>() {
                     @Override
@@ -102,7 +111,7 @@ public class CreerCompte extends AppCompatActivity {
             role = "ROLE_PROFESSOR";
         }
         if(utilisateurlambda.isChecked()){
-            role = "";
+            role = " ";
         }
         if(!etudiant.isChecked() && !professeur.isChecked() && !utilisateurlambda.isChecked()){
             Toast.makeText(CreerCompte.this,"choisissez un  rôle ",Toast.LENGTH_SHORT).show();
