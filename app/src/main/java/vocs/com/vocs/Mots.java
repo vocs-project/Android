@@ -2,9 +2,11 @@ package vocs.com.vocs;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.app.Application;
@@ -13,6 +15,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,6 +30,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -34,24 +38,32 @@ import retrofit.client.Response;
 
 
 import static android.R.attr.data;
+import static android.R.attr.drawableBottom;
 import static android.R.attr.id;
 import static android.R.attr.level;
 import static android.R.attr.name;
 import static android.R.attr.value;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
+import static android.os.Build.VERSION_CODES.M;
 import static vocs.com.vocs.GitService.ENDPOINT;
+import static vocs.com.vocs.R.drawable.speaker;
 import static vocs.com.vocs.R.id.afficheur;
+import static vocs.com.vocs.R.id.email;
 import static vocs.com.vocs.R.id.leedit;
 import static vocs.com.vocs.R.id.listView;
+import static vocs.com.vocs.R.id.partageliste;
 import static vocs.com.vocs.R.id.retour;
 import static vocs.com.vocs.R.id.supprliste;
+import static vocs.com.vocs.R.id.titre;
 
 public class Mots extends AppCompatActivity{
 
     Button retours,ajout,supp;
      String idreçu,idliste,tableautrad[],tableauword[],tableau[],word,tableauid[],idword,wordanglais;
     private ListView maListViewPerso;
+    private String solution;
     String level[];
+    TextToSpeech textToSpeech;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +77,15 @@ public class Mots extends AppCompatActivity{
             idliste = b.getString("idliste");
         }
 
+        textToSpeech=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    textToSpeech.setLanguage(Locale.UK);
+                }
+            }
+        });
+
         maListViewPerso = (ListView) findViewById(R.id.listView);
 
         maListViewPerso.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -72,10 +93,36 @@ public class Mots extends AppCompatActivity{
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 HashMap<String, String> map = (HashMap<String, String>) maListViewPerso.getItemAtPosition(position);
                 AlertDialog.Builder adb = new AlertDialog.Builder(Mots.this);
-                adb.setTitle("Sélection Item");
-                adb.setMessage("Votre choix : "+map.get("titre"));
-                adb.setPositiveButton("Ok", null);
+                adb.setTitle(map.get("titre"));
+                adb.setNegativeButton("Retour", null);
+                word = tableau[position];
+                idword = tableauid[position];
+                wordanglais = tableauword[position];
+                adb.setPositiveButton("Supprimer",new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        Intent verssupp = new Intent (Mots.this, SupprimerMot.class);
+                        Bundle b = new Bundle();
+                        b.putString("id",idreçu);
+                        b.putString("idliste",idliste);
+                        b.putString("idword",idword);
+                        b.putString("word",word);
+                        b.putString("wordanglais",wordanglais);
+                        verssupp.putExtras(b);
+                        startActivity(verssupp);
+                        finish();
+                    }
+                });
+                solution = tableauword[position];
+                adb.setNeutralButton("listen", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dlg, int sumthin) {
+                        textToSpeech.speak(solution, TextToSpeech.QUEUE_FLUSH, null);
+                    }
+                });
                 adb.show();
+
             }
         });
 
@@ -188,7 +235,7 @@ public class Mots extends AppCompatActivity{
                             listItem.add(map);
                         }
                         SimpleAdapter mSchedule = new SimpleAdapter (getApplicationContext(), listItem, R.layout.affichage_item,
-                                new String[] {"img", "titre", "hp"}, new int[] {R.id.img, R.id.titre, R.id.hp});
+                                new String[] {"img", "titre"}, new int[] {R.id.img, titre});
 
                         maListViewPerso.setAdapter(mSchedule);
                     }
@@ -208,4 +255,5 @@ public class Mots extends AppCompatActivity{
         });
 
     }
+
 }

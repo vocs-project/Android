@@ -1,6 +1,9 @@
 package vocs.com.vocs;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.speech.tts.TextToSpeech;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,26 +11,33 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
 
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 import static vocs.com.vocs.GitService.ENDPOINT;
+import static vocs.com.vocs.R.id.titre;
 
 public class MotsProf extends AppCompatActivity {
 
     Button retours,ajout,supp,partageliste;
     String idreçu,idliste,tableautrad[],tableauword[],tableau[],word,tableauid[],idword,wordanglais;
+    private ListView maListViewPerso;
+    private String solution;
+    String level[];
+    TextToSpeech textToSpeech;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mots_prof);
-
-        final ListView listView=(ListView) findViewById(R.id.listView);
-
 
         Bundle b = getIntent().getExtras();
 
@@ -36,10 +46,73 @@ public class MotsProf extends AppCompatActivity {
             idliste = b.getString("idliste");
         }
 
+        textToSpeech=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR) {
+                    textToSpeech.setLanguage(Locale.UK);
+                }
+            }
+        });
+
+        maListViewPerso = (ListView) findViewById(R.id.listView);
+
+        maListViewPerso.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> a, View v, int position, long id) {
+                HashMap<String, String> map = (HashMap<String, String>) maListViewPerso.getItemAtPosition(position);
+                AlertDialog.Builder adb = new AlertDialog.Builder(MotsProf.this);
+                adb.setTitle(map.get("titre"));
+                adb.setNegativeButton("Retour", null);
+                word = tableau[position];
+                idword = tableauid[position];
+                wordanglais = tableauword[position];
+                adb.setPositiveButton("Supprimer",new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        Intent verssupp = new Intent (MotsProf.this, SupprimerMot.class);
+                        Bundle b = new Bundle();
+                        b.putString("id",idreçu);
+                        b.putString("idliste",idliste);
+                        b.putString("idword",idword);
+                        b.putString("word",word);
+                        b.putString("wordanglais",wordanglais);
+                        verssupp.putExtras(b);
+                        startActivity(verssupp);
+                        finish();
+                    }
+                });
+                solution = tableauword[position];
+                adb.setNeutralButton("listen", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dlg, int sumthin) {
+                        textToSpeech.speak(solution, TextToSpeech.QUEUE_FLUSH, null);
+                    }
+                });
+                adb.show();
+
+            }
+        });
+
+
         retours=(Button) findViewById(R.id.retours);
         ajout=(Button) findViewById(R.id.ajout);
         supp=(Button) findViewById(R.id.supprliste);
-        partageliste = (Button) findViewById(R.id.partageliste);
+        partageliste=(Button) findViewById(R.id.partageliste);
+
+        partageliste.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent versliste = new Intent (MotsProf.this, ResultPartageListeProf.class);
+                Bundle b = new Bundle();
+                b.putString("id",idreçu);
+                b.putString("idliste",idliste);
+                versliste.putExtras(b);
+                startActivity(versliste);
+                finish();
+            }
+        });
 
         supp.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -82,19 +155,6 @@ public class MotsProf extends AppCompatActivity {
             }
         });
 
-        partageliste.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent versliste = new Intent (MotsProf.this, ResultPartageListeProf.class);
-                Bundle b = new Bundle();
-                b.putString("id",idreçu);
-                b.putString("idliste",idliste);
-                versliste.putExtras(b);
-                startActivity(versliste);
-                finish();
-            }
-        });
-
         ajout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -117,7 +177,7 @@ public class MotsProf extends AppCompatActivity {
             @Override
             public void success(MotsListe motslistes, Response response) {
 
-                int lenght = motslistes.getWordTrads().size();
+                final int lenght = motslistes.getWordTrads().size();
                 tableauword = new String[lenght];
                 tableautrad = new String[lenght];
                 tableauid = new String[lenght];
@@ -128,34 +188,52 @@ public class MotsProf extends AppCompatActivity {
                     tableauid[i]=Integer.toString(motslistes.getWordTrads().get(i).getId());
                     tableau[i]=(tableauword[i]+" - "+tableautrad[i]);
                 }
-                final ArrayAdapter<String> adaptermots = new ArrayAdapter<String>(MotsProf.this,
-                        android.R.layout.simple_list_item_1, tableau);
-                listView.setAdapter(adaptermots);
+
+                GitService githubService = new RestAdapter.Builder()
+                        .setEndpoint(ENDPOINT)
+                        .build()
+                        .create(GitService.class);
+
+                githubService.recupstat(idreçu,idliste, new retrofit.Callback<ListeTout>() {
+                    @Override
+                    public void success(ListeTout listestat, Response response) {
+                        level = new String[lenght];
+                        for(int u=0;u<lenght;u++){
+                            level[u]=String.valueOf(listestat.getWordTrads().get(u).getStat().getLevel());
+                        }
+                        ArrayList<HashMap<String, String>> listItem = new ArrayList<HashMap<String, String>>();
+                        HashMap<String, String> map;
+                        for(int y=0;y<tableau.length;y++){
+                            map = new HashMap<String, String>();
+                            map.put("titre", tableau[y]);
+                            if(Integer.valueOf(level[y])>=5){
+                                map.put("img", String.valueOf(R.drawable.green_point));
+                            }
+                            else if(Integer.valueOf(level[y])>=2){
+                                map.put("img", String.valueOf(R.drawable.yellow_point));
+                            }
+                            else{
+                                map.put("img", String.valueOf(R.drawable.red_point));
+                            }
+                            listItem.add(map);
+                        }
+                        SimpleAdapter mSchedule = new SimpleAdapter (getApplicationContext(), listItem, R.layout.affichage_item,
+                                new String[] {"img", "titre"}, new int[] {R.id.img, titre});
+
+                        maListViewPerso.setAdapter(mSchedule);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        System.out.println(error);
+                    }
+                });
             }
 
             @Override
             public void failure(RetrofitError error) {
 
                 Toast.makeText(MotsProf.this, "erreur", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                word = tableau[position];
-                idword = tableauid[position];
-                wordanglais = tableauword[position];
-                Intent verssupp = new Intent (MotsProf.this, SupprimerMot.class);
-                Bundle b = new Bundle();
-                b.putString("id",idreçu);
-                b.putString("idliste",idliste);
-                b.putString("idword",idword);
-                b.putString("word",word);
-                b.putString("wordanglais",wordanglais);
-                verssupp.putExtras(b);
-                startActivity(verssupp);
-                finish();
             }
         });
 

@@ -21,15 +21,5 @@
         android:textColor="@android:color/background_dark"
         />
 
-    <ImageButton
-        android:id="@+id/hp"
-        android:background="@drawable/speaker"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center_vertical"
-        android:padding="10px"
-        android:onClick="lirehp"
-        />
-
 
 </LinearLayout>

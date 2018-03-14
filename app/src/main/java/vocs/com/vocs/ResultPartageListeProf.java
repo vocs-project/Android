@@ -105,19 +105,23 @@ public class ResultPartageListeProf extends AppCompatActivity {
                 }
                 int length2 = role.length;
                 roleun = new String[length2];
+
                 for(int x=0; x<role.length; x++) {
                     for(int j=0; j<role[x].length; j++) {
-                        roleun[x]=role[x][j];
+
+                        roleun[x] = role[x][j];
+                        System.out.println(x);
                     }
                 }
-                int taille=0;
-                for(int o = 0; o<roleun.length;o++){
-                    System.out.println(o);
-                        if(roleun[o].contentEquals("ROLE_PROFESSOR")){
-                            taille = taille+1;
-                        }
 
-                }
+                int taille=0;
+
+                    for (int o = 0; o < roleun.length; o++) {
+                            if (roleun[o].contentEquals("ROLE_PROFESSOR")) {
+                                taille = taille + 1;
+                            }
+                    }
+
                 tableauusername = new String[taille-1];
                 tableauuserid = new String[taille-1];
                 tableautmpiduser = new String[taille];

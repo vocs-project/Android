@@ -28,12 +28,11 @@ import static vocs.com.vocs.R.id.retours;
 
 public class SupprimerMot extends AppCompatActivity {
 
-    ImageButton parametres,retourmot2,hp;
+    ImageButton parametres,retourmot2;
     BottomNavigationView BottomBar;
     Button supprimerok;
     String idreçu,idliste,word,idword,wordanglais;
     TextView mot;
-    TextToSpeech textToSpeech;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +44,6 @@ public class SupprimerMot extends AppCompatActivity {
         parametres=(ImageButton) findViewById(R.id.parametres);
         BottomBar=(BottomNavigationView) findViewById(R.id.BottomBar);
         mot = (TextView) findViewById(R.id.motaffichés);
-        hp = (ImageButton) findViewById(R.id.hp);
-
-        textToSpeech=new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if(status != TextToSpeech.ERROR) {
-                    textToSpeech.setLanguage(Locale.UK);
-                }
-            }
-        });
 
         Bundle b = getIntent().getExtras();
 
@@ -78,13 +67,6 @@ public class SupprimerMot extends AppCompatActivity {
                 versliste.putExtras(b);
                 startActivity(versliste);
                 finish();
-            }
-        });
-
-        hp.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                textToSpeech.speak(wordanglais, TextToSpeech.QUEUE_FLUSH, null);
             }
         });
 
