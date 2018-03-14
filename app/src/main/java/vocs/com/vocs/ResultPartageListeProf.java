@@ -106,40 +106,48 @@ public class ResultPartageListeProf extends AppCompatActivity {
                 int length2 = role.length;
                 roleun = new String[length2];
 
-                for(int x=0; x<role.length; x++) {
-                    for(int j=0; j<role[x].length; j++) {
+                if(length2 == 0){
+                    tableauusername = new String [0];
+                }else{
+                    for(int x=0; x<role.length; x++) {
+                        for(int j=0; j<role[x].length; j++) {
 
-                        roleun[x] = role[x][j];
-                        System.out.println(x);
+                            roleun[x] = role[x][j];
+                            System.out.println(x);
+                        }
+                        if(role[x].length<1){
+                            roleun[x]=" ";
+                        }
+                        System.out.println(roleun[x]);
                     }
-                }
 
-                int taille=0;
+                    int taille=0;
 
                     for (int o = 0; o < roleun.length; o++) {
-                            if (roleun[o].contentEquals("ROLE_PROFESSOR")) {
-                                taille = taille + 1;
-                            }
+                        if (roleun[o].contentEquals("ROLE_PROFESSOR")) {
+                            taille = taille + 1;
+                        }
                     }
 
-                tableauusername = new String[taille-1];
-                tableauuserid = new String[taille-1];
-                tableautmpiduser = new String[taille];
-                tableautmpnomuser = new String[taille];
-                int pos = 0;
-                for(int u=0; u<lenght;u++){
+                    tableauusername = new String[taille-1];
+                    tableauuserid = new String[taille-1];
+                    tableautmpiduser = new String[taille];
+                    tableautmpnomuser = new String[taille];
+                    int pos = 0;
+                    for(int u=0; u<lenght;u++){
                         if(roleun[u].contentEquals("ROLE_PROFESSOR")){
                             tableautmpnomuser[pos]=tableautout[u];
                             tableautmpiduser[pos]=tableauusertoutid[u];
                             pos=pos+1;
                         }
-                }
-                int tmp=0;
-                for(int c=0;c<taille;c++){
-                    if(!tableautmpiduser[c].contentEquals(idreçu)){
-                        tableauusername[tmp]=tableautmpnomuser[c];
-                        tableauuserid[tmp]=tableautmpiduser[c];
-                        tmp++;
+                    }
+                    int tmp=0;
+                    for(int c=0;c<taille;c++){
+                        if(!tableautmpiduser[c].contentEquals(idreçu)){
+                            tableauusername[tmp]=tableautmpnomuser[c];
+                            tableauuserid[tmp]=tableautmpiduser[c];
+                            tmp++;
+                        }
                     }
                 }
 
